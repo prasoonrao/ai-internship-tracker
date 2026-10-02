@@ -5,8 +5,8 @@
 
 | Company | Role | Location | Type | Source | Apply |
 |---|---|---|---|---|---|
-| **Arham Insurance Brokers Pvt. Ltd.** | Full Stack Development | Mumbai 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/full-stack-development-internship-in-mumbai-at-arham-insurance-brokers-pvt-ltd1790859308) |
 | **Boomerang** | Full Stack Development | Kollam, Idukki, Kochi, Keralapuram 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/full-stack-development-internship-in-multiple-locations-at-boomerang1790927621) |
+| **Arham Insurance Brokers Pvt. Ltd.** | Full Stack Development | Mumbai 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/full-stack-development-internship-in-mumbai-at-arham-insurance-brokers-pvt-ltd1790859308) |
 | **TEN** | Software Development | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-software-development-internship-at-ten1790309126) |
 | **Salesforce** | Software Development | Bangalore 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/part-time-software-development-internship-in-bangalore-at-salesforce1789133363) |
 | **Jungleworks** | AWS DevOps Engineer | Amritsar, Chandigarh, Patiala, Phagwara, Kharar, Mohali, Zirakpur, Panchkula, Ropar Division 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/devops-internship-in-multiple-locations-at-jungleworks1790253332) |
