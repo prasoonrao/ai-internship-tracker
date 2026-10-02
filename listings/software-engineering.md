@@ -1,4 +1,4 @@
-# 📚 Software & Backend Engineering Internships (196 Active Listings)
+# 📚 Software & Backend Engineering Internships (197 Active Listings)
 
 [← Back to Main Repository](../README.md) | [Top 20 Picks](../TOP20.md)
 *Generated on 2026-10-02 for B.Tech CSE (Batch of 2028)*
@@ -139,6 +139,7 @@
 | **Motorola** | Software Engineer Intern - Summer 2027 | Plantation, FL 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://motorolasolutions.wd5.myworkdayjobs.com/Careers/job/Plantation-FL/Software-Engineering-Intern---Summer-2027_R69136) |
 | **Notion** | Mobile Software Engineer Intern | SF, NYC 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.ashbyhq.com/notion/2b587e66-deac-421a-a824-9415ba78b5a7/application?embed=true) |
 | **GoTo Group** | Software Engineer Intern - C3PO | Remote in Canada 🌐 Remote | 🧪 Internship | GitHub Repos | [Apply Now →](https://goto.wd5.myworkdayjobs.com/GoToCareers/job/Remote-Canada/C3PO-Intern_R26-2245) |
+| **GoTo Group** | Software Development Intern | Remote in Canada 🌐 Remote | 🧪 Internship | GitHub Repos | [Apply Now →](https://goto.wd5.myworkdayjobs.com/GoToCareers/job/Remote-Canada/CPS-Intern_R26-2246) |
 | **Intel** | System Software Engineer PhD Intern - Intel Foundry - LTD CMT Litho Tools | Hillsboro, OR 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://intel.wd1.myworkdayjobs.com/en-us/external/job/US-Oregon-Hillsboro/System-Software-Engineering---PhD-Intern_JR0287457) |
 | **Garmin** | Software Engineering Intern | Boulder, CO 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://careers.garmin.com/jobs/20255?icims=1) |
 | **Cloudflare** | Software Engineer Intern | Austin, TX 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://boards.greenhouse.io/cloudflare/jobs/8199958) |
