@@ -1,0 +1,30 @@
+{
+  "name": "ai-internship-tracker",
+  "version": "2.0.0",
+  "description": "AI-Powered Internship Tracking & Alert Engine for B.Tech CSE 2028 (NMAMIT) — Scrapes 10+ sources, Gemini scoring, Discord/Telegram alerts, and local application tracking",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js",
+    "start:morning": "cross-env USE_SERPAPI=true USE_LLM=true node src/main.js",
+    "start:evening": "node src/main.js",
+    "dry-run": "node src/main.js --dry-run",
+    "test": "node tests/runTests.js",
+    "track": "node src/core/tracker.js",
+    "render": "node src/core/tracker.js render"
+  },
+  "dependencies": {
+    "@google/genai": "^1.52.0",
+    "axios": "^1.7.2",
+    "cheerio": "^1.0.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "node-telegram-bot-api": "^0.64.0",
+    "rss-parser": "^3.13.0",
+    "serpapi": "^2.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "NMAMIT CSE Batch of 2028",
+  "license": "MIT"
+}

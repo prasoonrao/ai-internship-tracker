@@ -1,0 +1,83 @@
+name: 🌱 Seed Run (First-Time Setup — Run Once)
+
+# This workflow is ONLY for first-time setup.
+# Run it manually ONCE before enabling the scheduled scrapes.
+# It will catalogue all currently-listed jobs as "already seen"
+# so that when the scheduled runs begin, only NEW jobs trigger alerts.
+#
+# HOW TO USE:
+#   1. Push this repo to GitHub
+#   2. Go to Actions tab → "Seed Run" → "Run workflow"
+#   3. Wait for it to complete (~5 min)
+#   4. Done — the scheduled morning/evening runs will now only send NEW jobs
+#
+# DO NOT run this more than once (it will wipe your dedup history).
+
+on:
+  workflow_dispatch:  # Manual trigger only — never runs on a schedule
+
+permissions:
+  contents: read
+
+jobs:
+  seed:
+    name: 🌱 Seed Deduplication Database
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: 🟢 Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 📦 Cache node_modules
+        id: node-cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
+
+      - name: 📦 Install dependencies (only if cache miss)
+        if: steps.node-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      # Seed run: no prior cache to restore — starts from a clean DB intentionally.
+      # This marks ALL currently-listed jobs as "already seen".
+      - name: 🌱 Run Seed (catalogue existing jobs, send NO notifications)
+        env:
+          # Notifier credentials not required in SEED_MODE — but provide anyway
+          # so the workflow doesn't fail if validateConfig is ever tightened.
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          USE_SERPAPI: 'true'   # Use SerpAPI so India jobs are also seeded
+          SEED_MODE: 'true'     # ← The key flag: scrape everything, notify nothing
+          DRY_RUN: 'false'
+        run: node src/main.js
+
+      # Save the seeded DB to Actions Cache so morning/evening runs pick it up.
+      - name: 🗄 Save seeded seen_jobs to cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: data/seen_jobs.json
+          key: seen-jobs-db-${{ github.run_id }}
+
+      - name: ✅ Seed complete — next steps
+        run: |
+          echo ""
+          echo "════════════════════════════════════════════════"
+          echo "  ✅ Seed run complete!"
+          echo "  All existing job listings have been catalogued."
+          echo "  The scheduled runs will now only alert you to"
+          echo "  genuinely NEW postings going forward."
+          echo "════════════════════════════════════════════════"

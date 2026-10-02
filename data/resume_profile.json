@@ -1,0 +1,46 @@
+{
+  "name": "Candidate",
+  "education": "B.Tech Computer Science & Engineering, NMAM Institute of Technology (NMAMIT), Nitte, Karnataka, India (Batch of 2028)",
+  "currentLevel": "3rd year / 5th semester",
+  "graduationYear": 2028,
+  "cgpa": "8.45",
+  "targetLocations": ["India", "Remote", "Work From Home"],
+  "primaryTargetRoles": [
+    "AI/ML Engineer Intern",
+    "Machine Learning Intern",
+    "AI Engineer Intern",
+    "GenAI Intern",
+    "LLM/LLM Engineering Intern",
+    "Data Science Intern",
+    "Applied AI Intern",
+    "ML Engineering Intern"
+  ],
+  "secondaryTargetRoles": [
+    "Software Engineering Intern",
+    "Backend Engineering Intern"
+  ],
+  "targetRoles": [
+    "AI/ML Engineer Intern",
+    "Machine Learning Intern",
+    "AI Engineer Intern",
+    "GenAI Intern",
+    "LLM/LLM Engineering Intern",
+    "Data Science Intern",
+    "Applied AI Intern",
+    "ML Engineering Intern",
+    "Software Engineering Intern",
+    "Backend Engineering Intern"
+  ],
+  "programmingLanguages": ["Python", "Java", "C"],
+  "coreStack": [
+    "Python", "TensorFlow", "scikit-learn", "NumPy", "Pandas",
+    "Machine Learning", "Deep Learning", "Generative AI", "LLMs",
+    "Java", "C", "Data Structures & Algorithms (DSA)", "REST APIs", "Git"
+  ],
+  "interests": [
+    "Artificial Intelligence", "Machine Learning", "Generative AI & LLMs",
+    "Applied Deep Learning", "Data Science & Analytics", "Backend Systems"
+  ],
+  "experienceLevel": "Student / Intern / Fresher / 2028 Grad",
+  "preferredWorkMode": "India-based or Remote"
+}

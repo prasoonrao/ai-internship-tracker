@@ -1,0 +1,76 @@
+name: 🌅 Morning Scrape (Full — with SerpAPI & Gemini AI)
+
+on:
+  schedule:
+    - cron: '30 3 * * *'  # 9:00 AM IST (3:30 AM UTC) daily backup trigger
+  workflow_dispatch:     # Triggered externally by cron-job.org for exact timing
+
+permissions:
+  contents: write  # Allows committing updated TOP20.md, listings/, and APPLICATIONS.md if desired
+
+jobs:
+  scrape:
+    name: Run AI Internship Pipeline
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: 🟢 Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 📦 Cache node_modules
+        id: node-cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
+
+      - name: 📦 Install dependencies (only if cache miss)
+        if: steps.node-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: 🗄 Restore seen_jobs cache
+        uses: actions/cache/restore@v4
+        with:
+          path: data/seen_jobs.json
+          key: seen-jobs-db-${{ github.run_id }}
+          restore-keys: |
+            seen-jobs-db-
+
+      - name: 🤖 Run AI Internship Pipeline (Full Mode — SerpAPI + Gemini AI)
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          USE_SERPAPI: 'true'
+          USE_LLM: 'true'
+          DRY_RUN: 'false'
+        run: node src/main.js
+
+      - name: 🗄 Save seen_jobs cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: data/seen_jobs.json
+          key: seen-jobs-db-${{ github.run_id }}
+
+      - name: 📝 Commit refreshed listings & TOP20 (if changed)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add TOP20.md listings/ APPLICATIONS.md data/applications.json || true
+          if [ -n "$(git status --porcelain)" ]; then
+            git commit -m "Auto-refresh: TOP20 & listings [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+            git push || echo "Push skipped or not permitted"
+          else
+            echo "No changes to listings or recommendations."
+          fi

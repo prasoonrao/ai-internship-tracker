@@ -1,0 +1,32 @@
+# 🏆 Today's Top 20 Internship Recommendations (2026-10-02)
+
+Curated for **B.Tech CSE 2028 (NMAMIT)** targeting **AI/ML & SWE Internships**.
+Ranked by **AI/ML role alignment + tier-1 employer signal + geographic fit + freshness**.
+
+[← Back to README](README.md) | [Application Tracker](APPLICATIONS.md)
+
+| # | Company | Role | Location | Focus | Apply | Log Application |
+|---|---|---|---|---|---|---|
+| 1 | **Cohere** | Machine Learning Intern/Co-op | Canada, United Kingdom, United States 🌍 Global | 🧠 AI/ML | [Apply →](https://jobs.ashbyhq.com/cohere/36d1f52f-8270-4652-adf5-5303a0ff341b/application) | `npm run track -- add "Cohere" "Machine Learning Intern/Co-op"` |
+| 2 | **Apple** | Machine Learning and Artificial Intelligence Undergraduate Intern | United States 🌍 Global | 🧠 AI/ML | [Apply →](https://jobs.apple.com/en-us/details/200664780) | `npm run track -- add "Apple" "Machine Learning and Artificial Intelligence Undergraduate Intern"` |
+| 3 | **Meta** | Research Scientist Intern - AI Alignment | Boston, MA, Seattle, WA, SF, Menlo Park, CA, NYC, Bellevue, WA 🌍 Global | 💻 SWE | [Apply →](https://www.metacareers.com/jobs/1782902493113620) | `npm run track -- add "Meta" "Research Scientist Intern - AI Alignment"` |
+| 4 | **Netflix** | AI/ML Scientist Intern - AIMS AI Foundations | Los Gatos, CA 🌍 Global | 🧠 AI/ML | [Apply →](https://explore.jobs.netflix.net/careers/job/790316547536) | `npm run track -- add "Netflix" "AI/ML Scientist Intern - AIMS AI Foundations"` |
+| 5 | **Jane Street** | Machine Learning Researcher | NYC 🌍 Global | 🧠 AI/ML | [Apply →](https://job-boards.greenhouse.io/janestreet/jobs/8384490002) | `npm run track -- add "Jane Street" "Machine Learning Researcher"` |
+| 6 | **Jump Trading** | Campus Data Engineer Intern | Chicago, IL 🌍 Global | 🧠 AI/ML | [Apply →](https://boards.greenhouse.io/embed/job_app?token=8002998) | `npm run track -- add "Jump Trading" "Campus Data Engineer Intern"` |
+| 7 | **Two Sigma** | AI Research Scientist Intern - 2027 Summer | NYC 🌍 Global | 🧠 AI/ML | [Apply →](https://twosigma.avature.net/careers/JobDetail/14096) | `npm run track -- add "Two Sigma" "AI Research Scientist Intern - 2027 Summer"` |
+| 8 | **Microsoft** | Software Engineer Intern - CoreAI | Redmond, WA 🌍 Global | 💻 SWE | [Apply →](https://apply.careers.microsoft.com/careers/job/1970393556951950) | `npm run track -- add "Microsoft" "Software Engineer Intern - CoreAI"` |
+| 9 | **Google** | Data Science PhD Intern | London, UK 🌍 Global | 🧠 AI/ML | [Apply →](https://www.google.com/about/careers/applications/jobs/results/73321728058499782) | `npm run track -- add "Google" "Data Science PhD Intern"` |
+| 10 | **NVIDIA** | Deep Learning Intern - Deep Learning Applications and Algorithms - Deep Learning Frameworks and Libraries | Santa Clara, CA 🌍 Global | 🧠 AI/ML | [Apply →](https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite/job/US-CA-Santa-Clara/NVIDIA-2027-Internships--Deep-Learning_JR2023497-1) | `npm run track -- add "NVIDIA" "Deep Learning Intern - Deep Learning Applications and Algorithms - Deep Learning Frameworks and Libraries"` |
+| 11 | **Amazon** | Machine Learning Systems Software Development Engineer Intern - Annapurna Labs | Toronto, ON, Canada 🌍 Global | 🧠 AI/ML | [Apply →](https://amazon.jobs/en/jobs/10538066/ml-systems-software-development-engineer-intern-annapurna-labs-2027) | `npm run track -- add "Amazon" "Machine Learning Systems Software Development Engineer Intern - Annapurna Labs"` |
+| 12 | **Stripe** | Data Scientist Intern | Seattle, WA, South SF, NYC 🌍 Global | 🧠 AI/ML | [Apply →](https://stripe.com/jobs/search?gh_jid=8194283) | `npm run track -- add "Stripe" "Data Scientist Intern"` |
+| 13 | **Scale AI** | Technical Advisor Intern, GenAI | San Francisco, CA 🌍 Global | 🧠 AI/ML | [Apply →](https://scale.com/careers/4611533005) | `npm run track -- add "Scale AI" "Technical Advisor Intern, GenAI"` |
+| 14 | **Arakoo** | Reinforcement Learning & Data Science | Faridabad, Delhi, Gurgaon, Jaipur, Noida, Roorkee 🇮🇳 India | 🧠 AI/ML | [Apply →](https://internshala.com/internship/detail/reinforcement-learning-data-science-internship-in-multiple-locations-at-arakoo1790829998) | `npm run track -- add "Arakoo" "Reinforcement Learning & Data Science"` |
+| 15 | **Gateway Software Solutions** | Artificial Intelligence (AI) | Chennai, Coimbatore, Madurai, Tirunelveli, Pollachi, Theni, Chengalpattu, Tiruppur, Salem, Viluppuram, Namakkal 🇮🇳 India | 🧠 AI/ML | [Apply →](https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-multiple-locations-at-gateway-software-solutions1790827964) | `npm run track -- add "Gateway Software Solutions" "Artificial Intelligence (AI)"` |
+| 16 | **Almost Magic Private Limited** | Artificial Intelligence (AI) | Chandigarh, Mohali, Panchkula 🇮🇳 India | 🧠 AI/ML | [Apply →](https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-multiple-locations-at-almost-magic-private-limited1790844424) | `npm run track -- add "Almost Magic Private Limited" "Artificial Intelligence (AI)"` |
+| 17 | **Coach Ravikant Academy** | Artificial Intelligence (AI) | Delhi 🇮🇳 India | 🧠 AI/ML | [Apply →](https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-delhi-at-coach-ravikant-academy1790857629) | `npm run track -- add "Coach Ravikant Academy" "Artificial Intelligence (AI)"` |
+| 18 | **Career Solutions** | Artificial Intelligence (AI) | Chennai 🇮🇳 India | 🧠 AI/ML | [Apply →](https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-chennai-at-career-solutions1790679217) | `npm run track -- add "Career Solutions" "Artificial Intelligence (AI)"` |
+| 19 | **Variety Innovation Venture Private Limited** | Robotics Data Engineer | Delhi, Gurgaon, Noida 🇮🇳 India | 🧠 AI/ML | [Apply →](https://internshala.com/internship/detail/robotics-data-engineer-internship-in-multiple-locations-at-variety-innovation-venture-private-limited1790677762) | `npm run track -- add "Variety Innovation Venture Private Limited" "Robotics Data Engineer"` |
+| 20 | **HYPERAPPS TECHNOLOGIES PRIVATE LIMITED** | Artificial Intelligence (AI) | Hyderabad Hybrid 🇮🇳 India | 🧠 AI/ML | [Apply →](https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-hyderabad-at-hyperapps-technologies-private-limited1790673841) | `npm run track -- add "HYPERAPPS TECHNOLOGIES PRIVATE LIMITED" "Artificial Intelligence (AI)"` |
+
+---
+*Rankings auto-update twice daily with every scheduled pipeline run.*
