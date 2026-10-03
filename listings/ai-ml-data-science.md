@@ -1,7 +1,7 @@
 # 📚 AI, Machine Learning & Data Science Internships (143 Active Listings)
 
 [← Back to Main Repository](../README.md) | [Top 20 Picks](../TOP20.md)
-*Generated on 2026-10-02 for B.Tech CSE (Batch of 2028)*
+*Generated on 2026-10-03 for B.Tech CSE (Batch of 2028)*
 
 | Company | Role | Location | Type | Source | Apply |
 |---|---|---|---|---|---|
@@ -10,10 +10,11 @@
 | **GRADTWIN SERVICES (OPC) PRIVATE LIMITED** | Data Science Project | Chennai, Tamil Nadu 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/part-time-data-science-project-internship-in-multiple-locations-at-gradtwin-services-opc-private-limited1790946163) |
 | **InAmigos Foundation** | AI Prompt Engineering | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-ai-prompt-engineering-internship-at-inamigos-foundation1790859844) |
 | **Almost Magic Private Limited** | Artificial Intelligence (AI) | Chandigarh, Mohali, Panchkula 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-multiple-locations-at-almost-magic-private-limited1790844424) |
-| **Gateway Software Solutions** | Machine Learning | Chennai, Coimbatore, Erode, Karur, Madurai, Villupuram, Namakkal, Dharmapuri, Kanchipuram, Avadi, Salem, Kanjanoor, Trichey, Sivagangai Hybrid 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/machine-learning-internship-in-multiple-locations-at-gateway-software-solutions1790741489) |
-| **Gateway Software Solutions** | Artificial Intelligence (AI) | Chennai, Coimbatore, Madurai, Tirunelveli, Pollachi, Theni, Chengalpattu, Tiruppur, Salem, Viluppuram, Namakkal 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-multiple-locations-at-gateway-software-solutions1790827964) |
-| **InAmigos Foundation** | AI & Machine Learning | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-ai-machine-learning-internship-at-inamigos-foundation1790849533) |
 | **She Can Foundation** | Artificial Intelligence (AI) | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-part-time-artificial-intelligence-ai-internship-at-she-can-foundation1790743066) |
+| **Gateway Software Solutions** | Artificial Intelligence (AI) | Chennai, Coimbatore, Madurai, Tirunelveli, Pollachi, Theni, Chengalpattu, Tiruppur, Salem, Viluppuram, Namakkal 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-multiple-locations-at-gateway-software-solutions1790827964) |
+| **Gateway Software Solutions** | Machine Learning | Chennai, Coimbatore, Erode, Karur, Madurai, Villupuram, Namakkal, Dharmapuri, Kanchipuram, Avadi, Salem, Kanjanoor, Trichey, Sivagangai Hybrid 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/machine-learning-internship-in-multiple-locations-at-gateway-software-solutions1790741489) |
+| **InAmigos Foundation** | AI & Machine Learning | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-ai-machine-learning-internship-at-inamigos-foundation1790849533) |
+| **Cloud Back** | Machine Learning | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-machine-learning-internship-at-cloud-back1791001487) |
 | **Codeatrix** | Artificial Intelligence (AI) | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-artificial-intelligence-ai-internship-at-codeatrix1790955823) |
 | **Codeatrix** | Data Science | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-data-science-internship-at-codeatrix1790955494) |
 | **GRADTWIN SERVICES (OPC) PRIVATE LIMITED** | Machine Learning Project | Chennai, Tamil Nadu 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/part-time-machine-learning-project-internship-in-multiple-locations-at-gradtwin-services-opc-private-limited1790947380) |
@@ -27,7 +28,6 @@
 | **Pledge India Foundation** | Data Science | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-data-science-internship-at-pledge-india-foundation1790856469) |
 | **Hope Behind Tails Foundation** | Data Science | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-data-science-internship-at-hope-behind-tails-foundation1790856110) |
 | **Women First India Foundation** | Machine Learning | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-machine-learning-internship-at-women-first-india-foundation1790855907) |
-| **Cloud Back** | Machine Learning | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-machine-learning-internship-at-cloud-back1790831539) |
 | **Queens Of Change Foundation** | Data Science | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-data-science-internship-at-queens-of-change-foundation1790767591) |
 | **Pledge India Foundation** | Machine Learning | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-machine-learning-internship-at-pledge-india-foundation1790765361) |
 | **Women First India Foundation** | Data Science | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-data-science-internship-at-women-first-india-foundation1790764515) |
@@ -40,7 +40,6 @@
 | **Variety Innovation Venture Private Limited** | Robotics Data Engineer | Delhi, Gurgaon, Noida 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/robotics-data-engineer-internship-in-multiple-locations-at-variety-innovation-venture-private-limited1790677762) |
 | **HYPERAPPS TECHNOLOGIES PRIVATE LIMITED** | Artificial Intelligence (AI) | Hyderabad Hybrid 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-hyderabad-at-hyperapps-technologies-private-limited1790673841) |
 | **Talent Corner HR Services** | Data Analyst | Mumbai 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/data-analyst-internship-in-mumbai-at-talent-corner-hr-services1790938994) |
-| **Apport Software Solutions Private Limited** | Data Analyst | Mumbai 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/data-analyst-internship-in-mumbai-at-apport-software-solutions-private-limited1790876167) |
 | **GRADTWIN SERVICES (OPC) PRIVATE LIMITED** | Applied Data Science | Chennai, Tamil Nadu 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/part-time-applied-data-science-internship-in-multiple-locations-at-gradtwin-services-opc-private-limited1790946079) |
 | **TalentXO** | AI/ML Engineer - GEO/AEO Projects | Pune 🇮🇳 India | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/ai-ml-engineer-geo-aeo-projects-job-in-pune-at-talentxo1789461415) |
 | **Alchi Design Studio** | AI/ML Engineer - Healthcare Medical Imaging (CT, X-Ray, DICOM/PACS) | Work from home 🌐 Remote | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/remote-ai-ml-engineer-healthcare-medical-imaging-ct-x-ray-dicom-pacs-job-at-alchi-design-studio1782347425) |
@@ -94,6 +93,7 @@
 | **TWG Global** | AI Data Science Intern - AI/ML Center of Excellence | London, UK, Remote in UK 🌐 Remote | 🧪 Internship | GitHub Repos | [Apply Now →](https://apply.workable.com/twgai/j/1206BF981C/apply) |
 | **Microsoft** | Data Scientist Intern | Redmond, WA 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://apply.careers.microsoft.com/careers/job/1970393556982928) |
 | **Commercial Metals** | AI Intern | Irving, TX 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.cmc.com/job/Irving-AI-Intern-SIOP-TX-75039/1417644400/?ats=successfactors) |
+| **Microsoft** | Data Scientist PhD Intern | Redmond, WA 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://apply.careers.microsoft.com/careers/job/1970393556986137) |
 | **Ancestry** | Applied AI Science Co-op - Embedding models - Personalization | Remote in USA 🌐 Remote | 🧪 Internship | GitHub Repos | [Apply Now →](https://ancestry.wd501.myworkdayjobs.com/Careers/job/Remote/Applied-AI-Science-Co-op---Embedding-models-and-Personalization_R003442) |
 | **State Farm** | Data Science Intern - Magnet Program - Online MS Analytics | Athens, GA 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.statefarm.com/jobs/46057?icims=1) |
 | **Garmin** | Data Scientist Intern | Olathe, KS 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://careers.garmin.com/jobs/19926?icims=1) |
@@ -135,6 +135,7 @@
 | **Stripe** | Data Scientist Intern | Seattle, WA, South SF, NYC 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://stripe.com/jobs/search?gh_jid=8194283) |
 | **Stripe** | Data Analyst Intern | Toronto, ON, Canada 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://stripe.com/jobs/search?gh_jid=8194287) |
 | **Regeneron Pharmaceuticals** | Data Science & Digital Innovation Co-op - Preclinical Manufacturing & Research IT | Tarrytown, NY 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://regeneron.wd1.myworkdayjobs.com/en-US/Careers/job/TARRYTOWN/XMLNAME-2027-Co-op-Data-Science---Digital-Innovation--Preclinical-Manufacturing---Research-IT-_R51031-1) |
+| **Kinaxis** | AI/ML Researcher Intern | Remote in Canada 🌐 Remote | 🧪 Internship | GitHub Repos | [Apply Now →](https://careers-kinaxis.icims.com/jobs/35465/job?mobile=true&needsRedirect=false) |
 | **Notion** | Software Engineer, AI Intern | San Francisco, CA, New York, NY 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.ashbyhq.com/notion/39d70209-37f6-4623-949b-18fbd8889933) |
 | **Scale AI** | Technical Advisor Intern, GenAI | San Francisco, CA 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://scale.com/careers/4611533005) |
 | **PathAI** | Machine Learning Intern, AI Product and ML Core | Boston, MA, New York, NY, Remote 🌐 Remote | 🧪 Internship | GitHub Repos | [Apply Now →](https://www.pathai.com/career/job-post?gh_jid=8202342002) |
@@ -147,4 +148,3 @@
 | **Mirantis** | Software Engineer | Remote 🌐 Remote | 💼 Full-time | RemoteOK | [Apply Now →](https://remoteOK.com/remote-jobs/remote-software-engineer-mirantis-1137387) |
 | **Benzinga** | AI Engineer Data APIs | Remote 🌐 Remote | 💼 Full-time | RemoteOK | [Apply Now →](https://remoteOK.com/remote-jobs/remote-ai-engineer-data-apis-benzinga-1137224) |
 | **Pinterest** | Data Scientist II, Infrastructure | Remote 🌐 Remote | 💼 Full-time | WeWorkRemotely | [Apply Now →](https://weworkremotely.com/remote-jobs/pinterest-data-scientist-ii-infrastructure) |
-| **Rebar** | Software Engineers (Product, Applied AI, ML Infra, Data Platform) | Global / On-site 🌐 Remote | 💼 Full-time | YCombinator | [Apply Now →](https://news.ycombinator.com/item?id=49934530) |
