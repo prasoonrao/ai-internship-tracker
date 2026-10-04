@@ -1,4 +1,4 @@
-# 📚 Software & Backend Engineering Internships (187 Active Listings)
+# 📚 Software & Backend Engineering Internships (198 Active Listings)
 
 [← Back to Main Repository](../README.md) | [Top 20 Picks](../TOP20.md)
 *Generated on 2026-10-04 for B.Tech CSE (Batch of 2028)*
@@ -8,19 +8,16 @@
 | **Jungleworks** | AWS DevOps Engineer | Amritsar, Chandigarh, Patiala, Phagwara, Kharar, Mohali, Zirakpur, Panchkula, Ropar Division 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/devops-internship-in-multiple-locations-at-jungleworks1790253332) |
 | **TEN** | Software Development | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-software-development-internship-at-ten1790309126) |
 | **Salesforce** | Software Development | Bangalore 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/part-time-software-development-internship-in-bangalore-at-salesforce1789133363) |
-| **Lit Amor** | Full Stack Development | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-full-stack-development-internship-at-lit-amor1791097933) |
 | **Growtern Academy** | Full Stack Development | Bhubaneswar 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/full-stack-development-internship-in-bhubaneswar-at-growtern-academy1790851625) |
 | **Codeatrix** | Full Stack Development | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-full-stack-development-internship-at-codeatrix1790955721) |
 | **International Institute Of SDGs & Public Policy Research** | Full Stack Development | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-part-time-full-stack-development-internship-at-international-institute-of-sdgs-public-policy-research1790954369) |
 | **ZSS Technologies Private Limited** | Full Stack Development | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-full-stack-development-internship-at-zss-technologies-private-limited1790941207) |
-| **Callvcal Technology Private Limited** | Software Development | Bangalore 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/software-development-internship-in-bangalore-at-callvcal-technology-private-limited1790930275) |
 | **Boomerang** | Full Stack Development | Kollam, Idukki, Kochi, Keralapuram 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/full-stack-development-internship-in-multiple-locations-at-boomerang1790927621) |
 | **Arham Insurance Brokers Pvt. Ltd.** | Full Stack Development | Mumbai 🇮🇳 India | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/full-stack-development-internship-in-mumbai-at-arham-insurance-brokers-pvt-ltd1790859308) |
 | **Pledge India Foundation** | Software Development | Work from home 🌐 Remote | 🧪 Internship | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-part-time-software-development-internship-at-pledge-india-foundation1790857039) |
-| **QuickHyre** | Full Stack Developer | Work from home 🌐 Remote | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/remote-full-stack-developer-job-at-quickhyre1788540148) |
+| **TalentXO** | Network Security Engineer (WAF) | Navi Mumbai 🇮🇳 India | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/network-security-engineer-waf-job-in-navi-mumbai-at-talentxo1790671428) |
 | **Solar Ladder** | Software Developer | Work from home 🌐 Remote | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/remote-software-developer-job-at-solar-ladder1790077114) |
 | **Arnifi Corporate Services Providers Limited** | System Security Engineer | Bangalore 🇮🇳 India | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/system-security-engineer-job-in-bangalore-at-arnifi-corporate-services-providers-limited1790677775) |
-| **MathonGo** | Backend / Full-Stack Engineer | Bangalore 🇮🇳 India | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/fresher-backend-full-stack-engineer-job-in-bangalore-at-mathongo1775694630) |
 | **Rickshesh Manchanda** | Full Stack Developer | Chennai, Delhi, Pune 🇮🇳 India | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/fresher-full-stack-developer-job-in-multiple-locations-at-rickshesh-manchanda1790926300) |
 | **Webaxis Software Services** | Python Full Stack Developer | Work from home 🌐 Remote | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/fresher-remote-python-full-stack-developer-job-at-webaxis-software-services1789996072) |
 | **LdotR** | Full Stack Developer | Noida 🇮🇳 India | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/full-stack-developer-job-in-noida-at-ldotr1789973345) |
@@ -28,8 +25,9 @@
 | **Primesoft Technologies** | Junior Software Developer | Pune 🇮🇳 India | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/fresher-junior-software-developer-job-in-pune-at-primesoft-technologies1788960504) |
 | **Wheelson BizAI** | Full Stack Engineer | Coimbatore 🇮🇳 India | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/full-stack-engineer-job-in-coimbatore-at-wheelson-bizai1779323429) |
 | **Honhr** | Software Engineer | Chennai, Delhi, Kolkata, Mumbai, Bangalore 🇮🇳 India | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/fresher-software-engineer-job-in-multiple-locations-at-honhr1790572349) |
-| **Banas Enterprise** | MES/Automation Engineer | Ahmedabad, Sanand 🇮🇳 India | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/mes-automation-engineer-job-in-multiple-locations-at-banas-enterprise1790250197) |
+| **Honhr** | Full Stack Developer | Chennai, Delhi, Kolkata, Mumbai, Bangalore 🇮🇳 India | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/fresher-full-stack-developer-job-in-multiple-locations-at-honhr1790438174) |
 | **Honhr** | Python Developer | Chennai, Delhi, Kolkata, Mumbai, Bangalore 🇮🇳 India | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/fresher-python-developer-job-in-multiple-locations-at-honhr1790437418) |
+| **Banas Enterprise** | MES/Automation Engineer | Ahmedabad, Sanand 🇮🇳 India | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/mes-automation-engineer-job-in-multiple-locations-at-banas-enterprise1790250197) |
 | **Digital Surveillance Incorporation (aka DSI Robotics)** | Robotics Software Developer | Noida 🇮🇳 India | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/robotics-software-developer-job-in-noida-at-digital-surveillance-incorporation-aka-dsi-robotics1779237024) |
 | **Webaxis Software Services** | Java Developer | Work from home 🌐 Remote | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/fresher-remote-part-time-java-developer-job-at-webaxis-software-services1789492305) |
 | **Lloyd Harrington Australia Proprietary Limited** | AI - First Python Developer Design Systems Thinker | Work from home 🌐 Remote | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/remote-ai-first-python-developer-design-systems-thinker-job-at-lloyd-harrington-australia-proprietary-limited1788155325) |
@@ -39,10 +37,13 @@
 | **Luminova Consulting** | AI FullStack Developer | Work from home 🌐 Remote | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/remote-ai-fullstack-developer-job-at-luminova-consulting1789371869) |
 | **Warewe Consultancy Private Limited** | Full Stack Developer | Gurgaon 🇮🇳 India | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/full-stack-developer-job-in-gurgaon-at-warewe-consultancy-private-limited1789667344) |
 | **Anuj Gope** | Associate Software Developer | Bangalore 🇮🇳 India | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/fresher-associate-software-developer-job-in-bangalore-at-anuj-gope1790342544) |
+| **Relish** | Backend Developer | Work from home 🌐 Remote | 💼 Full-time | Internshala | [Apply Now →](https://internshala.com/job/detail/remote-backend-developer-job-at-relish1787733197) |
 | **Palantir** | Forward Deployed Software Engineer Intern | NYC 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.lever.co/palantir/ac0dc094-2480-43c2-8495-26ade227ff4f/apply) |
 | **Cohere** | Software Engineer Intern | Toronto, ON, Canada, SF, NYC 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.ashbyhq.com/cohere/8c035d3d-081d-4c8a-914a-72f4efaad254/application) |
 | **Salesforce** | Software Engineer Intern | Palo Alto, CA, Seattle, WA, Indianapolis, IN, SF, NYC, Bellevue, WA, Atlanta, GA, Burlington, MA 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://salesforce.wd12.myworkdayjobs.com/Futureforce_Internships/job/California---San-Francisco/Summer-2027-Intern---Software-Engineer_JR340771) |
+| **Palantir** | Year at Palantir Intern - Forward Deployed Software Engineer | Washington, DC 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.lever.co/palantir/5c4c65c5-77da-4d36-856c-4ade87631019/apply) |
 | **Palantir** | Year at Palantir Intern - Forward Deployed Software Engineer - Commercial | NYC 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.lever.co/palantir/e6789b17-62fb-4226-a079-f8c17ff19e2d/apply) |
+| **Palantir** | Palantir Intern - Software Engineer | NYC 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.lever.co/palantir/655f9937-a4ce-4e7d-80e2-a6659af07329/apply) |
 | **Oracle** | Software Engineer Intern | Seattle, WA, Santa Clara, CA 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://eeho.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_45001/job/334325) |
 | **Oracle** | Software Engineer Intern - Ovip | Nashville, TN, Austin, TX, United States 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://eeho.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_45001/job/334333) |
 | **Apple** | Software Engineering Masters Intern | United States 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.apple.com/en-us/details/200664320) |
@@ -53,12 +54,12 @@
 | **Palantir** | Software Engineer Intern | NYC 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.lever.co/palantir/7d69cf8a-06fd-4f05-bd84-27149db29c4d/apply) |
 | **Palantir** | Software Engineer Intern - Defense Tech | Washington, DC 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.lever.co/palantir/f17e98d0-046a-4e6e-9d65-ed0b12dd0ff7/apply) |
 | **Palantir** | Forward Deployed Software Engineer Intern - Commercial | Chicago, IL 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.lever.co/palantir/d5486403-c050-4920-b2e0-91b69b61ebb2/apply) |
+| **Palantir** | Palantir Software Engineer Intern - Forward Deployed Software Engineer - Commercial | Chicago, IL 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.lever.co/palantir/75cc1c09-8ebd-44c8-b3bc-d122cd1fecb3/apply) |
 | **Palantir** | Software Engineer Intern - Production Infrastructure | Seattle, WA 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.lever.co/palantir/373367a9-3160-49d8-b7af-2efec062fad1/apply) |
 | **Palantir** | Privacy and Civil Liberties Software Engineer Intern | NYC 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.lever.co/palantir/09846827-b931-4a9f-bd64-c3bb8860187b/apply) |
 | **Optiver** | Software Engineer Intern | Chicago, IL 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://www.optiver.com/join-us/jobs/8604760002/?gh_jid=8604760002) |
 | **IMC Trading** | Software Engineer Intern | Chicago, IL 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://job-boards.eu.greenhouse.io/imc/jobs/4823924101) |
 | **Citadel Securities** | Software Engineer Intern | Miami, FL, NYC 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://www.citadelsecurities.com/careers/details/software-engineer-intern-us/) |
-| **Citadel** | Software Engineer Intern | Greenwich, CT, Houston, TX, Miami, FL, NYC 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://www.citadel.com/careers/details/software-engineer-intern-us/) |
 | **Jane Street** | Software Engineering Intern | NYC 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://job-boards.greenhouse.io/janestreet/jobs/8419303002) |
 | **Jane Street** | Software Engineer | NYC 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://job-boards.greenhouse.io/janestreet/jobs/8599644002) |
 | **Jump Trading** | Campus UI Software Engineer Intern | Chicago, IL 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://boards.greenhouse.io/embed/job_app?token=8003019) |
@@ -93,6 +94,7 @@
 | **Amazon** | Software Development Engineer Intern - Annapurna Labs | Seattle, WA, Austin, TX, NYC, Cupertino, CA 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://amazon.jobs/en/jobs/10517567/software-development-engineer-intern-annapurna-labs-2027) |
 | **Clerkie** | Software Engineer Intern | Remote in USA 🌐 Remote | 🧪 Internship | GitHub Repos | [Apply Now →](http://getfiber.ai/careers?gh_jid=5225258007) |
 | **Stripe** | Software Engineer Intern - Summer or Winter | Seattle, WA, SF, NYC 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://stripe.com/jobs/search?gh_jid=8128745) |
+| **Stripe** | Software Engineer Intern | London, UK 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://stripe.com/jobs/search?gh_jid=8130867) |
 | **AMD** | Graphics Software Engineer Intern/Co-op | Markham, ON, Canada 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://careers.amd.com/jobs/91359?icims=1) |
 | **Atlassian** | Software Engineer Intern | Seattle, WA, SF 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://careers-americas.icims.com/jobs/26266/software-engineer-intern%2c-2027-summer-u.s./job) |
 | **Armadin** | Software Engineer Intern - Agent Systems | Palo Alto, CA 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.ashbyhq.com/armadin/8ddb9c3a-3031-42d4-ad68-adcc865e32cf/application?embed=true) |
@@ -110,7 +112,9 @@
 | **Motorola** | Software Engineer Intern | Chicago, IL 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://motorolasolutions.wd5.myworkdayjobs.com/Careers/job/Chicago-IL/Software-Engineering-Intern---Summer-2027_R68388) |
 | **ONE Finance** | Software Engineer Intern | Remote in USA 🌐 Remote | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.ashbyhq.com/oneapp/ba18d004-3212-44e4-8a0c-bd1215bae770/application?embed=true) |
 | **Two Sigma** | Software Engineering Intern - Summer 2027 | NYC 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://twosigma.avature.net/careers/JobDetail/14016) |
+| **Datadog** | Software Engineer Intern - Summer | Boston, MA, NYC 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://careers.datadoghq.com/detail/8052118/?gh_jid=8052118) |
 | **Vercel** | Software Engineer Intern - Summer | SF 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://job-boards.greenhouse.io/vercel/jobs/6181759004) |
+| **Vercel** | Software Engineer Intern | SF 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://job-boards.greenhouse.io/vercel/jobs/6181755004) |
 | **Polar Semiconductor** | OT Automation Engineer Intern | Bloomington, MN 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://polarsemi.wd501.myworkdayjobs.com/Polar/job/Bloomington-MN-USA/OT-Automation-Engineer-Intern_R3786) |
 | **Microsoft** | Software Engineer Intern | Redmond, WA 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://apply.careers.microsoft.com/careers/job/1970393556983221) |
 | **Amgen** | Software Engineer Intern - Technology & Medical Organizations | Remote in USA 🌐 Remote | 🧪 Internship | GitHub Repos | [Apply Now →](https://amgen.wd1.myworkdayjobs.com/careers/job/United-States---Remote/Undergrad-Intern---Software-Engineer---Amgen-s-Technology---Medical-Organizations--Summer-2027-_R-255719) |
@@ -122,13 +126,17 @@
 | **Hometap** | Full Stack Engineer Co-op | Boston, MA 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://job-boards.greenhouse.io/hometapjobs/jobs/4927882007) |
 | **AMD** | AI Model Optimization & Software Engineer Intern/Co-op | San Jose, CA, Santa Clara, CA 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://careers.amd.com/jobs/92522?icims=1) |
 | **Tower Research Capital** | Software Developer Intern | Montreal, QC, Canada 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://www.tower-research.com/open-positions/?gh_jid=8212179) |
+| **Qualcomm** | Firmware Engineer Intern - Embedded Software Engineering - Embedded Firmware and SDK Development | Toronto, ON, Canada 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://qualcomm.eightfold.ai/careers/job/446721141411) |
+| **Qualcomm** | Low Power AI Software Development Intern - Interim Engineering Intern - Software | Markham, ON, Canada 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://qualcomm.eightfold.ai/careers/job/446721143440) |
 | **Amazon** | Software Development Engineer Intern - Summer | Seattle, WA, Arlington County, Arlington, VA 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://amazon.jobs/en/jobs/10552937/software-development-engineer-internship-summer-2027-usa) |
 | **Amazon** | Software Development Engineer Intern - Summer 2027 | Vancouver, BC, Canada 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://amazon.jobs/en/jobs/10553947/software-development-engineer-intern-summer-2027-can) |
+| **State Farm** | Software Developer Intern - HR&D | Tempe, AZ, Dunwoody, GA, Richardson, TX, Bloomington, IL 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.statefarm.com/jobs/45689?icims=1) |
 | **NASCO** | Software Engineer Intern | Remote in USA 🌐 Remote | 🧪 Internship | GitHub Repos | [Apply Now →](https://careers-nasco.icims.com/jobs/4402/job?mobile=true&needsRedirect=false) |
 | **Motorola** | Software Engineer Intern - Summer 2027 | Plantation, FL 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://motorolasolutions.wd5.myworkdayjobs.com/Careers/job/Plantation-FL/Software-Engineering-Intern---Summer-2027_R69136) |
 | **Notion** | Mobile Software Engineer Intern | SF, NYC 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.ashbyhq.com/notion/2b587e66-deac-421a-a824-9415ba78b5a7/application?embed=true) |
 | **GoTo Group** | Software Engineer Intern - C3PO | Remote in Canada 🌐 Remote | 🧪 Internship | GitHub Repos | [Apply Now →](https://goto.wd5.myworkdayjobs.com/GoToCareers/job/Remote-Canada/C3PO-Intern_R26-2245) |
 | **Intel** | System Software Engineer PhD Intern - Intel Foundry - LTD CMT Litho Tools | Hillsboro, OR 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://intel.wd1.myworkdayjobs.com/en-us/external/job/US-Oregon-Hillsboro/System-Software-Engineering---PhD-Intern_JR0287457) |
+| **Garmin** | Software Engineering Intern | Boulder, CO 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://careers.garmin.com/jobs/20255?icims=1) |
 | **Cloudflare** | Software Engineer Intern | Austin, TX 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://boards.greenhouse.io/cloudflare/jobs/8199958) |
 | **Microsoft** | Software Engineer Intern - Azure Databases | Redmond, WA 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://apply.careers.microsoft.com/careers/job/1970393557002476) |
 | **Amazon** | Software Engineer Intern | Seattle, WA, Jessup, MD, Arlington County, Arlington, VA, Denver, CO 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://amazon.jobs/en/jobs/10559746/software-development-engineer-intern-summer-2027-usa-amazon-dedicated-cloud-adc) |
@@ -150,6 +158,7 @@
 | **Naïve** | Software Engineer Intern | San Francisco, CA, Remote 🌐 Remote | 🧪 Internship | GitHub Repos | [Apply Now →](https://www.workatastartup.com/jobs/94647) |
 | **Apple** | Software Engineering Intern, Masters | United States 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.apple.com/en-us/details/200664320/software-engineering-masters-internships) |
 | **Apple** | Software Engineer Intern, Undergrad | United States 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://jobs.apple.com/en-us/details/200664785/software-undergrad-engineering-internships) |
+| **Citadel** | Software Engineer Intern | New York, NY, Greenwich, CT, Miami, FL, Houston, TX 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://www.citadel.com/careers/details/software-engineer-intern-us/) |
 | **DE Shaw** | Software Developer Intern | New York, NY 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://www.deshaw.com/careers/software-developer-intern-new-york-summer-2027-5894) |
 | **Jump Trading** | Software Engineer Intern | Chicago, IL 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://www.jumptrading.com/hr/job?gh_jid=8002989) |
 | **Jump Trading Group** | Campus UI Software Engineer Intern | Chicago, IL 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://www.jumptrading.com/hr/job?gh_jid=8003019) |
@@ -182,6 +191,8 @@
 | **Databricks** | Software Engineering Intern | Bellevue, Washington, Mountain View, California, San Francisco, California 🌍 Global | 🧪 Internship | GitHub Repos | [Apply Now →](https://www.databricks.com/company/careers/university-recruiting/software-engineering-intern-2027-start---winter-8732364002?gh_jid=8732364002) |
 | **RedMimicry** | Software Developer Security Analytics | Remote 🌐 Remote | 💼 Full-time | RemoteOK | [Apply Now →](https://remoteOK.com/remote-jobs/remote-software-developer-security-analytics-redmimicry-1137417) |
 | **Kruger NearShore LLC - Rekluti** | DESARROLLADOR FULL STACK | Remote 🌐 Remote | 💼 Full-time | RemoteOK | [Apply Now →](https://remoteOK.com/remote-jobs/remote-desarrollador-full-stack-kruger-nearshore-llc-rekluti-1137062) |
+| **Glean** | Application Security Engineer | Remote 🌐 Remote | 💼 Full-time | WeWorkRemotely | [Apply Now →](https://weworkremotely.com/remote-jobs/glean-application-security-engineer) |
+| **Hex Technologies** | Cloud Security Engineer | Remote 🌐 Remote | 💼 Full-time | WeWorkRemotely | [Apply Now →](https://weworkremotely.com/remote-jobs/hex-technologies-cloud-security-engineer) |
 | **Reddit** | Backend Engineer, IAM | Remote 🌐 Remote | 💼 Full-time | WeWorkRemotely | [Apply Now →](https://weworkremotely.com/remote-jobs/reddit-backend-engineer-iam) |
 | **Sticker Mule** | Software engineer | Remote 🌐 Remote | 💼 Full-time | WeWorkRemotely | [Apply Now →](https://weworkremotely.com/remote-jobs/sticker-mule-software-engineer-3) |
 | **Wonderdog** | Full-Stack Product Engineer - Agentic First | Remote 🌐 Remote | 💼 Full-time | WeWorkRemotely | [Apply Now →](https://weworkremotely.com/remote-jobs/wonderdog-full-stack-product-engineer-agentic-first) |
