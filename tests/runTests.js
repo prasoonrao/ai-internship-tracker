@@ -495,6 +495,59 @@ async function runAll() {
     assert.strictEqual(isAlertEligible(res), true);
   });
 
+  // ── 9. MIN_MATCH_SCORE=70 Notification Threshold & Formatting Tests ────────
+  console.log('\n🔹 9. MIN_MATCH_SCORE Notification Threshold & Tiered Formatting Tests:');
+
+  const { shouldAlert } = require('../src/core/eligibilityFilter');
+  const { formatTelegram, formatDiscordEmbed } = require('../src/core/formatter');
+
+  test('Score 90 -> alert (Priority Match)', () => {
+    const job = { title: 'ML Intern', company: 'Google', eligibility_status: 'ELIGIBLE', matchScore: 90 };
+    assert.strictEqual(shouldAlert(job, 70), true, 'Score 90 should be approved for alert');
+    const tg = formatTelegram(job);
+    assert.ok(tg.includes('PRIORITY MATCH'), '90 score should display PRIORITY MATCH in Telegram');
+    const discord = formatDiscordEmbed(job);
+    const scoreField = discord.fields.find(f => f.name.includes('Match Score'));
+    assert.ok(scoreField.value.includes('PRIORITY MATCH'), '90 score should display PRIORITY MATCH in Discord');
+  });
+
+  test('Score 80 -> alert (Priority Match boundary)', () => {
+    const job = { title: 'AI Intern', company: 'NVIDIA', eligibility_status: 'ELIGIBLE', matchScore: 80 };
+    assert.strictEqual(shouldAlert(job, 70), true, 'Score 80 should be approved for alert');
+    const tg = formatTelegram(job);
+    assert.ok(tg.includes('PRIORITY MATCH'), '80 score should display PRIORITY MATCH in Telegram');
+    const discord = formatDiscordEmbed(job);
+    const scoreField = discord.fields.find(f => f.name.includes('Match Score'));
+    assert.ok(scoreField.value.includes('PRIORITY MATCH'), '80 score should display PRIORITY MATCH in Discord');
+  });
+
+  test('Score 75 -> alert (Good Match / Apply + Learn)', () => {
+    const job = { title: 'Backend Intern', company: 'Razorpay', eligibility_status: 'ELIGIBLE', matchScore: 75 };
+    assert.strictEqual(shouldAlert(job, 70), true, 'Score 75 should be approved for alert');
+    const tg = formatTelegram(job);
+    assert.ok(tg.includes('GOOD MATCH'), '75 score should display GOOD MATCH in Telegram');
+    const discord = formatDiscordEmbed(job);
+    const scoreField = discord.fields.find(f => f.name.includes('Match Score'));
+    assert.ok(scoreField.value.includes('GOOD MATCH (Apply + Learn)'), '75 score should display Good Match in Discord');
+  });
+
+  test('Score 70 -> alert (Minimum notification boundary)', () => {
+    const job = { title: 'SWE Intern', company: 'Swiggy', eligibility_status: 'ELIGIBLE', matchScore: 70 };
+    assert.strictEqual(shouldAlert(job, 70), true, 'Score 70 should be approved for alert');
+    const tg = formatTelegram(job);
+    assert.ok(tg.includes('GOOD MATCH'), '70 score should display GOOD MATCH in Telegram');
+  });
+
+  test('Score 69 -> no alert (Below MIN_MATCH_SCORE)', () => {
+    const job = { title: 'Junior QA Intern', company: 'GenericCo', eligibility_status: 'ELIGIBLE', matchScore: 69 };
+    assert.strictEqual(shouldAlert(job, 70), false, 'Score 69 should be suppressed from alerts');
+  });
+
+  test('Score 30 -> no alert (Far below threshold)', () => {
+    const job = { title: 'Unrelated IT Intern', company: 'OtherCo', eligibility_status: 'ELIGIBLE', matchScore: 30 };
+    assert.strictEqual(shouldAlert(job, 70), false, 'Score 30 should be suppressed from alerts');
+  });
+
   console.log('\n' + '═'.repeat(60));
   console.log(`  📊 TEST RESULTS: ${passedTests} PASSED, ${failedTests} FAILED`);
   console.log('═'.repeat(60) + '\n');

@@ -375,10 +375,26 @@ function isAlertEligible(job) {
   return status !== ELIGIBILITY_STATUSES.INELIGIBLE && status !== ELIGIBILITY_STATUSES.LIKELY_INELIGIBLE;
 }
 
+/**
+ * Check if a job meets all criteria for notification dispatch:
+ * 1. Must pass international work authorization/eligibility screening
+ * 2. If scored by AI matcher (matchScore != null), must meet or exceed minScore (default 70)
+ *
+ * @param {Object} job - Standardized job object
+ * @param {number} minScore - Minimum match score required if scored (default: 70)
+ * @returns {boolean}
+ */
+function shouldAlert(job, minScore = 70) {
+  if (!isAlertEligible(job)) return false;
+  if (job.matchScore != null && job.matchScore < minScore) return false;
+  return true;
+}
+
 module.exports = {
   screenEligibility,
   getTelegramEligibilityBadge,
   getDiscordEligibilityField,
   isAlertEligible,
+  shouldAlert,
   ELIGIBILITY_STATUSES,
 };

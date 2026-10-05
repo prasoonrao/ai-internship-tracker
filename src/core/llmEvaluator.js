@@ -115,6 +115,49 @@ async function callGemini(apiKey, prompt) {
 }
 
 /**
+ * Calculate match score (0-100) based on verified candidate profile and skills
+ */
+function calculateHeuristicMatch(job, profile = candidateProfile) {
+  let score = 50; // Baseline
+  const title = (job.title || '').toLowerCase();
+  const desc = (job.description || '').toLowerCase();
+  const text = `${title} ${desc} ${job.category || ''}`;
+
+  // 1. Role alignment (Target Roles)
+  const isAIML = ['ai', 'ml', 'machine learning', 'data science', 'genai', 'llm', 'deep learning']
+    .some(kw => title.includes(kw));
+  const isSWE = ['software', 'backend', 'developer', 'sde', 'engineer']
+    .some(kw => title.includes(kw));
+
+  if (isAIML) score += 25;
+  else if (isSWE) score += 15;
+
+  // 2. Verified Candidate Skill Alignment
+  if (text.includes('pytorch') || text.includes('tensorflow') || text.includes('scikit-learn')) score += 10;
+  if (text.includes('machine learning') || text.includes('deep learning') || text.includes('llm') || text.includes('genai')) score += 5;
+  if (text.includes('python')) score += 5;
+  if (text.includes('sql') || text.includes('pandas') || text.includes('numpy')) score += 5;
+  if (text.includes('docker') || text.includes('kubernetes') || text.includes('aws') || text.includes('rest')) score += 5;
+
+  // 3. Internship fit
+  if (job.type === 'internship' || title.includes('intern') || title.includes('co-op')) score += 5;
+
+  // 4. Batch 2028 fit
+  if (text.includes('2028') || text.includes('summer 2026') || text.includes('summer 2027')) score += 5;
+
+  // 5. Ineligibility penalties
+  if (job.eligibility_status === 'INELIGIBLE') {
+    score = Math.min(score, 20);
+  } else if (job.eligibility_status === 'LIKELY_INELIGIBLE') {
+    score = Math.min(score, 35);
+  } else if (job.eligibility_status === 'UNCLEAR') {
+    score = Math.min(score, 75);
+  }
+
+  return Math.min(100, Math.max(0, score));
+}
+
+/**
  * Evaluate a single job against candidate profile and work authorization
  */
 async function evaluateSingleJob(apiKey, job) {
@@ -167,8 +210,22 @@ Return ONLY valid JSON matching this exact schema:
 async function evaluateJobs(jobs) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    console.warn('[LLM] GEMINI_API_KEY not set — skipping LLM evaluation.');
-    return jobs;
+    console.log('[LLM] GEMINI_API_KEY not set — using candidate profile heuristic matcher for scoring.');
+    const evaluated = jobs.map(job => {
+      const matchScore = calculateHeuristicMatch(job, candidateProfile);
+      return {
+        ...job,
+        matchScore,
+        aiReason: `Profile skill match aligned with NMAMIT 2028 target stack (${candidateProfile.coreStack.slice(0, 6).join(', ')}).`,
+        coldPitch: matchScore >= 80 ? `Hi hiring team, as a B.Tech CSE student at NMAMIT (Batch of 2028) with hands-on experience in ${job.category === 'AI / ML & Data Science' ? 'PyTorch, TensorFlow, and LLMs' : 'Python, SQL, and backend systems'}, I would love to connect!` : '',
+      };
+    });
+
+    const highMatches = evaluated.filter(j => j.matchScore >= 80).length;
+    const goodMatches = evaluated.filter(j => j.matchScore >= 70 && j.matchScore < 80).length;
+    const lowMatches = evaluated.filter(j => j.matchScore < 70).length;
+    console.log(`[LLM] ✅ Evaluated ${evaluated.length} jobs (80–100: ${highMatches}, 70–79: ${goodMatches}, <70: ${lowMatches})`);
+    return evaluated;
   }
 
   const evaluated = [];
@@ -197,11 +254,13 @@ async function evaluateJobs(jobs) {
 
   if (scored.length > 0) {
     const avg = Math.round(scored.reduce((sum, j) => sum + j.matchScore, 0) / scored.length);
-    const high = scored.filter(j => j.matchScore >= 80).length;
-    console.log(`[LLM]   Average score: ${avg}% | High matches (≥80%): ${high}`);
+    const highMatches = scored.filter(j => j.matchScore >= 80).length;
+    const goodMatches = scored.filter(j => j.matchScore >= 70 && j.matchScore < 80).length;
+    const lowMatches = scored.filter(j => j.matchScore < 70).length;
+    console.log(`[LLM]   Average score: ${avg}% | Breakdown: 80–100: ${highMatches}, 70–79: ${goodMatches}, <70: ${lowMatches}`);
   }
 
   return evaluated;
 }
 
-module.exports = { evaluateJobs, evaluateSingleJob };
+module.exports = { evaluateJobs, evaluateSingleJob, calculateHeuristicMatch };

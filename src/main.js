@@ -6,7 +6,7 @@ const { runAllScrapers } = require('./scrapers/index');
 const { filterJobs } = require('./core/filter');
 const { passesGeoFilter, isIndia } = require('./core/geoFilter');
 const { evaluateJobs } = require('./core/llmEvaluator');
-const { isAlertEligible, ELIGIBILITY_STATUSES } = require('./core/eligibilityFilter');
+const { isAlertEligible, shouldAlert, ELIGIBILITY_STATUSES } = require('./core/eligibilityFilter');
 const { generateAllListings } = require('./core/digestGenerator');
 const { loadApplications, renderMarkdown } = require('./core/tracker');
 const Database = require('./core/database');
@@ -169,21 +169,18 @@ async function main() {
     console.log(`⚠️  Capping at ${MAX_JOBS_PER_RUN} this run. ${deferred} deferred to next run.`);
   }
 
-  // ── 7. LLM Match Evaluation (Gemini) ──────────────────────────────────────
+  // ── 7. Match Evaluation (Gemini AI with Profile Fallback) ─────────────────
   let evaluatedJobs = toEvaluate;
-  if (USE_LLM) {
-    console.log(`\n🧠 Running Gemini evaluation on top ${toEvaluate.length} candidates...`);
+  if (USE_LLM || DRY_RUN) {
+    console.log(`\n🧠 Running candidate match evaluation on top ${toEvaluate.length} candidates...`);
     evaluatedJobs = await evaluateJobs(toEvaluate);
   }
 
   // Re-sort to put top LLM matches and eligible roles at the very top
   const sortedEvaluated = sortJobs(evaluatedJobs);
 
-  // Suppress LIKELY_INELIGIBLE and INELIGIBLE jobs from high-priority alert notifications,
-  // and enforce MIN_MATCH_SCORE threshold (70%) when AI evaluation is active
-  const toNotify = sortedEvaluated
-    .filter(isAlertEligible)
-    .filter(j => j.matchScore == null || j.matchScore >= MIN_MATCH_SCORE);
+  // Suppress LIKELY_INELIGIBLE and INELIGIBLE jobs, and enforce MIN_MATCH_SCORE threshold (70)
+  const toNotify = sortedEvaluated.filter(j => shouldAlert(j, MIN_MATCH_SCORE));
   const suppressedCount = sortedEvaluated.length - toNotify.length;
   if (suppressedCount > 0) {
     console.log(`🛡️  Screening & Threshold: Filtered out ${suppressedCount} restricted/ineligible or low-match (<${MIN_MATCH_SCORE}%) job(s) from push notifications.`);
@@ -220,13 +217,22 @@ async function main() {
       }
     }
   } else {
-    console.log('\n[DRY RUN] Would send alerts for these prioritized listings:');
+    const highMatches = evaluatedJobs.filter(j => j.matchScore != null && j.matchScore >= 80).length;
+    const goodMatches = evaluatedJobs.filter(j => j.matchScore != null && j.matchScore >= 70 && j.matchScore < 80).length;
+    const lowMatches = evaluatedJobs.filter(j => j.matchScore != null && j.matchScore < 70).length;
+
+    console.log('\n[DRY RUN] Match Score Distribution:');
+    console.log(`  🔥 Priority Match (80–100%) : ${highMatches} jobs`);
+    console.log(`  ⚡ Good Match (70–79%)      : ${goodMatches} jobs`);
+    console.log(`  ⚪ Below Threshold (<70%)   : ${lowMatches} jobs (suppressed from alerts)`);
+
+    console.log('\n[DRY RUN] Would send alerts for these prioritized listings (≥70%):');
     toNotify.slice(0, 20).forEach((j, i) => {
       const matchText = j.matchScore != null ? ` [Match: ${j.matchScore}%]` : '';
       const eligBadge = j.eligibility_status === 'ELIGIBLE' ? '🟢' : j.eligibility_status === 'LIKELY_ELIGIBLE' ? '🟢' : '🟡';
       console.log(`  ${i + 1}. ${eligBadge} [${j.category}] ${j.title} @ ${j.company} (${j.location || 'India/Remote'})${matchText}`);
     });
-    console.log(`[DRY RUN] Total to notify: ${toNotify.length} jobs (deferred: ${deferred}, ineligible suppressed: ${suppressedCount})\n`);
+    console.log(`\n[DRY RUN] Total to notify: ${toNotify.length} jobs (deferred: ${deferred}, suppressed: ${suppressedCount})\n`);
   }
 
   // ── 9. Mark Evaluated Jobs as Seen in Database ─────────────────────────────

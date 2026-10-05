@@ -58,6 +58,17 @@ function formatTelegram(job) {
   const trackSnippet = escapeMdV2(`npm run track -- add "${cleanComp}" "${cleanRole}"`);
   const eligibilityBadge = getTelegramEligibilityBadge(job.eligibility_status, job.eligibility_reasons);
 
+  let matchLine = '';
+  if (job.matchScore != null) {
+    if (job.matchScore >= 80) {
+      matchLine = `\n🔥 *PRIORITY MATCH: ${escapeMdV2(String(job.matchScore))}%*`;
+    } else if (job.matchScore >= 70) {
+      matchLine = `\n⚡ *GOOD MATCH: ${escapeMdV2(String(job.matchScore))}%* _(Apply \\+ Learn)_`;
+    } else {
+      matchLine = `\n📊 *Match: ${escapeMdV2(String(job.matchScore))}%*`;
+    }
+  }
+
   return (
     `${typeEmoji} *${title}*\n` +
     `━━━━━━━━━━━━━━━━━━━\n` +
@@ -65,7 +76,7 @@ function formatTelegram(job) {
     `📍 ${location} ${escapeMdV2(geoTag)}\n` +
     `🏷 ${type} • ${escapeMdV2(categoryTag)} • ${sourceEmoji} ${source}\n` +
     `🌍 *International Eligibility:*\n${escapeMdV2(eligibilityBadge)}` +
-    `${job.matchScore != null ? `\n📊 *Match: ${escapeMdV2(String(job.matchScore))}%*` : ''}` +
+    `${matchLine}` +
     `${job.aiReason ? `\n💡 ${escapeMdV2(job.aiReason)}` : ''}` +
     `${salary}` +
     `${posted}\n` +
@@ -115,7 +126,13 @@ function formatDiscordEmbed(job) {
     fields.push({ name: '⏱ Posted', value: job.postedAt, inline: true });
   }
   if (job.matchScore != null) {
-    fields.push({ name: '📊 AI Match Score', value: `**${job.matchScore}%**`, inline: true });
+    const scoreTitle = job.matchScore >= 80 ? '🔥 AI Match Score' : job.matchScore >= 70 ? '⚡ AI Match Score' : '📊 AI Match Score';
+    const scoreVal = job.matchScore >= 80
+      ? `**${job.matchScore}% — PRIORITY MATCH**`
+      : job.matchScore >= 70
+        ? `**${job.matchScore}% — GOOD MATCH (Apply + Learn)**`
+        : `**${job.matchScore}%**`;
+    fields.push({ name: scoreTitle, value: scoreVal, inline: true });
   }
   if (job.aiReason) {
     fields.push({ name: '💡 AI Profile Fit Insight', value: job.aiReason.slice(0, 1024), inline: false });
