@@ -1,4 +1,4 @@
-# 📚 AI, Machine Learning & Data Science Internships (141 Active Listings)
+# 📚 AI, Machine Learning & Data Science Internships (142 Active Listings)
 
 [← Back to Main Repository](../README.md) | [Top 20 Picks](../TOP20.md)
 *Generated on 2026-10-05 for B.Tech CSE (Batch of 2028)*
@@ -7,9 +7,8 @@
 |---|---|---|---|---|---|---|
 | **The Affordable Organic Store** | Full Stack AI Engineer — AI Agents | Kompally, Hyderabad 🇮🇳 India | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/full-stack-ai-engineer--ai-agents-internship-in-multiple-locations-at-the-affordable-organic-store1791181703) |
 | **Arakoo** | Reinforcement Learning & Data Science | Faridabad, Delhi, Gurgaon, Jaipur, Noida, Roorkee 🇮🇳 India | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/reinforcement-learning-data-science-internship-in-multiple-locations-at-arakoo1790829998) |
-| **Almost Magic Private Limited** | Artificial Intelligence (AI) | Chandigarh, Mohali, Panchkula 🇮🇳 India | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-multiple-locations-at-almost-magic-private-limited1790844424) |
 | **Gateway Software Solutions** | Machine Learning | Chennai, Coimbatore, Erode, Karur, Madurai, Villupuram, Namakkal, Dharmapuri, Kanchipuram, Avadi, Salem, Kanjanoor, Trichey, Sivagangai Hybrid 🇮🇳 India | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/machine-learning-internship-in-multiple-locations-at-gateway-software-solutions1790741489) |
-| **Gateway Software Solutions** | Artificial Intelligence (AI) | Chennai, Coimbatore, Madurai, Tirunelveli, Pollachi, Theni, Chengalpattu, Tiruppur, Salem, Viluppuram, Namakkal 🇮🇳 India | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-multiple-locations-at-gateway-software-solutions1790827964) |
+| **Almost Magic Private Limited** | Artificial Intelligence (AI) | Chandigarh, Mohali, Panchkula 🇮🇳 India | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-multiple-locations-at-almost-magic-private-limited1790844424) |
 | **InAmigos Foundation** | AI & Machine Learning | Work from home 🌐 Remote | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-ai-machine-learning-internship-at-inamigos-foundation1791196579) |
 | **OpalCode** | AI/ML | Work from home 🌐 Remote | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-ai-ml-internship-at-opalcode1791216032) |
 | **OpalCode** | Artificial Intelligence (AI) | Work from home 🌐 Remote | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-artificial-intelligence-ai-internship-at-opalcode1791215365) |
@@ -36,6 +35,7 @@
 | **Pledge India Foundation** | Data Science | Work from home 🌐 Remote | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-data-science-internship-at-pledge-india-foundation1790856469) |
 | **Hope Behind Tails Foundation** | Data Science | Work from home 🌐 Remote | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-data-science-internship-at-hope-behind-tails-foundation1790856110) |
 | **Women First India Foundation** | Machine Learning | Work from home 🌐 Remote | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-machine-learning-internship-at-women-first-india-foundation1790855907) |
+| **Gateway Software Solutions** | Artificial Intelligence (AI) | Chennai, Coimbatore, Madurai, Tirunelveli, Pollachi, Theni, Chengalpattu, Tiruppur, Salem, Viluppuram, Namakkal 🇮🇳 India | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-multiple-locations-at-gateway-software-solutions1790827964) |
 | **Queens Of Change Foundation** | Data Science | Work from home 🌐 Remote | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-data-science-internship-at-queens-of-change-foundation1790767591) |
 | **Pledge India Foundation** | Machine Learning | Work from home 🌐 Remote | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-machine-learning-internship-at-pledge-india-foundation1790765361) |
 | **InAmigos Foundation** | Artificial Intelligence (AI) | Work from home 🌐 Remote | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-artificial-intelligence-ai-internship-at-inamigos-foundation1791202200) |
@@ -145,6 +145,7 @@
 | **Mirantis** | Software Engineer | Remote 🌐 Remote | 💼 Full-time | 🟢 Likely | RemoteOK | [Apply Now →](https://remoteOK.com/remote-jobs/remote-software-engineer-mirantis-1137387) |
 | **Benzinga** | AI Engineer Data APIs | Remote 🌐 Remote | 💼 Full-time | 🟢 Likely | RemoteOK | [Apply Now →](https://remoteOK.com/remote-jobs/remote-ai-engineer-data-apis-benzinga-1137224) |
 | **Pinterest** | Data Scientist II, Infrastructure | Remote 🌐 Remote | 💼 Full-time | 🟢 Likely | WeWorkRemotely | [Apply Now →](https://weworkremotely.com/remote-jobs/pinterest-data-scientist-ii-infrastructure) |
+| **FunnelStory** | MTS, AI/ML | Remote 🌐 Remote | 💼 Full-time | 🟢 Likely | YCombinator | [Apply Now →](https://news.ycombinator.com/item?id=49969213) |
 | **Axmed** | AI Engineer (Agentic Systems) | Remote 🌐 Remote | 💼 Full-time | 🟢 Likely | YCombinator | [Apply Now →](https://news.ycombinator.com/item?id=49963332) |
 
 > ⚠️ **Screening Disclaimer:** International work authorization and visa eligibility classifications are automated heuristic indicators for discovery and triage purposes only, not legal or immigration advice.

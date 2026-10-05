@@ -466,7 +466,7 @@ async function runAll() {
     const res = screenEligibility(job);
     assert.strictEqual(res.eligibility_status, ELIGIBILITY_STATUSES.UNCLEAR);
     assert.ok(res.eligibility_reasons[0].includes('Manual review recommended') || res.eligibility_reasons[0].includes('International on-site'));
-    assert.strictEqual(isAlertEligible(res), true, 'UNCLEAR positions should not be silently dropped');
+    assert.strictEqual(isAlertEligible(res), false, 'UNCLEAR positions should not be alerted via Telegram/Discord');
   });
 
   test('9. India-based internship -> ELIGIBLE', () => {
@@ -546,6 +546,59 @@ async function runAll() {
   test('Score 30 -> no alert (Far below threshold)', () => {
     const job = { title: 'Unrelated IT Intern', company: 'OtherCo', eligibility_status: 'ELIGIBLE', matchScore: 30 };
     assert.strictEqual(shouldAlert(job, 70), false, 'Score 30 should be suppressed from alerts');
+  });
+
+  // ── 10. Combined Eligibility + Match-Score Gate Tests ────────────────────
+  console.log('\n🔹 10. Combined Eligibility + Match-Score Gate (shouldAlert) Tests:');
+
+  test('Combined Gate: ELIGIBLE + score 85 -> true (Allowed)', () => {
+    const job = { title: 'AI Intern', company: 'Google', eligibility_status: ELIGIBILITY_STATUSES.ELIGIBLE, matchScore: 85 };
+    assert.strictEqual(shouldAlert(job, 70), true);
+  });
+
+  test('Combined Gate: LIKELY_ELIGIBLE + score 75 -> true (Allowed)', () => {
+    const job = { title: 'ML Intern', company: 'DeepMind', eligibility_status: ELIGIBILITY_STATUSES.LIKELY_ELIGIBLE, matchScore: 75 };
+    assert.strictEqual(shouldAlert(job, 70), true);
+  });
+
+  test('Combined Gate: UNCLEAR + score 95 -> false (High score but unclear eligibility suppressed)', () => {
+    const job = { title: 'Research Intern', company: 'Foreign Uni', eligibility_status: ELIGIBILITY_STATUSES.UNCLEAR, matchScore: 95 };
+    assert.strictEqual(shouldAlert(job, 70), false, 'UNCLEAR jobs must be suppressed from Telegram/Discord alerts even with score 95');
+  });
+
+  test('Combined Gate: LIKELY_INELIGIBLE + score 90 -> false (Restricted auth suppressed)', () => {
+    const job = { title: 'Robotics Intern', company: 'US Firm', eligibility_status: ELIGIBILITY_STATUSES.LIKELY_INELIGIBLE, matchScore: 90 };
+    assert.strictEqual(shouldAlert(job, 70), false, 'LIKELY_INELIGIBLE jobs must be suppressed');
+  });
+
+  test('Combined Gate: INELIGIBLE + score 100 -> false (US-only/ineligible suppressed)', () => {
+    const job = { title: 'Defense AI Intern', company: 'GovLab', eligibility_status: ELIGIBILITY_STATUSES.INELIGIBLE, matchScore: 100 };
+    assert.strictEqual(shouldAlert(job, 70), false, 'INELIGIBLE jobs must be suppressed');
+  });
+
+  test('Combined Gate: ELIGIBLE + score 65 -> false (Low match score suppressed)', () => {
+    const job = { title: 'IT Support Intern', company: 'LocalCo', eligibility_status: ELIGIBILITY_STATUSES.ELIGIBLE, matchScore: 65 };
+    assert.strictEqual(shouldAlert(job, 70), false, 'ELIGIBLE jobs with score < 70 must be suppressed');
+  });
+
+  test('Combined Gate: LIKELY_ELIGIBLE + score 69 -> false (Borderline low match suppressed)', () => {
+    const job = { title: 'Web Intern', company: 'GlobalStartup', eligibility_status: ELIGIBILITY_STATUSES.LIKELY_ELIGIBLE, matchScore: 69 };
+    assert.strictEqual(shouldAlert(job, 70), false, 'LIKELY_ELIGIBLE jobs with score < 70 must be suppressed');
+  });
+
+  test('Combined Gate: UNCLEAR + score 60 -> false (Fails both gates)', () => {
+    const job = { title: 'Generic Intern', company: 'EuroCo', eligibility_status: ELIGIBILITY_STATUSES.UNCLEAR, matchScore: 60 };
+    assert.strictEqual(shouldAlert(job, 70), false, 'UNCLEAR with low score must be suppressed');
+  });
+
+  test('Combined Gate: ELIGIBLE unscored (matchScore null) -> true (Allowed)', () => {
+    const job = { title: 'AI Intern', company: 'Swiggy', eligibility_status: ELIGIBILITY_STATUSES.ELIGIBLE, matchScore: null };
+    assert.strictEqual(shouldAlert(job, 70), true, 'Unscored ELIGIBLE job should pass shouldAlert');
+  });
+
+  test('Combined Gate: UNCLEAR unscored (matchScore null) -> false (Suppressed)', () => {
+    const job = { title: 'AI Intern', company: 'EuroUni', eligibility_status: ELIGIBILITY_STATUSES.UNCLEAR, matchScore: null };
+    assert.strictEqual(shouldAlert(job, 70), false, 'Unscored UNCLEAR job must be suppressed');
   });
 
   console.log('\n' + '═'.repeat(60));

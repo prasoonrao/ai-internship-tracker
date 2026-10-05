@@ -137,9 +137,12 @@ async function main() {
   const newJobs = geoJobs.filter(job => db.isNew(job));
   console.log(`✨ New (not previously seen): ${newJobs.length} jobs`);
 
-  if (newJobs.length === 0) {
+  // In DRY_RUN, if database was already saturated from prior test runs, fall back to geoJobs to demonstrate evaluation
+  const candidatePool = (DRY_RUN && newJobs.length === 0) ? geoJobs : newJobs;
+
+  if (candidatePool.length === 0) {
     console.log('✅ No new jobs found. Staying silent (silence is golden).');
-    db.save();
+    if (!DRY_RUN) db.save();
     return;
   }
 
@@ -161,9 +164,9 @@ async function main() {
   }
 
   // ── 6. Sort and Select Top Candidates for Evaluation & Delivery ────────────
-  const sorted = sortJobs(newJobs);
+  const sorted = sortJobs(candidatePool);
   const toEvaluate = sorted.slice(0, MAX_JOBS_PER_RUN);
-  const deferred = newJobs.length - toEvaluate.length;
+  const deferred = candidatePool.length - toEvaluate.length;
 
   if (deferred > 0) {
     console.log(`⚠️  Capping at ${MAX_JOBS_PER_RUN} this run. ${deferred} deferred to next run.`);
@@ -179,11 +182,17 @@ async function main() {
   // Re-sort to put top LLM matches and eligible roles at the very top
   const sortedEvaluated = sortJobs(evaluatedJobs);
 
-  // Suppress LIKELY_INELIGIBLE and INELIGIBLE jobs, and enforce MIN_MATCH_SCORE threshold (70)
+  // Suppress UNCLEAR, LIKELY_INELIGIBLE, and INELIGIBLE jobs, and enforce MIN_MATCH_SCORE threshold (70)
   const toNotify = sortedEvaluated.filter(j => shouldAlert(j, MIN_MATCH_SCORE));
   const suppressedCount = sortedEvaluated.length - toNotify.length;
   if (suppressedCount > 0) {
-    console.log(`🛡️  Screening & Threshold: Filtered out ${suppressedCount} restricted/ineligible or low-match (<${MIN_MATCH_SCORE}%) job(s) from push notifications.`);
+    console.log(`🛡️  Screening & Threshold: Filtered out ${suppressedCount} restricted/ineligible/unclear or low-match (<${MIN_MATCH_SCORE}%) job(s) from push notifications.`);
+  }
+
+  // Strict Gate Verification: Every job in toNotify MUST be ELIGIBLE or LIKELY_ELIGIBLE
+  const nonEligibleInNotify = toNotify.filter(j => j.eligibility_status !== ELIGIBILITY_STATUSES.ELIGIBLE && j.eligibility_status !== ELIGIBILITY_STATUSES.LIKELY_ELIGIBLE);
+  if (nonEligibleInNotify.length > 0) {
+    throw new Error(`CRITICAL INTEGRITY FAILURE: ${nonEligibleInNotify.length} job(s) in toNotify have disallowed eligibility status: ${nonEligibleInNotify.map(j => `${j.title} (${j.eligibility_status})`).join(', ')}`);
   }
 
   // ── 8. Send Notifications ─────────────────────────────────────────────────
@@ -226,20 +235,32 @@ async function main() {
     console.log(`  ⚡ Good Match (70–79%)      : ${goodMatches} jobs`);
     console.log(`  ⚪ Below Threshold (<70%)   : ${lowMatches} jobs (suppressed from alerts)`);
 
+    console.log('\n[DRY RUN] Notification Eligibility Audit:');
+    const eligibleCount = toNotify.filter(j => j.eligibility_status === ELIGIBILITY_STATUSES.ELIGIBLE).length;
+    const likelyEligibleCount = toNotify.filter(j => j.eligibility_status === ELIGIBILITY_STATUSES.LIKELY_ELIGIBLE).length;
+    console.log(`  🟢 ELIGIBLE          : ${eligibleCount}`);
+    console.log(`  🟢 LIKELY_ELIGIBLE   : ${likelyEligibleCount}`);
+    console.log(`  🟡 UNCLEAR           : 0 (verified 100% suppressed)`);
+    console.log(`  🔴 LIKELY_INELIGIBLE : 0 (verified 100% suppressed)`);
+    console.log(`  🔴 INELIGIBLE        : 0 (verified 100% suppressed)`);
+    console.log(`  🛡️  100% of notification listings (${toNotify.length}/${toNotify.length}) verified ELIGIBLE or LIKELY_ELIGIBLE.`);
+
     console.log('\n[DRY RUN] Would send alerts for these prioritized listings (≥70%):');
     toNotify.slice(0, 20).forEach((j, i) => {
       const matchText = j.matchScore != null ? ` [Match: ${j.matchScore}%]` : '';
-      const eligBadge = j.eligibility_status === 'ELIGIBLE' ? '🟢' : j.eligibility_status === 'LIKELY_ELIGIBLE' ? '🟢' : '🟡';
+      const eligBadge = j.eligibility_status === ELIGIBILITY_STATUSES.ELIGIBLE ? '🟢 [ELIGIBLE]' : '🟢 [LIKELY_ELIGIBLE]';
       console.log(`  ${i + 1}. ${eligBadge} [${j.category}] ${j.title} @ ${j.company} (${j.location || 'India/Remote'})${matchText}`);
     });
     console.log(`\n[DRY RUN] Total to notify: ${toNotify.length} jobs (deferred: ${deferred}, suppressed: ${suppressedCount})\n`);
   }
 
   // ── 9. Mark Evaluated Jobs as Seen in Database ─────────────────────────────
-  for (const job of evaluatedJobs) {
-    db.markSeen(job);
+  if (!DRY_RUN) {
+    for (const job of evaluatedJobs) {
+      db.markSeen(job);
+    }
+    db.save();
   }
-  db.save();
 
   // ── 10. Summary ───────────────────────────────────────────────────────────
   const stats = db.stats();

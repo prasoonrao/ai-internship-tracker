@@ -19,7 +19,10 @@ class Database {
         return empty;
       }
       const raw = fs.readFileSync(DB_PATH, 'utf8');
-      return JSON.parse(raw);
+      const parsed = JSON.parse(raw);
+      if (!parsed.meta) parsed.meta = { created: new Date().toISOString(), totalSeen: 0 };
+      if (!parsed.jobs) parsed.jobs = {};
+      return parsed;
     } catch (err) {
       console.warn('[DB] Could not load DB, starting fresh:', err.message);
       return { jobs: {}, meta: { created: new Date().toISOString(), totalSeen: 0 } };

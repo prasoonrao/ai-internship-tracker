@@ -368,11 +368,13 @@ function getDiscordEligibilityField(status, reasons = []) {
 
 /**
  * Check if a job should be allowed in high-priority alerts
- * Suppresses LIKELY_INELIGIBLE and INELIGIBLE
+ * Strictly allows only ELIGIBLE and LIKELY_ELIGIBLE.
+ * Suppresses UNCLEAR, LIKELY_INELIGIBLE, and INELIGIBLE from push notifications.
  */
 function isAlertEligible(job) {
-  const status = job.eligibility_status || ELIGIBILITY_STATUSES.UNCLEAR;
-  return status !== ELIGIBILITY_STATUSES.INELIGIBLE && status !== ELIGIBILITY_STATUSES.LIKELY_INELIGIBLE;
+  if (!job) return false;
+  const status = job.eligibility_status || (typeof screenEligibility === 'function' ? screenEligibility(job).eligibility_status : null);
+  return status === ELIGIBILITY_STATUSES.ELIGIBLE || status === ELIGIBILITY_STATUSES.LIKELY_ELIGIBLE;
 }
 
 /**

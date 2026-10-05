@@ -1,12 +1,12 @@
-# 📚 Software & Backend Engineering Internships (217 Active Listings)
+# 📚 Software & Backend Engineering Internships (215 Active Listings)
 
 [← Back to Main Repository](../README.md) | [Top 20 Picks](../TOP20.md)
 *Generated on 2026-10-05 for B.Tech CSE (Batch of 2028)*
 
 | Company | Role | Location | Type | Eligibility | Source | Apply |
 |---|---|---|---|---|---|---|
-| **Basti Ki Pathshala Foundation** | Software Development | Work from home 🌐 Remote | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-software-development-internship-at-basti-ki-pathshala-foundation1791203265) |
 | **She Can Foundation** | Full Stack Development | Work from home 🌐 Remote | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-full-stack-development-internship-at-she-can-foundation1791203445) |
+| **Basti Ki Pathshala Foundation** | Software Development | Work from home 🌐 Remote | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-software-development-internship-at-basti-ki-pathshala-foundation1791203265) |
 | **TEN** | Software Development | Work from home 🌐 Remote | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-software-development-internship-at-ten1790309126) |
 | **Salesforce** | Software Development | Bangalore 🇮🇳 India | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/part-time-software-development-internship-in-bangalore-at-salesforce1789133363) |
 | **Astrorize** | Software Development – Full Stack & Mobile | Bangalore 🇮🇳 India | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/software-development--full-stack-mobile-internship-in-bangalore-at-astrorize1791196156) |
@@ -21,7 +21,6 @@
 | **Women First India Foundation** | Full Stack Development | Work from home 🌐 Remote | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-full-stack-development-internship-at-women-first-india-foundation1791202742) |
 | **NayePankh Foundation** | Software Development | Work from home 🌐 Remote | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-software-development-internship-at-nayepankh-foundation1791202072) |
 | **Buzdealz Ventures Private Limited** | Full Stack Development | Work from home 🌐 Remote | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-full-stack-development-internship-at-buzdealz-ventures-private-limited1791198499) |
-| **Account Large Language (ALL.)** | Backend Engineering | Work from home 🌐 Remote | 🧪 Internship | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-backend-engineering-internship-at-account-large-language-all1791186843) |
 | **Markytics** | Associate Python Developer | Pune 🇮🇳 India | 💼 Full-time | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/job/detail/associate-python-developer-job-in-pune-at-markytics1791200043) |
 | **Route Mobile Limited** | Forward Deployed Software Engineer | Delhi, Gurgaon, Mumbai, Bangalore 🇮🇳 India | 💼 Full-time | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/job/detail/forward-deployed-software-engineer-job-in-multiple-locations-at-route-mobile-limited1791188307) |
 | **QuickHyre** | Software Engineer | Work from home 🌐 Remote | 💼 Full-time | 🟢 Eligible | Internshala | [Apply Now →](https://internshala.com/job/detail/remote-part-time-software-engineer-job-at-quickhyre1791194468) |
@@ -213,7 +212,6 @@
 | **Sphinx Defense** | Software Engineering | Remote 🌐 Remote | 💼 Full-time | 🟢 Likely | YCombinator | [Apply Now →](https://news.ycombinator.com/item?id=49967017) |
 | **Greenzie** | Robotics Software Engineer (Experienced, 3 | Global / On-site 🌐 Remote | 💼 Full-time | 🟡 Review | YCombinator | [Apply Now →](https://news.ycombinator.com/item?id=49964254) |
 | **InfoHawk** | Software Engineer | Global / On-site 🌐 Remote | 💼 Full-time | 🟡 Review | YCombinator | [Apply Now →](https://news.ycombinator.com/item?id=49963906) |
-| **SingleStore** | Software Engineer, AI Platform | Remote 🌐 Remote | 💼 Full-time | 🟢 Likely | YCombinator | [Apply Now →](https://news.ycombinator.com/item?id=49962002) |
 | **Company on Freshersworld** | IT Software Developer Jobs Opening in Dem Infraventures Pvt Ltd at Goregaon West, MumbaiLessMoreLess | Mumbai 🇮🇳 India | 💼 Full-time | 🟢 Eligible | Freshersworld | [Apply Now →](https://www.freshersworld.com/jobs/it-software-developer-jobs-opening-in-dem-infraventures-pvt-ltd-at-goregaon-west-mumbai-2944759) |
 | **Company on Freshersworld** | IT Software Engineer Jobs Opening in Client of Teamlease at PuneLessMoreLess | Pune 🇮🇳 India | 💼 Full-time | 🟢 Eligible | Freshersworld | [Apply Now →](https://www.freshersworld.com/jobs/it-software-engineer-jobs-opening-in-client-of-teamlease-at-pune-2948934) |
 | **Company on Freshersworld** | Software Developer Jobs Opening in A Client of Freshersworld at MysoreLessMoreLess | Mysore 🇮🇳 India | 💼 Full-time | 🟢 Eligible | Freshersworld | [Apply Now →](https://www.freshersworld.com/jobs/software-developer-jobs-opening-in-a-client-of-freshersworld-at-mysore-2951151) |
