@@ -87,6 +87,8 @@ async function fetchJsonFeed(feed) {
           salary: terms ? `Terms: ${terms}` : '',
           source: 'GitHub Repos',
           rawCategory: item.category || '',
+          sponsorship: item.sponsorship || '',
+          description: `${title} | Location: ${locations} | Sponsorship: ${item.sponsorship || 'Unstated'}`,
         });
       }
     }

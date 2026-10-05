@@ -338,6 +338,147 @@ async function runAll() {
     assert.ok(hasMatchField, 'Discord embed should contain Match Score field');
   });
 
+  // ── 8. International Work Authorization & Eligibility Screening ───────────
+  console.log('\n🔹 8. International Eligibility & Work Authorization Screening Tests:');
+
+  const {
+    screenEligibility,
+    isAlertEligible,
+    getTelegramEligibilityBadge,
+    getDiscordEligibilityField,
+    ELIGIBILITY_STATUSES,
+  } = require('../src/core/eligibilityFilter');
+
+  test('1. US university requirement -> INELIGIBLE', () => {
+    const job = {
+      title: 'Software Engineering Intern',
+      company: 'TechCorp USA',
+      location: 'Seattle, WA',
+      description: 'Applicants must be currently enrolled in an accredited US university.',
+    };
+    const res = screenEligibility(job);
+    assert.strictEqual(res.eligibility_status, ELIGIBILITY_STATUSES.INELIGIBLE);
+    assert.ok(res.study_location_requirement.includes('US'));
+    assert.strictEqual(isAlertEligible(res), false);
+  });
+
+  test('2. Country residency requirement -> LIKELY_INELIGIBLE', () => {
+    const job = {
+      title: 'AI Research Intern',
+      company: 'CloudSystems',
+      location: 'Remote',
+      description: 'Candidates must reside in the United States or Canada. No exceptions.',
+    };
+    const res = screenEligibility(job);
+    assert.strictEqual(res.eligibility_status, ELIGIBILITY_STATUSES.LIKELY_INELIGIBLE);
+    assert.ok(res.location_restriction.includes('Must reside'));
+    assert.strictEqual(isAlertEligible(res), false);
+  });
+
+  test('3. Citizenship requirement -> INELIGIBLE', () => {
+    const job = {
+      title: 'Machine Learning Defense Intern',
+      company: 'Defense Dynamics',
+      location: 'Washington, DC',
+      description: 'Must be a US Citizen due to federal government security requirements.',
+    };
+    const res = screenEligibility(job);
+    assert.strictEqual(res.eligibility_status, ELIGIBILITY_STATUSES.INELIGIBLE);
+    assert.ok(res.citizenship_requirement.includes('US Citizen'));
+    assert.strictEqual(isAlertEligible(res), false);
+  });
+
+  test('4. Work authorization requirement -> LIKELY_INELIGIBLE', () => {
+    const job = {
+      title: 'Data Science Intern',
+      company: 'Fintech Hub',
+      location: 'San Francisco, CA',
+      description: 'Must already have unrestricted work authorization to work in the US.',
+    };
+    const res = screenEligibility(job);
+    assert.strictEqual(res.eligibility_status, ELIGIBILITY_STATUSES.LIKELY_INELIGIBLE);
+    assert.ok(res.work_authorization_requirement.includes('Unrestricted') || res.work_authorization_requirement.includes('work authorization'));
+    assert.strictEqual(isAlertEligible(res), false);
+  });
+
+  test('5. No sponsorship requirement -> LIKELY_INELIGIBLE', () => {
+    const job = {
+      title: 'Backend Engineering Intern',
+      company: 'MarketSoft',
+      location: 'New York, NY',
+      description: 'Visa sponsorship is not available for this role now or in the future.',
+    };
+    const res = screenEligibility(job);
+    assert.strictEqual(res.eligibility_status, ELIGIBILITY_STATUSES.LIKELY_INELIGIBLE);
+    assert.strictEqual(res.visa_sponsorship, 'Not provided');
+    assert.strictEqual(isAlertEligible(res), false);
+  });
+
+  test('6. International applicants welcome -> ELIGIBLE', () => {
+    const job = {
+      title: 'GenAI Research Intern',
+      company: 'DeepAI Labs',
+      location: 'London, UK',
+      description: 'International students are welcome. Visa sponsorship provided for accepted fellows.',
+    };
+    const res = screenEligibility(job);
+    assert.strictEqual(res.eligibility_status, ELIGIBILITY_STATUSES.ELIGIBLE);
+    assert.ok(res.eligibility_reasons.some(r => r.includes('International students welcome')));
+    assert.strictEqual(isAlertEligible(res), true);
+  });
+
+  test('7. Remote worldwide -> ELIGIBLE', () => {
+    const job = {
+      title: 'Applied AI Intern',
+      company: 'GlobalOpen',
+      location: 'Remote',
+      description: 'Open to applicants worldwide. Work from anywhere in the world on foundation models.',
+    };
+    const res = screenEligibility(job);
+    assert.strictEqual(res.eligibility_status, ELIGIBILITY_STATUSES.ELIGIBLE);
+    assert.ok(res.eligibility_reasons.some(r => r.includes('worldwide') || r.includes('anywhere')));
+    assert.strictEqual(isAlertEligible(res), true);
+  });
+
+  test('8. Ambiguous eligibility (foreign on-site without sponsorship info) -> UNCLEAR (REVIEW)', () => {
+    const job = {
+      title: 'AI Systems Intern',
+      company: 'Swiss Robotics Institute',
+      location: 'Zurich, Switzerland',
+      description: 'Develop neuromorphic vision algorithms with our research group.',
+    };
+    const res = screenEligibility(job);
+    assert.strictEqual(res.eligibility_status, ELIGIBILITY_STATUSES.UNCLEAR);
+    assert.ok(res.eligibility_reasons[0].includes('Manual review recommended') || res.eligibility_reasons[0].includes('International on-site'));
+    assert.strictEqual(isAlertEligible(res), true, 'UNCLEAR positions should not be silently dropped');
+  });
+
+  test('9. India-based internship -> ELIGIBLE', () => {
+    const job = {
+      title: 'Machine Learning Intern',
+      company: 'Swiggy',
+      location: 'Bangalore, India',
+      description: 'Build real-time delivery estimation and recommendation systems.',
+    };
+    const res = screenEligibility(job);
+    assert.strictEqual(res.eligibility_status, ELIGIBILITY_STATUSES.ELIGIBLE);
+    assert.ok(res.eligibility_reasons[0].includes('India-based'));
+    assert.strictEqual(isAlertEligible(res), true);
+  });
+
+  test('10. India remote internship -> ELIGIBLE', () => {
+    const job = {
+      title: 'AI Engineering Intern',
+      company: 'Flipkart',
+      location: 'Remote, India',
+      description: 'Help develop customer support agents using large language models.',
+    };
+    const res = screenEligibility(job);
+    assert.strictEqual(res.eligibility_status, ELIGIBILITY_STATUSES.ELIGIBLE);
+    assert.ok(res.eligibility_reasons[0].includes('India-based'));
+    assert.strictEqual(isAlertEligible(res), true);
+  });
+
   console.log('\n' + '═'.repeat(60));
   console.log(`  📊 TEST RESULTS: ${passedTests} PASSED, ${failedTests} FAILED`);
   console.log('═'.repeat(60) + '\n');

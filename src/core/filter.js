@@ -170,6 +170,8 @@ function detectJobType(job) {
   return 'fulltime';
 }
 
+const { screenEligibility } = require('./eligibilityFilter');
+
 /**
  * Filter and enrich an array of raw jobs
  */
@@ -181,11 +183,13 @@ function filterJobs(jobs) {
       const type = job.type || detectJobType(job);
       const category = categorizeJob(job);
       const rolePriority = getRolePriority({ ...job, type });
+      const eligibility = screenEligibility({ ...job, type, category });
       return {
         ...job,
         type,
         category,
         rolePriority,
+        ...eligibility,
       };
     });
 }

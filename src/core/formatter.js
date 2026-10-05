@@ -1,6 +1,7 @@
 'use strict';
 
 const { getGeoTag } = require('./geoFilter');
+const { getTelegramEligibilityBadge, getDiscordEligibilityField } = require('./eligibilityFilter');
 
 // Emoji map
 const TYPE_EMOJI = {
@@ -55,13 +56,15 @@ function formatTelegram(job) {
   const cleanComp = (job.company || 'Company').replace(/["'\\]/g, '');
   const cleanRole = (job.title || 'Role').replace(/["'\\]/g, '');
   const trackSnippet = escapeMdV2(`npm run track -- add "${cleanComp}" "${cleanRole}"`);
+  const eligibilityBadge = getTelegramEligibilityBadge(job.eligibility_status, job.eligibility_reasons);
 
   return (
     `${typeEmoji} *${title}*\n` +
     `━━━━━━━━━━━━━━━━━━━\n` +
     `🏢 *${company}*\n` +
     `📍 ${location} ${escapeMdV2(geoTag)}\n` +
-    `🏷 ${type} • ${escapeMdV2(categoryTag)} • ${sourceEmoji} ${source}` +
+    `🏷 ${type} • ${escapeMdV2(categoryTag)} • ${sourceEmoji} ${source}\n` +
+    `🌍 *International Eligibility:*\n${escapeMdV2(eligibilityBadge)}` +
     `${job.matchScore != null ? `\n📊 *Match: ${escapeMdV2(String(job.matchScore))}%*` : ''}` +
     `${job.aiReason ? `\n💡 ${escapeMdV2(job.aiReason)}` : ''}` +
     `${salary}` +
@@ -120,6 +123,13 @@ function formatDiscordEmbed(job) {
   if (job.coldPitch && job.matchScore >= 80) {
     fields.push({ name: '✉️ Tailored Cold Pitch (LinkedIn)', value: job.coldPitch.slice(0, 1024), inline: false });
   }
+
+  const eligField = getDiscordEligibilityField(job.eligibility_status, job.eligibility_reasons);
+  fields.push({
+    name: eligField.name,
+    value: eligField.value,
+    inline: eligField.inline,
+  });
 
   // Quick tracker command
   const cleanComp = (job.company || 'Company').replace(/["'\\]/g, '');

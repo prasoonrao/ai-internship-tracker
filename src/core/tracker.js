@@ -117,8 +117,8 @@ function renderMarkdown(apps) {
     lines.push('npm run track -- add "Google" "AI/ML Intern" "2026-10-02" "Applied" "Applied via careers portal" "https://careers.google.com"');
     lines.push('```');
   } else {
-    lines.push('| # | Company | Role | Date Applied | Days Old | Status | Notes | Link |');
-    lines.push('|---|---|---|---|---|---|---|---|');
+    lines.push('| # | Company | Role | Eligibility | Date Applied | Days Old | Status | Notes | Link |');
+    lines.push('|---|---|---|---|---|---|---|---|---|');
 
     apps.forEach((a, idx) => {
       const days = calculateDaysOld(a.dateApplied);
@@ -126,9 +126,10 @@ function renderMarkdown(apps) {
       const statusBadge = STATUS_BADGES[a.status] || a.status;
       const linkCell = a.url ? `[Link](${a.url})` : '—';
       const followUp = typeof days === 'number' && days >= 14 && ['Applied', 'Screening'].includes(a.status) ? ' ⚠️ *Follow-up*' : '';
+      const eligBadge = a.eligibility || '🟢 Eligible';
 
       lines.push(
-        `| ${idx + 1} | **${a.company}** | ${a.role} | ${a.dateApplied || '—'} | ${daysText}${followUp} | ${statusBadge} | ${a.notes || ''} | ${linkCell} |`
+        `| ${idx + 1} | **${a.company}** | ${a.role} | ${eligBadge} | ${a.dateApplied || '—'} | ${daysText}${followUp} | ${statusBadge} | ${a.notes || ''} | ${linkCell} |`
       );
     });
   }
@@ -153,7 +154,7 @@ function renderMarkdown(apps) {
   console.log(`[Tracker] Rendered ${MD_FILE} (${apps.length} applications)`);
 }
 
-function addApplication(company, role, dateApplied, status = 'Applied', notes = '', url = '') {
+function addApplication(company, role, dateApplied, status = 'Applied', notes = '', url = '', eligibility = '🟢 Eligible') {
   const apps = loadApplications();
   const today = new Date().toISOString().split('T')[0];
   const newApp = {
@@ -164,6 +165,7 @@ function addApplication(company, role, dateApplied, status = 'Applied', notes = 
     status: status.trim(),
     notes: notes ? notes.trim() : '',
     url: url ? url.trim() : '',
+    eligibility: eligibility ? eligibility.trim() : '🟢 Eligible',
     updatedAt: new Date().toISOString(),
   };
 

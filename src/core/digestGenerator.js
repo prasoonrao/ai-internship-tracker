@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { getGeoTag, isIndia } = require('./geoFilter');
+const { isAlertEligible } = require('./eligibilityFilter');
 
 const ROOT_DIR = path.join(__dirname, '..', '..');
 const LISTINGS_DIR = path.join(ROOT_DIR, 'listings');
@@ -19,6 +20,17 @@ const TIER1_COMPANIES = new Set([
 
 function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+}
+
+function getEligibilityBadge(j) {
+  switch (j.eligibility_status) {
+    case 'ELIGIBLE': return '🟢 Eligible';
+    case 'LIKELY_ELIGIBLE': return '🟢 Likely';
+    case 'UNCLEAR': return '🟡 Review';
+    case 'LIKELY_INELIGIBLE': return '🔴 Restricted';
+    case 'INELIGIBLE': return '🔴 Ineligible';
+    default: return '🟡 Review';
+  }
 }
 
 function calculateScore(job) {
@@ -56,6 +68,15 @@ function calculateScore(job) {
     score += Math.round(job.matchScore * 0.4);
   }
 
+  // 6. Eligibility status bonus / penalty
+  if (job.eligibility_status === 'ELIGIBLE') {
+    score += 25;
+  } else if (job.eligibility_status === 'LIKELY_ELIGIBLE') {
+    score += 15;
+  } else if (job.eligibility_status === 'LIKELY_INELIGIBLE' || job.eligibility_status === 'INELIGIBLE') {
+    score -= 100;
+  }
+
   return score;
 }
 
@@ -70,8 +91,8 @@ function generateCategoryMarkdown(categoryTitle, jobs, filename) {
     `[← Back to Main Repository](../README.md) | [Top 20 Picks](../TOP20.md)`,
     `*Generated on ${today} for B.Tech CSE (Batch of 2028)*`,
     '',
-    '| Company | Role | Location | Type | Source | Apply |',
-    '|---|---|---|---|---|---|',
+    '| Company | Role | Location | Type | Eligibility | Source | Apply |',
+    '|---|---|---|---|---|---|---|',
   ];
 
   jobs.forEach(j => {
@@ -79,12 +100,15 @@ function generateCategoryMarkdown(categoryTitle, jobs, filename) {
     const loc = j.location || 'Not specified';
     const link = j.url ? `[Apply Now →](${j.url})` : '—';
     const type = j.type === 'internship' ? '🧪 Internship' : '💼 Full-time';
+    const elig = getEligibilityBadge(j);
 
     lines.push(
-      `| **${j.company}** | ${j.title} | ${loc} ${geo} | ${type} | ${j.source} | ${link} |`
+      `| **${j.company}** | ${j.title} | ${loc} ${geo} | ${type} | ${elig} | ${j.source} | ${link} |`
     );
   });
 
+  lines.push('');
+  lines.push('> ⚠️ **Screening Disclaimer:** International work authorization and visa eligibility classifications are automated heuristic indicators for discovery and triage purposes only, not legal or immigration advice.');
   lines.push('');
   fs.writeFileSync(targetPath, lines.join('\n'), 'utf8');
 }
@@ -92,8 +116,11 @@ function generateCategoryMarkdown(categoryTitle, jobs, filename) {
 function generateTop20(jobs) {
   const today = new Date().toISOString().split('T')[0];
 
+  // Only consider alert-eligible positions (exclude LIKELY_INELIGIBLE and INELIGIBLE)
+  const eligibleCandidates = jobs.filter(isAlertEligible);
+
   // Score jobs
-  const scored = jobs.map(j => ({
+  const scored = eligibleCandidates.map(j => ({
     ...j,
     recommendScore: calculateScore(j),
   }));
@@ -116,12 +143,14 @@ function generateTop20(jobs) {
     `# 🏆 Today's Top 20 Internship Recommendations (${today})`,
     '',
     `Curated for **B.Tech CSE 2028 (NMAMIT)** targeting **AI/ML & SWE Internships**.`,
-    `Ranked by **AI/ML role alignment + tier-1 employer signal + geographic fit + freshness**.`,
+    `Ranked by **AI/ML role alignment + tier-1 employer signal + international eligibility + geographic fit**.`,
+    '',
+    `> ⚠️ **Screening Disclaimer:** International work authorization and visa eligibility classifications are automated heuristic indicators for discovery and triage purposes only, not legal or immigration advice.`,
     '',
     '[← Back to README](README.md) | [Application Tracker](APPLICATIONS.md)',
     '',
-    '| # | Company | Role | Location | Focus | Apply | Log Application |',
-    '|---|---|---|---|---|---|---|',
+    '| # | Company | Role | Location | Focus | Eligibility | Apply | Log Application |',
+    '|---|---|---|---|---|---|---|---|',
   ];
 
   topPicks.forEach((j, idx) => {
@@ -129,10 +158,11 @@ function generateTop20(jobs) {
     const loc = j.location || 'India / Remote';
     const link = j.url ? `[Apply →](${j.url})` : '—';
     const focus = j.category === 'AI / ML & Data Science' ? '🧠 AI/ML' : '💻 SWE';
+    const elig = getEligibilityBadge(j);
     const trackCmd = `\`npm run track -- add "${j.company.replace(/"/g, '')}" "${j.title.replace(/"/g, '')}"\``;
 
     lines.push(
-      `| ${idx + 1} | **${j.company}** | ${j.title} | ${loc} ${geo} | ${focus} | ${link} | ${trackCmd} |`
+      `| ${idx + 1} | **${j.company}** | ${j.title} | ${loc} ${geo} | ${focus} | ${elig} | ${link} | ${trackCmd} |`
     );
   });
 

@@ -32,7 +32,12 @@ Primary Target Roles: ${(candidateProfile.primaryTargetRoles || candidateProfile
 Secondary Target Roles: ${(candidateProfile.secondaryTargetRoles || []).join(', ')}
 Technical Skills: ${(candidateProfile.coreStack || []).join(', ')}
 Programming: ${(candidateProfile.programmingLanguages || ['Python', 'Java', 'C']).join(', ')}
-Preferred Location / Mode: ${(candidateProfile.targetLocations || ['India', 'Remote']).join(', ')}
+Citizenship & Location: Indian Citizen residing and studying in India (NMAMIT)
+Work Authorization Context:
+- Authorized for employment in India (Domestic citizen/student).
+- Does NOT possess existing work authorization, citizenship, residency, or visa in the US, Canada, UK, EU, or Australia.
+- Eligible for foreign roles ONLY if employer provides international visa sponsorship (e.g. J-1/F-1) or if the role is remote worldwide accessible from India.
+- Excluded from roles requiring foreign citizenship, domestic university enrollment, or requiring pre-existing foreign work authorization without sponsorship.
 `.trim();
 
 function sleep(ms) {
@@ -92,10 +97,10 @@ async function callGemini(apiKey, prompt) {
 }
 
 /**
- * Evaluate a single job against candidate profile
+ * Evaluate a single job against candidate profile and work authorization
  */
 async function evaluateSingleJob(apiKey, job) {
-  const prompt = `You are an expert technical recruiter evaluating an internship/job for a specific engineering candidate.
+  const prompt = `You are an expert technical recruiter evaluating an internship for a specific undergraduate candidate.
 
 CANDIDATE PROFILE:
 ${PROFILE_SUMMARY}
@@ -106,13 +111,18 @@ Company: ${job.company || 'Unknown'}
 Location: ${job.location || 'Not specified'}
 Category: ${job.category || 'General CS'}
 Type: ${job.type || 'Internship'}
-Source: ${job.source || 'Aggregator'}
+Preliminary Eligibility: ${job.eligibility_status || 'UNCLEAR'}
+Eligibility Context: ${(job.eligibility_reasons || []).join('; ') || 'No restrictions detected'}
+Sponsorship: ${job.visa_sponsorship || job.sponsorship || 'Unstated'}
 Description: ${(job.description || 'No description available').slice(0, 800)}
 
 TASKS:
-1. Provide a match score (0 to 100) assessing relevance to the candidate's target roles (Highest preference: AI/ML, GenAI, LLM, Data Science, Python, Deep Learning; Secondary: SWE, Backend), college graduation timeline (Batch of 2028 / Summer 2026/2027/2028), and skills.
-2. Write exactly 1 concise sentence explaining the match (highlight stack alignment and student internship fit).
-3. If the score is >= 80, write a 2-sentence polite cold outreach pitch the candidate can send to a recruiter or engineering manager on LinkedIn mentioning their NMAMIT B.Tech background and AI/ML projects. If score < 80, set coldPitch to empty string.
+1. Provide a match score (0 to 100) assessing relevance to the candidate's target roles (Highest preference: AI/ML, GenAI, LLM, Data Science, Python; Secondary: SWE, Backend), college graduation timeline (Batch of 2028), and skills.
+   CRITICAL ELIGIBILITY RULE:
+   - If the role requires US/foreign citizenship, security clearance, host-country university enrollment, or explicitly states no visa sponsorship for foreign on-site, rate match score low (<= 30) or mark ineligible in reason.
+   - If India-based, remote worldwide, or offers visa sponsorship, rate normally based on technical alignment.
+2. Write exactly 1 concise sentence explaining the match and eligibility fit.
+3. If the score is >= 80 and the job is international-friendly/eligible, write a 2-sentence polite cold outreach pitch the candidate can send to a recruiter or engineering manager on LinkedIn mentioning their NMAMIT B.Tech background and AI/ML projects. If score < 80 or ineligible, set coldPitch to empty string.
 
 Return ONLY valid JSON matching this exact schema:
 {"matchScore": 88, "reason": "Strong match because...", "coldPitch": "Hi [Name], I noticed..."}`;

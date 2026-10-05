@@ -6,6 +6,7 @@ const { runAllScrapers } = require('./scrapers/index');
 const { filterJobs } = require('./core/filter');
 const { passesGeoFilter, isIndia } = require('./core/geoFilter');
 const { evaluateJobs } = require('./core/llmEvaluator');
+const { isAlertEligible, ELIGIBILITY_STATUSES } = require('./core/eligibilityFilter');
 const { generateAllListings } = require('./core/digestGenerator');
 const { loadApplications, renderMarkdown } = require('./core/tracker');
 const Database = require('./core/database');
@@ -44,6 +45,20 @@ function validateConfig() {
  */
 function sortJobs(jobs) {
   return jobs.sort((a, b) => {
+    // 0. Eligibility rank: ELIGIBLE (0) -> LIKELY_ELIGIBLE (1) -> UNCLEAR (2) -> LIKELY_INELIGIBLE (3) -> INELIGIBLE (4)
+    const eligRank = j => {
+      switch (j.eligibility_status) {
+        case ELIGIBILITY_STATUSES.ELIGIBLE: return 0;
+        case ELIGIBILITY_STATUSES.LIKELY_ELIGIBLE: return 1;
+        case ELIGIBILITY_STATUSES.UNCLEAR: return 2;
+        case ELIGIBILITY_STATUSES.LIKELY_INELIGIBLE: return 3;
+        case ELIGIBILITY_STATUSES.INELIGIBLE: return 4;
+        default: return 2;
+      }
+    };
+    const eligDiff = eligRank(a) - eligRank(b);
+    if (eligDiff !== 0) return eligDiff;
+
     // 1. If LLM scores exist, highest match first
     if (a.matchScore != null && b.matchScore != null) {
       const scoreDiff = b.matchScore - a.matchScore;
@@ -160,8 +175,15 @@ async function main() {
     evaluatedJobs = await evaluateJobs(toEvaluate);
   }
 
-  // Re-sort to put top LLM matches at the very top
-  const toNotify = sortJobs(evaluatedJobs);
+  // Re-sort to put top LLM matches and eligible roles at the very top
+  const sortedEvaluated = sortJobs(evaluatedJobs);
+
+  // Suppress LIKELY_INELIGIBLE and INELIGIBLE jobs from high-priority alert notifications
+  const toNotify = sortedEvaluated.filter(isAlertEligible);
+  const suppressedCount = sortedEvaluated.length - toNotify.length;
+  if (suppressedCount > 0) {
+    console.log(`🛡️  Eligibility Screening: Suppressed ${suppressedCount} restricted/ineligible foreign job(s) from push notifications.`);
+  }
 
   // ── 8. Send Notifications ─────────────────────────────────────────────────
   const runType = USE_SERPAPI ? '☀️ Morning Run (Full)' : '🌙 Evening Run (Standard)';
@@ -197,13 +219,14 @@ async function main() {
     console.log('\n[DRY RUN] Would send alerts for these prioritized listings:');
     toNotify.slice(0, 20).forEach((j, i) => {
       const matchText = j.matchScore != null ? ` [Match: ${j.matchScore}%]` : '';
-      console.log(`  ${i + 1}. [${j.category}] ${j.title} @ ${j.company} (${j.location || 'India/Remote'})${matchText}`);
+      const eligBadge = j.eligibility_status === 'ELIGIBLE' ? '🟢' : j.eligibility_status === 'LIKELY_ELIGIBLE' ? '🟢' : '🟡';
+      console.log(`  ${i + 1}. ${eligBadge} [${j.category}] ${j.title} @ ${j.company} (${j.location || 'India/Remote'})${matchText}`);
     });
-    console.log(`[DRY RUN] Total to notify: ${toNotify.length} jobs (deferred: ${deferred})\n`);
+    console.log(`[DRY RUN] Total to notify: ${toNotify.length} jobs (deferred: ${deferred}, ineligible suppressed: ${suppressedCount})\n`);
   }
 
-  // ── 9. Mark Confirmed Jobs as Seen in Database ─────────────────────────────
-  for (const job of toNotify) {
+  // ── 9. Mark Evaluated Jobs as Seen in Database ─────────────────────────────
+  for (const job of evaluatedJobs) {
     db.markSeen(job);
   }
   db.save();
