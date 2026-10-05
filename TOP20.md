@@ -1,4 +1,4 @@
-# 🏆 Today's Top 20 Internship Recommendations (2026-10-04)
+# 🏆 Today's Top 20 Internship Recommendations (2026-10-05)
 
 Curated for **B.Tech CSE 2028 (NMAMIT)** targeting **AI/ML & SWE Internships**.
 Ranked by **AI/ML role alignment + tier-1 employer signal + geographic fit + freshness**.
@@ -26,7 +26,7 @@ Ranked by **AI/ML role alignment + tier-1 employer signal + geographic fit + fre
 | 17 | **Gateway Software Solutions** | Machine Learning | Chennai, Coimbatore, Erode, Karur, Madurai, Villupuram, Namakkal, Dharmapuri, Kanchipuram, Avadi, Salem, Kanjanoor, Trichey, Sivagangai Hybrid 🇮🇳 India | 🧠 AI/ML | [Apply →](https://internshala.com/internship/detail/machine-learning-internship-in-multiple-locations-at-gateway-software-solutions1790741489) | `npm run track -- add "Gateway Software Solutions" "Machine Learning"` |
 | 18 | **Coach Ravikant Academy** | Artificial Intelligence (AI) | Delhi 🇮🇳 India | 🧠 AI/ML | [Apply →](https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-delhi-at-coach-ravikant-academy1790857629) | `npm run track -- add "Coach Ravikant Academy" "Artificial Intelligence (AI)"` |
 | 19 | **Career Solutions** | Artificial Intelligence (AI) | Chennai 🇮🇳 India | 🧠 AI/ML | [Apply →](https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-chennai-at-career-solutions1790679217) | `npm run track -- add "Career Solutions" "Artificial Intelligence (AI)"` |
-| 20 | **Variety Innovation Venture Private Limited** | Robotics Data Engineer | Delhi, Gurgaon, Noida 🇮🇳 India | 🧠 AI/ML | [Apply →](https://internshala.com/internship/detail/robotics-data-engineer-internship-in-multiple-locations-at-variety-innovation-venture-private-limited1790677762) | `npm run track -- add "Variety Innovation Venture Private Limited" "Robotics Data Engineer"` |
+| 20 | **Cotiviti** | Generative AI/Agentic AI/Research Intern | Remote in USA 🌐 Remote | 🧠 AI/ML | [Apply →](https://careers-cotiviti.icims.com/jobs/18929/job?mobile=true&needsRedirect=false) | `npm run track -- add "Cotiviti" "Generative AI/Agentic AI/Research Intern"` |
 
 ---
 *Rankings auto-update twice daily with every scheduled pipeline run.*
