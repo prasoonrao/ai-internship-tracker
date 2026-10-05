@@ -51,6 +51,7 @@ jobs:
           SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
           USE_SERPAPI: 'true'
           USE_LLM: 'true'
           DRY_RUN: 'false'
