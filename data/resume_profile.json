@@ -4,7 +4,11 @@
   "currentLevel": "3rd year / 5th semester",
   "graduationYear": 2028,
   "cgpa": "8.45",
-  "targetLocations": ["India", "Remote", "Work From Home"],
+  "targetLocations": [
+    "India",
+    "Remote",
+    "Work From Home"
+  ],
   "primaryTargetRoles": [
     "AI/ML Engineer Intern",
     "Machine Learning Intern",
@@ -31,15 +35,71 @@
     "Software Engineering Intern",
     "Backend Engineering Intern"
   ],
-  "programmingLanguages": ["Python", "Java", "C"],
+  "programmingLanguages": [
+    "Python",
+    "Java",
+    "C",
+    "DSA"
+  ],
+  "skills": {
+    "Programming": [
+      "Python",
+      "Java",
+      "C",
+      "DSA"
+    ],
+    "AI/ML": [
+      "Machine Learning",
+      "Deep Learning",
+      "Generative AI",
+      "LLMs",
+      "TensorFlow",
+      "PyTorch",
+      "scikit-learn"
+    ],
+    "Data": [
+      "NumPy",
+      "Pandas",
+      "SQL"
+    ],
+    "Cloud / Engineering": [
+      "AWS",
+      "Docker",
+      "Kubernetes",
+      "REST APIs",
+      "Git",
+      "GitHub"
+    ]
+  },
   "coreStack": [
-    "Python", "TensorFlow", "scikit-learn", "NumPy", "Pandas",
-    "Machine Learning", "Deep Learning", "Generative AI", "LLMs",
-    "Java", "C", "Data Structures & Algorithms (DSA)", "REST APIs", "Git"
+    "Python",
+    "Java",
+    "C",
+    "DSA",
+    "Machine Learning",
+    "Deep Learning",
+    "Generative AI",
+    "LLMs",
+    "TensorFlow",
+    "PyTorch",
+    "scikit-learn",
+    "NumPy",
+    "Pandas",
+    "SQL",
+    "AWS",
+    "Docker",
+    "Kubernetes",
+    "REST APIs",
+    "Git",
+    "GitHub"
   ],
   "interests": [
-    "Artificial Intelligence", "Machine Learning", "Generative AI & LLMs",
-    "Applied Deep Learning", "Data Science & Analytics", "Backend Systems"
+    "Artificial Intelligence",
+    "Machine Learning",
+    "Generative AI & LLMs",
+    "Applied Deep Learning",
+    "Data Science & Analytics",
+    "Backend Systems"
   ],
   "experienceLevel": "Student / Intern / Fresher / 2028 Grad",
   "preferredWorkMode": "India-based or Remote"

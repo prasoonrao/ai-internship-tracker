@@ -298,6 +298,22 @@ async function runAll() {
     assert.ok(profile.coreStack.includes('Python'));
   });
 
+  test('Candidate profile contains PyTorch, Docker, Kubernetes, AWS, and SQL in coreStack and skills', () => {
+    const profilePath = path.join(__dirname, '..', 'data', 'resume_profile.json');
+    const profile = JSON.parse(fs.readFileSync(profilePath, 'utf8'));
+
+    const requiredSkills = ['PyTorch', 'Docker', 'Kubernetes', 'AWS', 'SQL'];
+    requiredSkills.forEach(skill => {
+      assert.ok(profile.coreStack.includes(skill), `coreStack should include ${skill}`);
+    });
+
+    assert.ok(profile.skills['AI/ML'].includes('PyTorch'), 'AI/ML skills should include PyTorch');
+    assert.ok(profile.skills['Cloud / Engineering'].includes('Docker'), 'Cloud skills should include Docker');
+    assert.ok(profile.skills['Cloud / Engineering'].includes('Kubernetes'), 'Cloud skills should include Kubernetes');
+    assert.ok(profile.skills['Cloud / Engineering'].includes('AWS'), 'Cloud skills should include AWS');
+    assert.ok(profile.skills['Data'].includes('SQL'), 'Data skills should include SQL');
+  });
+
   // ── 7. AI Match Scoring Engine Verification ───────────────────────────────
   console.log('\n🔹 7. AI Match Scoring Engine Verification:');
 

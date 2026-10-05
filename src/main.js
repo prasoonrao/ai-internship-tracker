@@ -21,6 +21,7 @@ const USE_SERPAPI = process.env.USE_SERPAPI === 'true';
 const DRY_RUN = process.env.DRY_RUN === 'true' || process.argv.includes('--dry-run');
 const USE_LLM = process.env.USE_LLM === 'true';
 const SEED_MODE = process.env.SEED_MODE === 'true' || process.argv.includes('--seed');
+const MIN_MATCH_SCORE = parseInt(process.env.MIN_MATCH_SCORE || '70', 10);
 
 const MAX_JOBS_PER_RUN = 50;
 
@@ -178,11 +179,14 @@ async function main() {
   // Re-sort to put top LLM matches and eligible roles at the very top
   const sortedEvaluated = sortJobs(evaluatedJobs);
 
-  // Suppress LIKELY_INELIGIBLE and INELIGIBLE jobs from high-priority alert notifications
-  const toNotify = sortedEvaluated.filter(isAlertEligible);
+  // Suppress LIKELY_INELIGIBLE and INELIGIBLE jobs from high-priority alert notifications,
+  // and enforce MIN_MATCH_SCORE threshold (70%) when AI evaluation is active
+  const toNotify = sortedEvaluated
+    .filter(isAlertEligible)
+    .filter(j => j.matchScore == null || j.matchScore >= MIN_MATCH_SCORE);
   const suppressedCount = sortedEvaluated.length - toNotify.length;
   if (suppressedCount > 0) {
-    console.log(`🛡️  Eligibility Screening: Suppressed ${suppressedCount} restricted/ineligible foreign job(s) from push notifications.`);
+    console.log(`🛡️  Screening & Threshold: Filtered out ${suppressedCount} restricted/ineligible or low-match (<${MIN_MATCH_SCORE}%) job(s) from push notifications.`);
   }
 
   // ── 8. Send Notifications ─────────────────────────────────────────────────

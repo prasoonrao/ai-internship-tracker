@@ -18,10 +18,27 @@ try {
     graduationYear: 2028,
     cgpa: '8.45',
     targetRoles: ['AI/ML Engineer Intern', 'Machine Learning Intern', 'Software Engineer Intern'],
-    coreStack: ['Python', 'TensorFlow', 'scikit-learn', 'NumPy', 'Pandas', 'DSA', 'Java', 'C', 'GenAI'],
+    skills: {
+      Programming: ['Python', 'Java', 'C', 'DSA'],
+      'AI/ML': ['Machine Learning', 'Deep Learning', 'Generative AI', 'LLMs', 'TensorFlow', 'PyTorch', 'scikit-learn'],
+      Data: ['NumPy', 'Pandas', 'SQL'],
+      'Cloud / Engineering': ['AWS', 'Docker', 'Kubernetes', 'REST APIs', 'Git', 'GitHub'],
+    },
+    coreStack: [
+      'Python', 'Java', 'C', 'DSA',
+      'Machine Learning', 'Deep Learning', 'Generative AI', 'LLMs', 'TensorFlow', 'PyTorch', 'scikit-learn',
+      'NumPy', 'Pandas', 'SQL',
+      'AWS', 'Docker', 'Kubernetes', 'REST APIs', 'Git', 'GitHub',
+    ],
     targetLocations: ['India', 'Remote'],
   };
 }
+
+const skillsFormatted = candidateProfile.skills
+  ? Object.entries(candidateProfile.skills)
+      .map(([cat, list]) => `- ${cat}: ${list.join(', ')}`)
+      .join('\n')
+  : (candidateProfile.coreStack || []).join(', ');
 
 const PROFILE_SUMMARY = `
 Candidate: ${candidateProfile.name || 'Candidate'}
@@ -30,8 +47,9 @@ Graduation Year: ${candidateProfile.graduationYear || '2028'} (${candidateProfil
 CGPA: ${candidateProfile.cgpa || '8.45'}
 Primary Target Roles: ${(candidateProfile.primaryTargetRoles || candidateProfile.targetRoles || []).join(', ')}
 Secondary Target Roles: ${(candidateProfile.secondaryTargetRoles || []).join(', ')}
-Technical Skills: ${(candidateProfile.coreStack || []).join(', ')}
-Programming: ${(candidateProfile.programmingLanguages || ['Python', 'Java', 'C']).join(', ')}
+Verified Candidate Skills:
+${skillsFormatted}
+Full Core Stack: ${(candidateProfile.coreStack || []).join(', ')}
 Citizenship & Location: Indian Citizen residing and studying in India (NMAMIT)
 Work Authorization Context:
 - Authorized for employment in India (Domestic citizen/student).
@@ -117,7 +135,7 @@ Sponsorship: ${job.visa_sponsorship || job.sponsorship || 'Unstated'}
 Description: ${(job.description || 'No description available').slice(0, 800)}
 
 TASKS:
-1. Provide a match score (0 to 100) assessing relevance to the candidate's target roles (Highest preference: AI/ML, GenAI, LLM, Data Science, Python; Secondary: SWE, Backend), college graduation timeline (Batch of 2028), and skills.
+1. Provide a match score (0 to 100) assessing relevance to the candidate's target roles (Highest preference: AI/ML, GenAI, LLM, Data Science, Python; Secondary: SWE, Backend), college graduation timeline (Batch of 2028), and technical skill alignment (evaluate against candidate's verified skills: Python, Java, C, DSA; AI/ML: Machine Learning, Deep Learning, Generative AI, LLMs, TensorFlow, PyTorch, scikit-learn; Data: NumPy, Pandas, SQL; Cloud/Engineering: AWS, Docker, Kubernetes, REST APIs, Git, GitHub).
    CRITICAL ELIGIBILITY RULE:
    - If the role requires US/foreign citizenship, security clearance, host-country university enrollment, or explicitly states no visa sponsorship for foreign on-site, rate match score low (<= 30) or mark ineligible in reason.
    - If India-based, remote worldwide, or offers visa sponsorship, rate normally based on technical alignment.
