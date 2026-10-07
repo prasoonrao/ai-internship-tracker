@@ -601,6 +601,443 @@ async function runAll() {
     assert.strictEqual(shouldAlert(job, 70), false, 'Unscored UNCLEAR job must be suppressed');
   });
 
+  // ── 11. Discovery Scrapers Tests (Indeed, Hirist, Foundit, Naukri) ────────
+  console.log('\n🔹 11. Discovery Scrapers Tests (Indeed, Hirist, Foundit, Naukri):');
+
+  async function testAsync(description, fn) {
+    try {
+      await fn();
+      console.log(`  ✅ ${description}`);
+      passedTests++;
+    } catch (err) {
+      console.error(`  ❌ ${description}`);
+      console.error(`     Error: ${err.message}`);
+      failedTests++;
+    }
+  }
+
+  const { normalizeIndeedJob, scrape: scrapeIndeed } = require('../src/scrapers/indeed');
+  const { normalizeHiristJob, scrape: scrapeHirist } = require('../src/scrapers/hirist');
+  const { normalizeFounditJob, scrape: scrapeFoundit } = require('../src/scrapers/foundit');
+  const { normalizeNaukriJob, scrape: scrapeNaukri } = require('../src/scrapers/naukri');
+
+  // INDEED TESTS
+  test('Indeed: Valid listing normalizes all required fields', () => {
+    const raw = {
+      title: 'Machine Learning Intern',
+      company: 'TechCorp India',
+      location: 'Bengaluru, Karnataka',
+      url: 'https://in.indeed.com/viewjob?jk=abc12345&from=serp',
+      description: 'Develop PyTorch and LLM pipelines for conversational agents.',
+      salary: '₹35,000 / month',
+      skills: ['Python', 'PyTorch', 'NLP'],
+      experience: '0-1 years',
+      postedAt: '2 days ago',
+    };
+    const job = normalizeIndeedJob(raw);
+    assert.ok(job);
+    assert.strictEqual(job.title, 'Machine Learning Intern');
+    assert.strictEqual(job.company, 'TechCorp India');
+    assert.strictEqual(job.location, 'Bengaluru, Karnataka');
+    assert.strictEqual(job.remote, false);
+    assert.strictEqual(job.url, 'https://in.indeed.com/viewjob');
+    assert.strictEqual(job.type, 'internship');
+    assert.strictEqual(job.source, '[INDEED]');
+    assert.strictEqual(job.salary, '₹35,000 / month');
+    assert.deepStrictEqual(job.skills, ['Python', 'PyTorch', 'NLP']);
+    assert.strictEqual(job.experience, '0-1 years');
+    assert.strictEqual(job.postedAt, '2 days ago');
+    assert.ok(job.description.includes('PyTorch'));
+  });
+
+  test('Indeed: Malformed listings return null', () => {
+    assert.strictEqual(normalizeIndeedJob(null), null);
+    assert.strictEqual(normalizeIndeedJob({}), null);
+    assert.strictEqual(normalizeIndeedJob({ title: '' }), null);
+    assert.strictEqual(normalizeIndeedJob({ title: 'ML Intern' }), null, 'Missing URL must return null');
+  });
+
+  test('Indeed: Missing location defaults safely', () => {
+    const job = normalizeIndeedJob({
+      title: 'Data Science Intern',
+      url: 'https://in.indeed.com/viewjob?jk=xyz',
+      location: '',
+    });
+    assert.strictEqual(job.location, 'India');
+    assert.strictEqual(passesGeoFilter(job), true);
+  });
+
+  test('Indeed: Duplicate URLs with tracking params produce identical clean URLs and hashes', () => {
+    const job1 = normalizeIndeedJob({
+      title: 'AI Intern',
+      company: 'Google',
+      url: 'https://in.indeed.com/viewjob?jk=123&utm_source=feed&tk=abc',
+    });
+    const job2 = normalizeIndeedJob({
+      title: 'AI Intern',
+      company: 'Google',
+      url: 'https://in.indeed.com/viewjob?jk=123&ref=banner&from=vjs',
+    });
+    assert.strictEqual(job1.url, job2.url);
+    assert.strictEqual(Database.hash(job1), Database.hash(job2));
+  });
+
+  test('Indeed: India listing passes geo & eligibility filters', () => {
+    const job = normalizeIndeedJob({
+      title: 'ML Intern',
+      company: 'Swiggy',
+      location: 'Hyderabad, India',
+      url: 'https://in.indeed.com/viewjob?jk=ind1',
+    });
+    assert.strictEqual(passesGeoFilter(job), true);
+    const elig = screenEligibility(job);
+    assert.strictEqual(elig.eligibility_status, ELIGIBILITY_STATUSES.ELIGIBLE);
+  });
+
+  test('Indeed: Remote listing is recognized and passes geoFilter', () => {
+    const job = normalizeIndeedJob({
+      title: 'AI Engineer Intern',
+      company: 'RemoteStart',
+      location: 'Remote',
+      url: 'https://in.indeed.com/viewjob?jk=rem1',
+    });
+    assert.strictEqual(job.remote, true);
+    assert.strictEqual(passesGeoFilter(job), true);
+  });
+
+  test('Indeed: Foreign-restricted remote listing is flagged LIKELY_INELIGIBLE and blocked from alerts', () => {
+    const job = normalizeIndeedJob({
+      title: 'ML Research Intern',
+      company: 'USLab',
+      location: 'Remote',
+      description: 'Remote in the US only. Must reside in the United States.',
+      url: 'https://in.indeed.com/viewjob?jk=usrem1',
+    });
+    assert.strictEqual(job.remote, true);
+    const elig = screenEligibility(job);
+    assert.strictEqual(elig.eligibility_status, ELIGIBILITY_STATUSES.LIKELY_INELIGIBLE);
+    job.eligibility_status = elig.eligibility_status;
+    job.matchScore = 95;
+    assert.strictEqual(shouldAlert(job, 70), false);
+  });
+
+  await testAsync('Indeed: Fail-safe returns empty array on network/anti-bot restriction without error', async () => {
+    const res = await scrapeIndeed();
+    assert.ok(Array.isArray(res));
+  });
+
+  // HIRIST TESTS
+  test('Hirist: Valid listing normalizes all required fields', () => {
+    const raw = {
+      title: 'AI / Deep Learning Intern',
+      company: 'AI Analytics Ltd',
+      location: 'Pune',
+      id: '987654',
+      description: 'Work on Computer Vision and Transformer models.',
+      ctc: '₹25,000 / month',
+      keySkills: ['TensorFlow', 'Python', 'PyTorch'],
+      exp: '0-0 years',
+      postedOn: 'Today',
+    };
+    const job = normalizeHiristJob(raw);
+    assert.ok(job);
+    assert.strictEqual(job.title, 'AI / Deep Learning Intern');
+    assert.strictEqual(job.company, 'AI Analytics Ltd');
+    assert.strictEqual(job.location, 'Pune');
+    assert.strictEqual(job.remote, false);
+    assert.strictEqual(job.url, 'https://www.hirist.tech/j/987654');
+    assert.strictEqual(job.type, 'internship');
+    assert.strictEqual(job.source, '[HIRIST]');
+    assert.strictEqual(job.salary, '₹25,000 / month');
+    assert.deepStrictEqual(job.skills, ['TensorFlow', 'Python', 'PyTorch']);
+    assert.strictEqual(job.experience, '0-0 years');
+    assert.strictEqual(job.postedAt, 'Today');
+  });
+
+  test('Hirist: Malformed listings return null', () => {
+    assert.strictEqual(normalizeHiristJob(null), null);
+    assert.strictEqual(normalizeHiristJob({}), null);
+    assert.strictEqual(normalizeHiristJob({ title: '' }), null);
+    assert.strictEqual(normalizeHiristJob({ title: 'AI Intern' }), null, 'Missing URL/id must return null');
+  });
+
+  test('Hirist: Missing location defaults safely', () => {
+    const job = normalizeHiristJob({
+      title: 'GenAI Intern',
+      id: '112233',
+      location: '',
+    });
+    assert.strictEqual(job.location, 'India');
+    assert.strictEqual(passesGeoFilter(job), true);
+  });
+
+  test('Hirist: Duplicate URLs with tracking query params resolve stably', () => {
+    const job1 = normalizeHiristJob({
+      title: 'SWE Intern',
+      company: 'InnoTech',
+      url: 'https://www.hirist.tech/j/12345?ref=search&utm_source=feed',
+    });
+    const job2 = normalizeHiristJob({
+      title: 'SWE Intern',
+      company: 'InnoTech',
+      url: 'https://www.hirist.tech/j/12345?candidate=99',
+    });
+    assert.strictEqual(job1.url, job2.url);
+    assert.strictEqual(Database.hash(job1), Database.hash(job2));
+  });
+
+  test('Hirist: India listing passes geo & eligibility filters', () => {
+    const job = normalizeHiristJob({
+      title: 'Data Science Intern',
+      company: 'Razorpay',
+      location: 'Bangalore',
+      id: '5566',
+    });
+    assert.strictEqual(passesGeoFilter(job), true);
+    const elig = screenEligibility(job);
+    assert.strictEqual(elig.eligibility_status, ELIGIBILITY_STATUSES.ELIGIBLE);
+  });
+
+  test('Hirist: Remote listing is recognized and passes geoFilter', () => {
+    const job = normalizeHiristJob({
+      title: 'Backend Engineer Intern',
+      company: 'DistributedTech',
+      location: 'Work from home',
+      id: '7788',
+    });
+    assert.strictEqual(job.remote, true);
+    assert.strictEqual(passesGeoFilter(job), true);
+  });
+
+  test('Hirist: Foreign-restricted remote listing is flagged LIKELY_INELIGIBLE and blocked', () => {
+    const job = normalizeHiristJob({
+      title: 'ML Intern',
+      company: 'GlobalCorp',
+      location: 'Remote',
+      description: 'Restricted to candidates residing in Canada.',
+      id: '9900',
+    });
+    assert.strictEqual(job.remote, true);
+    const elig = screenEligibility(job);
+    assert.strictEqual(elig.eligibility_status, ELIGIBILITY_STATUSES.LIKELY_INELIGIBLE);
+    job.eligibility_status = elig.eligibility_status;
+    job.matchScore = 88;
+    assert.strictEqual(shouldAlert(job, 70), false);
+  });
+
+  await testAsync('Hirist: Fail-safe returns empty array on auth/network restriction without error', async () => {
+    const res = await scrapeHirist();
+    assert.ok(Array.isArray(res));
+  });
+
+  // FOUNDIT TESTS
+  test('Foundit: Valid listing normalizes all required fields', () => {
+    const raw = {
+      title: 'Generative AI Intern',
+      company: 'Monster Innovation',
+      location: 'Noida',
+      id: 'fnt-54321',
+      description: 'Building RAG applications and LLM fine-tuning pipelines.',
+      salaryText: '₹30,000 - ₹40,000 / Month',
+      skillSets: ['Python', 'LangChain', 'Vector DB'],
+      experienceText: '0-1 Yrs',
+      postedOn: '1 day ago',
+    };
+    const job = normalizeFounditJob(raw);
+    assert.ok(job);
+    assert.strictEqual(job.title, 'Generative AI Intern');
+    assert.strictEqual(job.company, 'Monster Innovation');
+    assert.strictEqual(job.location, 'Noida');
+    assert.strictEqual(job.remote, false);
+    assert.strictEqual(job.url, 'https://www.foundit.in/job/fnt-54321');
+    assert.strictEqual(job.type, 'internship');
+    assert.strictEqual(job.source, '[FOUNDIT]');
+    assert.strictEqual(job.salary, '₹30,000 - ₹40,000 / Month');
+    assert.deepStrictEqual(job.skills, ['Python', 'LangChain', 'Vector DB']);
+    assert.strictEqual(job.experience, '0-1 Yrs');
+    assert.strictEqual(job.postedAt, '1 day ago');
+  });
+
+  test('Foundit: Malformed listings return null', () => {
+    assert.strictEqual(normalizeFounditJob(null), null);
+    assert.strictEqual(normalizeFounditJob({}), null);
+    assert.strictEqual(normalizeFounditJob({ title: '' }), null);
+    assert.strictEqual(normalizeFounditJob({ title: 'AI Intern' }), null, 'Missing URL/id must return null');
+  });
+
+  test('Foundit: Missing location defaults safely', () => {
+    const job = normalizeFounditJob({
+      title: 'Python Intern',
+      id: 'fnt-001',
+      location: '',
+    });
+    assert.strictEqual(job.location, 'India');
+    assert.strictEqual(passesGeoFilter(job), true);
+  });
+
+  test('Foundit: Duplicate URLs with tracking query params resolve stably', () => {
+    const job1 = normalizeFounditJob({
+      title: 'Data Analyst Intern',
+      company: 'AnalyticsCo',
+      url: 'https://www.foundit.in/job/1122?searchId=abc&source=srp',
+    });
+    const job2 = normalizeFounditJob({
+      title: 'Data Analyst Intern',
+      company: 'AnalyticsCo',
+      url: 'https://www.foundit.in/job/1122?ref=external',
+    });
+    assert.strictEqual(job1.url, job2.url);
+    assert.strictEqual(Database.hash(job1), Database.hash(job2));
+  });
+
+  test('Foundit: India listing passes geo & eligibility filters', () => {
+    const job = normalizeFounditJob({
+      title: 'AI Research Intern',
+      company: 'Infosys',
+      location: 'Mysore, Karnataka',
+      id: 'fnt-999',
+    });
+    assert.strictEqual(passesGeoFilter(job), true);
+    const elig = screenEligibility(job);
+    assert.strictEqual(elig.eligibility_status, ELIGIBILITY_STATUSES.ELIGIBLE);
+  });
+
+  test('Foundit: Remote listing is recognized and passes geoFilter', () => {
+    const job = normalizeFounditJob({
+      title: 'SDE Intern',
+      company: 'CloudWorks',
+      location: 'Remote',
+      id: 'fnt-888',
+    });
+    assert.strictEqual(job.remote, true);
+    assert.strictEqual(passesGeoFilter(job), true);
+  });
+
+  test('Foundit: Foreign-restricted remote listing is flagged LIKELY_INELIGIBLE and blocked', () => {
+    const job = normalizeFounditJob({
+      title: 'ML Systems Intern',
+      company: 'EuroTech',
+      location: 'Remote',
+      description: 'Candidates must be based in the UK. UK residents only.',
+      id: 'fnt-777',
+    });
+    assert.strictEqual(job.remote, true);
+    const elig = screenEligibility(job);
+    assert.strictEqual(elig.eligibility_status, ELIGIBILITY_STATUSES.LIKELY_INELIGIBLE);
+    job.eligibility_status = elig.eligibility_status;
+    job.matchScore = 90;
+    assert.strictEqual(shouldAlert(job, 70), false);
+  });
+
+  await testAsync('Foundit: Fail-safe returns empty array on SPA/WAF restriction without error', async () => {
+    const res = await scrapeFoundit();
+    assert.ok(Array.isArray(res));
+  });
+
+  // NAUKRI TESTS
+  test('Naukri: Valid listing normalizes all required fields', () => {
+    const raw = {
+      title: 'Machine Learning Engineering Intern',
+      company: 'Zomato',
+      location: 'Gurgaon / Gurugram',
+      jobId: '24052026001',
+      description: 'Work on recommendation algorithms and feature engineering.',
+      salaryPlaceholder: '₹40,000 - ₹50,000 / month',
+      tagsAndSkills: 'Python, PyTorch, Scikit-learn, SQL',
+      experienceText: '0 - 1 years',
+      footerPlaceholderLabel: 'Just now',
+    };
+    const job = normalizeNaukriJob(raw);
+    assert.ok(job);
+    assert.strictEqual(job.title, 'Machine Learning Engineering Intern');
+    assert.strictEqual(job.company, 'Zomato');
+    assert.strictEqual(job.location, 'Gurgaon / Gurugram');
+    assert.strictEqual(job.remote, false);
+    assert.strictEqual(job.url, 'https://www.naukri.com/job-listings-24052026001');
+    assert.strictEqual(job.type, 'internship');
+    assert.strictEqual(job.source, '[NAUKRI]');
+    assert.strictEqual(job.salary, '₹40,000 - ₹50,000 / month');
+    assert.deepStrictEqual(job.skills, ['Python', 'PyTorch', 'Scikit-learn', 'SQL']);
+    assert.strictEqual(job.experience, '0 - 1 years');
+    assert.strictEqual(job.postedAt, 'Just now');
+  });
+
+  test('Naukri: Malformed listings return null', () => {
+    assert.strictEqual(normalizeNaukriJob(null), null);
+    assert.strictEqual(normalizeNaukriJob({}), null);
+    assert.strictEqual(normalizeNaukriJob({ title: '' }), null);
+    assert.strictEqual(normalizeNaukriJob({ title: 'AI Intern' }), null, 'Missing URL/jobId must return null');
+  });
+
+  test('Naukri: Missing location defaults safely', () => {
+    const job = normalizeNaukriJob({
+      title: 'AI Intern',
+      jobId: 'nk-001',
+      location: '',
+    });
+    assert.strictEqual(job.location, 'India');
+    assert.strictEqual(passesGeoFilter(job), true);
+  });
+
+  test('Naukri: Duplicate URLs with tracking query params resolve stably', () => {
+    const job1 = normalizeNaukriJob({
+      title: 'Data Science Intern',
+      company: 'Paytm',
+      url: 'https://www.naukri.com/job-listings-1234?src=jobsearchDesk&sid=171&xp=1',
+    });
+    const job2 = normalizeNaukriJob({
+      title: 'Data Science Intern',
+      company: 'Paytm',
+      url: 'https://www.naukri.com/job-listings-1234?utm_source=google',
+    });
+    assert.strictEqual(job1.url, job2.url);
+    assert.strictEqual(Database.hash(job1), Database.hash(job2));
+  });
+
+  test('Naukri: India listing passes geo & eligibility filters', () => {
+    const job = normalizeNaukriJob({
+      title: 'Machine Learning Intern',
+      company: 'Flipkart',
+      location: 'Bengaluru / Bangalore',
+      jobId: 'nk-777',
+    });
+    assert.strictEqual(passesGeoFilter(job), true);
+    const elig = screenEligibility(job);
+    assert.strictEqual(elig.eligibility_status, ELIGIBILITY_STATUSES.ELIGIBLE);
+  });
+
+  test('Naukri: Remote listing is recognized and passes geoFilter', () => {
+    const job = normalizeNaukriJob({
+      title: 'AI Engineer Intern',
+      company: 'Zepto',
+      location: 'Remote',
+      jobId: 'nk-666',
+    });
+    assert.strictEqual(job.remote, true);
+    assert.strictEqual(passesGeoFilter(job), true);
+  });
+
+  test('Naukri: Foreign-restricted remote listing is flagged LIKELY_INELIGIBLE and blocked', () => {
+    const job = normalizeNaukriJob({
+      title: 'NLP Research Intern',
+      company: 'USLab',
+      location: 'Remote',
+      description: 'Must reside in the US. No visa sponsorship provided.',
+      jobId: 'nk-555',
+    });
+    assert.strictEqual(job.remote, true);
+    const elig = screenEligibility(job);
+    assert.strictEqual(elig.eligibility_status, ELIGIBILITY_STATUSES.LIKELY_INELIGIBLE);
+    job.eligibility_status = elig.eligibility_status;
+    job.matchScore = 95;
+    assert.strictEqual(shouldAlert(job, 70), false);
+  });
+
+  await testAsync('Naukri: Fail-safe returns empty array on anti-bot restriction without error', async () => {
+    const res = await scrapeNaukri();
+    assert.ok(Array.isArray(res));
+  });
+
   console.log('\n' + '═'.repeat(60));
   console.log(`  📊 TEST RESULTS: ${passedTests} PASSED, ${failedTests} FAILED`);
   console.log('═'.repeat(60) + '\n');

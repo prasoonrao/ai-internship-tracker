@@ -60,13 +60,15 @@ const WORK_AUTH_DISQUALIFIERS = [
 
 // ─── Geographic Residency Restrictions on Remote ─────────────────────────────
 const RESIDENCY_RESTRICTIONS = [
-  { regex: /\b(?:must\s+(?:currently\s+)?reside\s+in|candidates?\s+must\s+reside\s+in)\s+(?:the\s+)?(?:u\.?s\.?|united states|canada|uk|europe|north america)\b/i, label: 'Must reside in foreign host country' },
-  { regex: /\b(?:u\.?s\.?|united states|canada|uk)\s+residents?\s+only\b/i, label: 'Host country residents only' },
+  { regex: /\b(?:must\s+(?:currently\s+)?reside\s+in|candidates?\s+must\s+reside\s+in|restricted\s+to\s+(?:candidates|applicants|residents)\s+(?:currently\s+)?residing\s+in)\s+(?:the\s+)?(?:u\.?s\.?|united states|canada|uk|europe|north america|serbia|poland|germany|france|australia)/i, label: 'Must reside in foreign host country' },
+  { regex: /\b(?:u\.?s\.?|united states|canada|uk|europe)\s+residents?\s+only\b/i, label: 'Host country residents only' },
   { regex: /\bmust\s+be\s+(?:physically\s+)?located\s+in\s+(?:the\s+)?(?:u\.?s\.?|united states|canada|uk|europe)\b/i, label: 'Must be physically located in foreign host country' },
   { regex: /\bcandidates?\s+must\s+be\s+based\s+in\s+(?:the\s+)?(?:u\.?s\.?|united states|canada|uk)\b/i, label: 'Must be based in foreign host country' },
   { regex: /\bcontinental\s+u\.?s\.?\s+only\b/i, label: 'Continental US only' },
   { regex: /\bremote\s+(?:in|within|only)\s+(?:the\s+)?(?:u\.?s\.?|united states|usa|canada|uk|europe|germany|france|australia)\b/i, label: 'Remote restricted to specific foreign country' },
+  { regex: /\bremote\s*\(\s*(?:only\s+)?(?:in\s+)?(?:the\s+)?(?:u\.?s\.?|united states|usa|canada|uk|europe|latam|emea|apac|north america|serbia|poland|germany|france)[^)]*\)/i, label: 'Remote restricted to designated foreign territory' },
   { regex: /\b(?:u\.?s\.?|usa|uk|canada|europe)\s+remote\b/i, label: 'Remote restricted to specific foreign country' },
+  { regex: /\b(?:u\.?s\.?|usa|canada|uk|europe|eu|emea|latam)\s+only\b/i, label: 'Foreign region restricted' },
 ];
 
 // ─── Positive Signals: Welcomes International Candidates ─────────────────────
@@ -84,7 +86,13 @@ const POSITIVE_SIGNALS = [
  * Helper to check if a location string points to India
  */
 function isDomesticIndia(loc, source) {
-  if (['Internshala', 'Freshersworld', 'IndiaDirect'].includes(source)) {
+  if ([
+    'Internshala', 'Freshersworld', 'IndiaDirect',
+    '[UNSTOP]', 'UNSTOP', 'Unstop',
+    '[NAUKRI]', 'NAUKRI', 'Naukri',
+    '[HIRIST]', 'HIRIST', 'Hirist',
+    '[FOUNDIT]', 'FOUNDIT', 'Foundit',
+  ].includes(source)) {
     return true;
   }
   if (!loc) return false;
@@ -122,23 +130,7 @@ function screenEligibility(job) {
   let studyLocationReq = 'None stated';
   let citizenshipReq = 'None stated';
 
-  // ── 1. Domestic India Check (Candidate is citizen and student in India) ────
-  if (isDomesticIndia(location, source)) {
-    return {
-      eligibility_status: ELIGIBILITY_STATUSES.ELIGIBLE,
-      location_restriction: location || 'India',
-      work_authorization_requirement: 'Citizen / Local Student (Eligible in India)',
-      visa_sponsorship: 'Not required (Domestic)',
-      study_location_requirement: 'None (Enrolled in NMAMIT, India)',
-      citizenship_requirement: 'None (Indian citizen)',
-      eligibility_confidence: 0.99,
-      eligibility_reasons: [
-        'India-based opportunity; candidate is an Indian citizen and student studying in India'
-      ],
-    };
-  }
-
-  // ── 2. Explicit Citizenship Disqualifiers ──────────────────────────────────
+  // ── 1. Explicit Citizenship Disqualifiers ──────────────────────────────────
   for (const item of CITIZENSHIP_PATTERNS) {
     if (item.regex.test(fullText)) {
       citizenshipReq = item.label;
@@ -164,7 +156,7 @@ function screenEligibility(job) {
     };
   }
 
-  // ── 3. Study / University Location Restrictions ────────────────────────────
+  // ── 2. Study / University Location Restrictions ────────────────────────────
   for (const item of STUDY_LOCATION_PATTERNS) {
     if (item.regex.test(fullText)) {
       studyLocationReq = item.label;
@@ -185,25 +177,7 @@ function screenEligibility(job) {
     };
   }
 
-  // ── 4. Explicit Work Authorization & Sponsorship Restrictions ──────────────
-  let hasNoSponsorship = false;
-  for (const item of WORK_AUTH_DISQUALIFIERS) {
-    if (item.regex.test(fullText)) {
-      workAuthReq = item.label;
-      visaSponsorship = 'Not provided';
-      hasNoSponsorship = true;
-      reasons.push(item.label);
-    }
-  }
-
-  // Structured feed metadata check (e.g. SimplifyJobs 'Does Not Offer Sponsorship')
-  if (sponsorshipField.toLowerCase().includes('does not offer') || sponsorshipField.toLowerCase().includes('no sponsorship')) {
-    visaSponsorship = 'Not provided';
-    hasNoSponsorship = true;
-    reasons.push('Structured listing feed explicitly flags: Does Not Offer Sponsorship');
-  }
-
-  // ── 5. Residency Restrictions on Remote / Distributed Roles ─────────────────
+  // ── 3. Residency Restrictions on Remote / Distributed Roles ─────────────────
   let hasResidencyRestriction = false;
   for (const item of RESIDENCY_RESTRICTIONS) {
     if (item.regex.test(fullText)) {
@@ -225,6 +199,40 @@ function screenEligibility(job) {
       eligibility_confidence: 0.92,
       eligibility_reasons: reasons,
     };
+  }
+
+  // ── 4. Domestic India Check (Candidate is citizen and student in India) ────
+  if (isDomesticIndia(location, source)) {
+    return {
+      eligibility_status: ELIGIBILITY_STATUSES.ELIGIBLE,
+      location_restriction: location || 'India',
+      work_authorization_requirement: 'Citizen / Local Student (Eligible in India)',
+      visa_sponsorship: 'Not required (Domestic)',
+      study_location_requirement: 'None (Enrolled in NMAMIT, India)',
+      citizenship_requirement: 'None (Indian citizen)',
+      eligibility_confidence: 0.99,
+      eligibility_reasons: [
+        'India-based opportunity; candidate is an Indian citizen and student studying in India'
+      ],
+    };
+  }
+
+  // ── 5. Explicit Work Authorization & Sponsorship Restrictions ──────────────
+  let hasNoSponsorship = false;
+  for (const item of WORK_AUTH_DISQUALIFIERS) {
+    if (item.regex.test(fullText)) {
+      workAuthReq = item.label;
+      visaSponsorship = 'Not provided';
+      hasNoSponsorship = true;
+      reasons.push(item.label);
+    }
+  }
+
+  // Structured feed metadata check (e.g. SimplifyJobs 'Does Not Offer Sponsorship')
+  if (sponsorshipField.toLowerCase().includes('does not offer') || sponsorshipField.toLowerCase().includes('no sponsorship')) {
+    visaSponsorship = 'Not provided';
+    hasNoSponsorship = true;
+    reasons.push('Structured listing feed explicitly flags: Does Not Offer Sponsorship');
   }
 
   // If role explicitly does not offer sponsorship or requires pre-existing foreign work authorization

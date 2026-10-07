@@ -43,7 +43,13 @@ const REPUTABLE_COMPANIES = [
 ];
 
 // Sources that primarily catalog Indian listings
-const INDIA_PRIMARY_SOURCES = ['Internshala', 'Naukri', 'Freshersworld', 'IndiaDirect'];
+const INDIA_PRIMARY_SOURCES = [
+  'Internshala', 'Naukri', 'Freshersworld', 'IndiaDirect',
+  '[UNSTOP]', 'UNSTOP', 'Unstop',
+  '[NAUKRI]', 'NAUKRI',
+  '[HIRIST]', 'HIRIST', 'Hirist',
+  '[FOUNDIT]', 'FOUNDIT', 'Foundit',
+];
 
 /**
  * Check if a location string represents India.
