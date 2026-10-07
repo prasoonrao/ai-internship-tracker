@@ -7,7 +7,13 @@ const { filterJobs } = require('./core/filter');
 const { passesGeoFilter, isIndia } = require('./core/geoFilter');
 const { evaluateJobs } = require('./core/llmEvaluator');
 const { isAlertEligible, shouldAlert, ELIGIBILITY_STATUSES } = require('./core/eligibilityFilter');
-const { generateAllListings } = require('./core/digestGenerator');
+const { generateAllListings, generateTop20Queue } = require('./core/digestGenerator');
+const {
+  buildTop20Queue,
+  tierQueue,
+  getQueueCategoryDistribution,
+  selectEvaluationPool,
+} = require('./core/applicationQueue');
 const { loadApplications, renderMarkdown } = require('./core/tracker');
 const Database = require('./core/database');
 const TelegramNotifier = require('./notifiers/telegram');
@@ -163,9 +169,10 @@ async function main() {
     return;
   }
 
-  // ── 6. Sort and Select Top Candidates for Evaluation & Delivery ────────────
-  const sorted = sortJobs(candidatePool);
-  const toEvaluate = sorted.slice(0, MAX_JOBS_PER_RUN);
+  // ── 6. Select Category-Aware Candidate Pool for Gemini Evaluation ─────────
+  const toEvaluate = selectEvaluationPool(candidatePool, {
+    maxTotal: MAX_JOBS_PER_RUN,
+  });
   const deferred = candidatePool.length - toEvaluate.length;
 
   if (deferred > 0) {
@@ -195,6 +202,32 @@ async function main() {
     throw new Error(`CRITICAL INTEGRITY FAILURE: ${nonEligibleInNotify.length} job(s) in toNotify have disallowed eligibility status: ${nonEligibleInNotify.map(j => `${j.title} (${j.eligibility_status})`).join(', ')}`);
   }
 
+  // ── 7.5. Build Daily Top-20 Application Queue ─────────────────────────────
+  let apps = [];
+  try {
+    apps = loadApplications();
+  } catch (err) {
+    console.warn('[Queue] Notice loading applications:', err.message);
+  }
+
+  const top20Queue = buildTop20Queue(evaluatedJobs, { applications: apps });
+  const { priority: qPriority, next: qNext, backup: qBackup } = tierQueue(top20Queue);
+
+  // Strict Gate Verification: Every job in top20Queue MUST be ELIGIBLE or LIKELY_ELIGIBLE
+  const nonEligibleInQueue = top20Queue.filter(j => j.eligibility_status !== ELIGIBILITY_STATUSES.ELIGIBLE && j.eligibility_status !== ELIGIBILITY_STATUSES.LIKELY_ELIGIBLE);
+  if (nonEligibleInQueue.length > 0) {
+    throw new Error(`CRITICAL INTEGRITY FAILURE: ${nonEligibleInQueue.length} job(s) in top20Queue have disallowed eligibility status: ${nonEligibleInQueue.map(j => `${j.title} (${j.eligibility_status})`).join(', ')}`);
+  }
+
+  // Update TOP20.md with the evaluated queue
+  if (top20Queue.length > 0) {
+    try {
+      generateTop20Queue(evaluatedJobs, apps);
+    } catch (err) {
+      console.warn('[Digest] Notice updating TOP20.md queue:', err.message);
+    }
+  }
+
   // ── 8. Send Notifications ─────────────────────────────────────────────────
   const runType = USE_SERPAPI ? '☀️ Morning Run (Full)' : '🌙 Evening Run (Standard)';
 
@@ -202,11 +235,11 @@ async function main() {
     const notifiers = [];
     if (TELEGRAM_TOKEN && TELEGRAM_CHAT_ID) {
       const telegram = new TelegramNotifier(TELEGRAM_TOKEN, TELEGRAM_CHAT_ID);
-      notifiers.push(telegram.sendJobs(toNotify, runType));
+      notifiers.push(telegram.sendJobs(toNotify, runType, top20Queue));
     }
     if (DISCORD_WEBHOOK) {
       const discord = new DiscordNotifier(DISCORD_WEBHOOK);
-      notifiers.push(discord.sendJobs(toNotify, runType));
+      notifiers.push(discord.sendJobs(toNotify, runType, top20Queue));
     }
 
     if (notifiers.length === 0) {
@@ -244,6 +277,56 @@ async function main() {
     console.log(`  🔴 LIKELY_INELIGIBLE : 0 (verified 100% suppressed)`);
     console.log(`  🔴 INELIGIBLE        : 0 (verified 100% suppressed)`);
     console.log(`  🛡️  100% of notification listings (${toNotify.length}/${toNotify.length}) verified ELIGIBLE or LIKELY_ELIGIBLE.`);
+
+    console.log('\n[DRY RUN] Daily Top-20 Application Queue Audit:');
+    console.log(`  🔥 PRIORITY (Ranks 1–5  | Today's Minimum Target) : ${qPriority.length} jobs`);
+    console.log(`  🟢 NEXT     (Ranks 6–15 | Apply After Priority)   : ${qNext.length} jobs`);
+    console.log(`  🟡 BACKUP   (Ranks 16–20| Pipeline Depth)         : ${qBackup.length} jobs`);
+    console.log(`  📋 Total in Queue                                 : ${top20Queue.length} jobs`);
+    console.log(`  🛡️  Zero UNCLEAR, LIKELY_INELIGIBLE, or INELIGIBLE jobs in queue.`);
+
+    const evalDist = getQueueCategoryDistribution(evaluatedJobs);
+    console.log('\n[DRY RUN] Evaluated Candidates Role-Category Distribution:');
+    console.log(`  🧠 AI/ML                     : ${evalDist['AI/ML'] || 0}`);
+    console.log(`  💻 Software/Backend          : ${evalDist['Software/Backend'] || 0}`);
+    console.log(`  📈 Data/Data Analytics       : ${evalDist['Data/Data Analytics'] || 0}`);
+    console.log(`  ☁️ Cloud/DevOps/Automation   : ${evalDist['Cloud/DevOps/Automation'] || 0}`);
+    console.log(`  ⚙️ Other technical           : ${evalDist['Other technical'] || 0}`);
+
+    const dist = getQueueCategoryDistribution(top20Queue);
+    console.log('\n[DRY RUN] Top-20 Role-Category Distribution:');
+    console.log(`  🧠 AI/ML                     : ${dist['AI/ML'] || 0}`);
+    console.log(`  💻 Software/Backend          : ${dist['Software/Backend'] || 0}`);
+    console.log(`  📈 Data/Data Analytics       : ${dist['Data/Data Analytics'] || 0}`);
+    console.log(`  ☁️ Cloud/DevOps/Automation   : ${dist['Cloud/DevOps/Automation'] || 0}`);
+    console.log(`  ⚙️ Other technical           : ${dist['Other technical'] || 0}`);
+
+    const nonAIMLEval = evaluatedJobs.filter(j => j.roleCategory && j.roleCategory !== 'AI/ML');
+    if (nonAIMLEval.length > 0) {
+      console.log(`\n[DRY RUN] Sample Non-AI/ML Candidates Evaluated (${nonAIMLEval.length} total):`);
+      nonAIMLEval.slice(0, 5).forEach(j => {
+        console.log(`  • [${j.roleCategory}] ${j.title} @ ${j.company} (Match: ${j.matchScore}%)`);
+      });
+    }
+
+    const nonAIMLQueue = top20Queue.filter(j => j.roleCategory && j.roleCategory !== 'AI/ML');
+    if (nonAIMLQueue.length > 0) {
+      console.log(`\n[DRY RUN] Non-AI/ML Candidates in Top-20 Queue (${nonAIMLQueue.length} total):`);
+      nonAIMLQueue.forEach(j => {
+        console.log(`  • #${j.queueRank} [${j.roleCategory}] ${j.title} @ ${j.company} (Match: ${j.matchScore}% | Priority: ${j.applicationPriorityScore})`);
+      });
+    }
+
+    if (top20Queue.length > 0) {
+      console.log('\n[DRY RUN] Top-5 Priority Applications to Target First:');
+      qPriority.forEach((j) => {
+        const matchText = j.matchScore != null ? `${j.matchScore}%` : '70%';
+        const prioText = j.applicationPriorityScore != null ? j.applicationPriorityScore : '80';
+        const cat = j.roleCategory || 'AI/ML';
+        console.log(`  🔥 #${j.queueRank} [Match: ${matchText} | Prio: ${prioText}] [${cat}] ${j.title} @ ${j.company} (${j.location || 'India/Remote'})`);
+        console.log(`     URL: ${j.url}`);
+      });
+    }
 
     console.log('\n[DRY RUN] Would send alerts for these prioritized listings (≥70%):');
     toNotify.slice(0, 20).forEach((j, i) => {

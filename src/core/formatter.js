@@ -112,12 +112,41 @@ function formatTelegram(job) {
 /**
  * Format a batch header for Telegram
  */
-function formatTelegramHeader(count, runType) {
+function formatTelegramHeader(count, runType, queue = []) {
   const time = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-  return (
+  let header = (
     `🤖 *NMAMIT 2028 Internship Bot* — ${escapeMdV2(String(count))} new match${count > 1 ? 'es' : ''} found\\!\n` +
-    `_Run: ${escapeMdV2(runType)} \\| ${escapeMdV2(time)} IST_`
+    `_Run: ${escapeMdV2(runType)} \\| ${escapeMdV2(time)} IST_\n`
   );
+
+  if (queue && queue.length > 0) {
+    const priority = queue.slice(0, 5);
+    const nextCount = queue.filter(j => j.queueTier === 'NEXT').length;
+    const backupCount = queue.filter(j => j.queueTier === 'BACKUP').length;
+
+    header += `\n🎯 *TODAY'S DAILY TARGET: TOP 5 TO APPLY FIRST*\n`;
+    header += `_Today's recommended minimum: apply to these 5 Priority jobs\\._\n\n`;
+
+    priority.forEach(j => {
+      const title = escapeMdV2(j.title);
+      const company = escapeMdV2(j.company);
+      const url = safeUrl(j.url);
+      const match = j.matchScore != null ? `${j.matchScore}%` : '70%';
+      const prio = j.applicationPriorityScore != null ? j.applicationPriorityScore : '80';
+      const cat = escapeMdV2(j.roleCategory || 'AI/ML');
+      const loc = escapeMdV2(j.location || 'India/Remote');
+
+      header += `🔥 *\\#${j.queueRank || 1}* [${title}](${url}) @ *${company}*\n`;
+      header += `   _Category: ${cat} \\| Match: ${escapeMdV2(match)} \\| Priority: ${escapeMdV2(String(prio))}_\n`;
+      header += `   _📍 ${loc}_\n\n`;
+    });
+
+    header += `🟢 *NEXT 10*: ${nextCount} opportunities\n`;
+    header += `🟡 *BACKUP 5*: ${backupCount} opportunities\n`;
+    header += `_Full Top\\-20 queue and details in TOP20\\.md_\n`;
+  }
+
+  return header;
 }
 
 /**
@@ -195,15 +224,45 @@ function formatDiscordEmbed(job) {
 /**
  * Format a Discord summary embed
  */
-function formatDiscordHeader(count, runType) {
+function formatDiscordHeader(count, runType, queue = []) {
   const time = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-  return {
+  const embed = {
     title: `🤖 NMAMIT 2028 Bot — ${count} New Match${count > 1 ? 'es' : ''} Found!`,
     description: `Here are the latest AI/ML and SWE internship opportunities matched to your profile. Good luck! 🚀`,
     color: 0x6c5ce7,
+    fields: [],
     footer: { text: `${runType} • ${time} IST` },
     timestamp: new Date().toISOString(),
   };
+
+  if (queue && queue.length > 0) {
+    const priority = queue.slice(0, 5);
+    const nextCount = queue.filter(j => j.queueTier === 'NEXT').length;
+    const backupCount = queue.filter(j => j.queueTier === 'BACKUP').length;
+
+    const top5Text = priority.map(j => {
+      const match = j.matchScore != null ? `${j.matchScore}%` : '70%';
+      const prio = j.applicationPriorityScore != null ? j.applicationPriorityScore : '80';
+      const cat = j.roleCategory || 'AI/ML';
+      const loc = j.location || 'India / Remote';
+      return `🔥 **#${j.queueRank || 1}** [${j.title}](${j.url || '#'}) @ **${j.company}**\n` +
+             `   • **Category:** ${cat} | **Match:** ${match} | **Priority:** ${prio}\n` +
+             `   • **Location:** ${loc}`;
+    }).join('\n\n');
+
+    embed.fields.push({
+      name: `🔥 TOP 5 TO APPLY TODAY (Today's Minimum Target)`,
+      value: top5Text.slice(0, 1024),
+      inline: false,
+    });
+    embed.fields.push({
+      name: `📋 Additional Opportunities`,
+      value: `🟢 **NEXT 10:** ${nextCount} opportunities\n🟡 **BACKUP 5:** ${backupCount} opportunities\n*Full details & tracking commands in \`TOP20.md\`*`,
+      inline: false,
+    });
+  }
+
+  return embed;
 }
 
 module.exports = {

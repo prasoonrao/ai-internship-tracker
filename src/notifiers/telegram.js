@@ -45,7 +45,7 @@ class TelegramNotifier {
    * FIX Issue 5: Only sends messages when jobs.length > 0.
    * The zero-job case is now handled in main.js with a silent exit.
    */
-  async sendJobs(jobs, runType = 'Morning Run') {
+  async sendJobs(jobs, runType = 'Morning Run', queue = []) {
     const dryRun = process.env.DRY_RUN === 'true';
 
     if (jobs.length === 0) {
@@ -54,7 +54,7 @@ class TelegramNotifier {
     }
 
     // Send header
-    const header = formatTelegramHeader(jobs.length, runType);
+    const header = formatTelegramHeader(jobs.length, runType, queue);
     if (dryRun) {
       console.log('[DRY RUN][Telegram] Header:', jobs.length, 'jobs');
     } else {

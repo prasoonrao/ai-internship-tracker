@@ -51,7 +51,7 @@ class DiscordNotifier {
    * FIX Issue 5: Only sends messages when jobs.length > 0.
    * FIX Issue 7: Errors propagate up to main.js allSettled.
    */
-  async sendJobs(jobs, runType = 'Morning Run') {
+  async sendJobs(jobs, runType = 'Morning Run', queue = []) {
     const dryRun = process.env.DRY_RUN === 'true';
 
     if (jobs.length === 0) {
@@ -60,7 +60,7 @@ class DiscordNotifier {
     }
 
     // Send header embed
-    const headerEmbed = formatDiscordHeader(jobs.length, runType);
+    const headerEmbed = formatDiscordHeader(jobs.length, runType, queue);
     if (dryRun) {
       console.log('[DRY RUN][Discord] Header:', jobs.length, 'jobs');
     } else {

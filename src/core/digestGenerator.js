@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { getGeoTag, isIndia } = require('./geoFilter');
 const { isAlertEligible } = require('./eligibilityFilter');
+const { buildTop20Queue, renderQueueMarkdown } = require('./applicationQueue');
 
 const ROOT_DIR = path.join(__dirname, '..', '..');
 const LISTINGS_DIR = path.join(ROOT_DIR, 'listings');
@@ -113,7 +114,22 @@ function generateCategoryMarkdown(categoryTitle, jobs, filename) {
   fs.writeFileSync(targetPath, lines.join('\n'), 'utf8');
 }
 
-function generateTop20(jobs) {
+function generateTop20Queue(evaluatedJobs, applications = []) {
+  const queue = buildTop20Queue(evaluatedJobs, { applications });
+  if (queue.length > 0) {
+    const md = renderQueueMarkdown(queue);
+    fs.writeFileSync(TOP20_PATH, md, 'utf8');
+    console.log(`[Digest] Rendered ${TOP20_PATH} (${queue.length} queue picks)`);
+  }
+  return queue;
+}
+
+function generateTop20(jobs, applications = []) {
+  const hasScoredJobs = jobs.some(j => j.matchScore != null && j.matchScore >= 70);
+  if (hasScoredJobs) {
+    return generateTop20Queue(jobs, applications);
+  }
+
   const today = new Date().toISOString().split('T')[0];
 
   // Only consider alert-eligible positions (exclude LIKELY_INELIGIBLE and INELIGIBLE)
@@ -176,7 +192,7 @@ function generateTop20(jobs) {
   return topPicks;
 }
 
-function generateAllListings(allJobs) {
+function generateAllListings(allJobs, applications = []) {
   ensureDir(LISTINGS_DIR);
 
   // Group by categories
@@ -188,7 +204,7 @@ function generateAllListings(allJobs) {
   generateCategoryMarkdown('Software & Backend Engineering Internships', sweJobs, 'software-engineering.md');
   generateCategoryMarkdown('Domestic India Opportunities', indiaJobs, 'india-internships.md');
 
-  const topPicks = generateTop20(allJobs);
+  const topPicks = generateTop20(allJobs, applications);
   console.log(`[Digest] Generated categorized markdown files in ${LISTINGS_DIR}`);
   return { topPicks, aimlJobs, sweJobs, indiaJobs };
 }
@@ -196,5 +212,6 @@ function generateAllListings(allJobs) {
 module.exports = {
   generateAllListings,
   generateTop20,
+  generateTop20Queue,
   calculateScore,
 };

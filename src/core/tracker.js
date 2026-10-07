@@ -9,27 +9,43 @@ const APPS_FILE = path.join(DATA_DIR, 'applications.json');
 const MD_FILE = path.join(ROOT_DIR, 'APPLICATIONS.md');
 
 const VALID_STATUSES = [
-  'Bookmarked',
+  'NEW',
+  'QUEUED',
+  'APPLYING',
   'Applied',
+  'APPLIED',
+  'Bookmarked',
   'Screening',
   'Assessment',
   'Interview',
+  'INTERVIEW',
   'Offer',
+  'OFFER',
   'Rejected',
+  'REJECTED',
   'Ghosted',
   'Withdrawn',
+  'WITHDRAWN',
 ];
 
 const STATUS_BADGES = {
+  'NEW': '🆕 New',
+  'QUEUED': '📋 Queued',
+  'APPLYING': '📝 Applying',
   'Bookmarked': '📌 Bookmarked',
   'Applied': '⏳ Applied',
+  'APPLIED': '⏳ Applied',
   'Screening': '🔍 Screening',
   'Assessment': '📝 OA / Assessment',
   'Interview': '🎙️ Interview',
+  'INTERVIEW': '🎙️ Interview',
   'Offer': '🎉 Offer',
+  'OFFER': '🎉 Offer',
   'Rejected': '❌ Rejected',
+  'REJECTED': '❌ Rejected',
   'Ghosted': '👻 No Response',
   'Withdrawn': '🚪 Withdrawn',
+  'WITHDRAWN': '🚪 Withdrawn',
 };
 
 function ensureDir() {
@@ -157,6 +173,32 @@ function renderMarkdown(apps) {
 function addApplication(company, role, dateApplied, status = 'Applied', notes = '', url = '', eligibility = '🟢 Eligible') {
   const apps = loadApplications();
   const today = new Date().toISOString().split('T')[0];
+
+  const cClean = company.trim().toLowerCase();
+  const rClean = role.trim().toLowerCase();
+  const uClean = url ? url.trim().split('?')[0].split('#')[0].toLowerCase() : '';
+
+  const existing = apps.find(a => {
+    if (uClean && a.url && a.url.split('?')[0].split('#')[0].toLowerCase() === uClean) {
+      return true;
+    }
+    return (a.company || '').trim().toLowerCase() === cClean && (a.role || '').trim().toLowerCase() === rClean;
+  });
+
+  if (existing) {
+    if (status) existing.status = status.trim();
+    if (notes) existing.notes = notes.trim();
+    if (dateApplied) existing.dateApplied = dateApplied.trim();
+    if (url) existing.url = url.trim();
+    if (eligibility) existing.eligibility = eligibility.trim();
+    existing.updatedAt = new Date().toISOString();
+
+    saveApplications(apps);
+    renderMarkdown(apps);
+    console.log(`[Tracker] ℹ️ Updated existing application record: ${existing.company} — ${existing.role} (${existing.status})`);
+    return existing;
+  }
+
   const newApp = {
     id: `app_${Date.now()}`,
     company: company.trim(),

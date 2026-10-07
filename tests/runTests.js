@@ -1038,6 +1038,762 @@ async function runAll() {
     assert.ok(Array.isArray(res));
   });
 
+  // ── 12. Daily Top-20 Application Queue Tests ─────────────────────────────
+  console.log('\n🔹 12. Daily Top-20 Application Queue Tests:');
+
+  const {
+    MIN_QUEUE_MATCH_SCORE,
+    MAX_QUEUE_SIZE,
+    MAX_ROLES_PER_COMPANY,
+    ROLE_CATEGORIES,
+    DEFAULT_CATEGORY_LIMITS,
+    calculateCareerRoleRelevance,
+    calculateApplicationPriorityScore,
+    calculatePreEvalCandidateScore,
+    getExcludedApplicationKeys,
+    isQueueEligible,
+    isEvaluationPoolEligible,
+    getQueueCategoryDistribution,
+    selectEvaluationPool,
+    buildTop20Queue,
+    tierQueue,
+    renderQueueMarkdown,
+    formatQueueSummaryTelegram,
+    formatQueueSummaryDiscord,
+  } = require('../src/core/applicationQueue');
+  const { generateTop20Queue } = require('../src/core/digestGenerator');
+  const { formatTelegramHeader, formatDiscordHeader } = require('../src/core/formatter');
+
+  // 1. AI/ML role gets strong relevance (Category A: 90-100)
+  test('1. AI/ML role gets strong career-role relevance (Category A: 90-100)', () => {
+    const roles = [
+      'AI/ML Engineer Intern',
+      'Machine Learning Intern',
+      'AI Engineer Intern',
+      'Applied AI Intern',
+      'GenAI Intern',
+      'LLM / GenAI Engineering Intern',
+      'Deep Learning Intern',
+      'NLP Research Intern',
+    ];
+    roles.forEach(title => {
+      const res = calculateCareerRoleRelevance({ title });
+      assert.strictEqual(res.category, ROLE_CATEGORIES.AIML, `Failed category for ${title}`);
+      assert.ok(res.score >= 90 && res.score <= 100, `Score out of range for ${title}: ${res.score}`);
+    });
+  });
+
+  // 2. Software Engineer Intern gets strong relevance (Category B: 80-92)
+  test('2. Software Engineer Intern gets strong relevance (Category B: 80-92)', () => {
+    const res = calculateCareerRoleRelevance({ title: 'Software Engineer Intern' });
+    assert.strictEqual(res.category, ROLE_CATEGORIES.SOFTWARE_BACKEND);
+    assert.ok(res.score >= 80 && res.score <= 92, `Score ${res.score} not in 80-92 range`);
+  });
+
+  // 3. Backend Developer Intern gets strong relevance (Category B: 78-90)
+  test('3. Backend Developer Intern gets strong relevance (Category B: 78-90)', () => {
+    const res = calculateCareerRoleRelevance({ title: 'Backend Developer Intern' });
+    assert.strictEqual(res.category, ROLE_CATEGORIES.SOFTWARE_BACKEND);
+    assert.ok(res.score >= 78 && res.score <= 90, `Score ${res.score} not in 78-90 range`);
+  });
+
+  // 4. Python Developer Intern gets strong relevance (Category B: 78-90)
+  test('4. Python Developer Intern gets strong relevance (Category B: 78-90)', () => {
+    const res = calculateCareerRoleRelevance({ title: 'Python Developer Intern' });
+    assert.strictEqual(res.category, ROLE_CATEGORIES.SOFTWARE_BACKEND);
+    assert.ok(res.score >= 78 && res.score <= 90, `Score ${res.score} not in 78-90 range`);
+  });
+
+  // 5. Java Developer Intern gets strong relevance (Category B: 78-90)
+  test('5. Java Developer Intern gets strong relevance (Category B: 78-90)', () => {
+    const res = calculateCareerRoleRelevance({ title: 'Java Developer Intern' });
+    assert.strictEqual(res.category, ROLE_CATEGORIES.SOFTWARE_BACKEND);
+    assert.ok(res.score >= 78 && res.score <= 90, `Score ${res.score} not in 78-90 range`);
+  });
+
+  // 6. Data Analyst Intern is accepted as a valid target (Category B: 72-88)
+  test('6. Data Analyst Intern is accepted as a valid target (Category B: 72-88)', () => {
+    const res = calculateCareerRoleRelevance({ title: 'Data Analyst Intern' });
+    assert.strictEqual(res.category, ROLE_CATEGORIES.DATA_ANALYTICS);
+    assert.ok(res.score >= 72 && res.score <= 88, `Score ${res.score} not in 72-88 range`);
+
+    const job = {
+      title: 'Data Analyst Intern',
+      company: 'DataCorp',
+      url: 'https://example.com/da-1',
+      matchScore: 78,
+      eligibility_status: 'ELIGIBLE',
+    };
+    assert.strictEqual(isQueueEligible(job), true, 'Data Analyst must be queue eligible');
+  });
+
+  // 7. Data Science Intern gets strong relevance (Category A: 85-95)
+  test('7. Data Science Intern gets strong relevance (Category A: 85-95)', () => {
+    const res = calculateCareerRoleRelevance({ title: 'Data Science Intern' });
+    assert.strictEqual(res.category, ROLE_CATEGORIES.AIML);
+    assert.ok(res.score >= 85 && res.score <= 95, `Score ${res.score} not in 85-95 range`);
+  });
+
+  // 8. Data Engineer Intern gets strong relevance (Category B: 78-90)
+  test('8. Data Engineer Intern gets strong relevance (Category B: 78-90)', () => {
+    const res = calculateCareerRoleRelevance({ title: 'Data Engineer Intern' });
+    assert.strictEqual(res.category, ROLE_CATEGORIES.DATA_ANALYTICS);
+    assert.ok(res.score >= 78 && res.score <= 90, `Score ${res.score} not in 78-90 range`);
+  });
+
+  // 9. Cloud/DevOps/Automation gets valid secondary relevance (Category C: 70-85)
+  test('9. Cloud/DevOps/Automation gets valid secondary relevance (Category C: 70-85)', () => {
+    const cloud = calculateCareerRoleRelevance({ title: 'Cloud Engineer Intern' });
+    assert.strictEqual(cloud.category, ROLE_CATEGORIES.CLOUD_DEVOPS_AUTOMATION);
+    assert.ok(cloud.score >= 70 && cloud.score <= 85);
+
+    const devops = calculateCareerRoleRelevance({ title: 'DevOps Intern' });
+    assert.strictEqual(devops.category, ROLE_CATEGORIES.CLOUD_DEVOPS_AUTOMATION);
+    assert.ok(devops.score >= 70 && devops.score <= 85);
+
+    const auto = calculateCareerRoleRelevance({ title: 'Automation Engineer Intern' });
+    assert.strictEqual(auto.category, ROLE_CATEGORIES.CLOUD_DEVOPS_AUTOMATION);
+    assert.ok(auto.score >= 70 && auto.score <= 85);
+  });
+
+  // 10. Full-stack/Web gets valid lower-secondary relevance (Category C: 65-82)
+  test('10. Full-stack/Web gets valid lower-secondary relevance (Category C: 65-82)', () => {
+    const fullstack = calculateCareerRoleRelevance({ title: 'Full Stack Developer Intern' });
+    assert.strictEqual(fullstack.category, ROLE_CATEGORIES.SOFTWARE_BACKEND);
+    assert.ok(fullstack.score >= 65 && fullstack.score <= 82);
+
+    const web = calculateCareerRoleRelevance({ title: 'Web Developer Intern' });
+    assert.strictEqual(web.category, ROLE_CATEGORIES.SOFTWARE_BACKEND);
+    assert.ok(web.score >= 65 && web.score <= 82);
+  });
+
+  // 11. ML Trainer is lower than genuine ML engineering when other factors are similar
+  test('11. ML Trainer is lower than genuine ML engineering when other factors are similar', () => {
+    const mlEng = calculateCareerRoleRelevance({
+      title: 'Machine Learning Engineer Intern',
+      description: 'Develop and train deep learning models for production recommendation engines.',
+    });
+    const mlTrainer = calculateCareerRoleRelevance({
+      title: 'Machine Learning Trainer Intern',
+      description: 'Teach student batches Python and ML basics and grade coding assignments.',
+    });
+    assert.ok(mlEng.score > mlTrainer.score, `ML Eng (${mlEng.score}) should exceed ML Trainer (${mlTrainer.score})`);
+    assert.ok(mlEng.score - mlTrainer.score >= 15, 'Penalty should clearly differentiate teaching from engineering');
+  });
+
+  // 12. Generic non-technical roles are excluded (Category E: 0-40)
+  test('12. Generic non-technical roles are excluded (Category E: 0-40)', () => {
+    const nonTech = ['Sales Executive', 'Marketing Intern', 'HR Recruiter', 'Telecaller', 'Graphic Designer'];
+    nonTech.forEach(title => {
+      const res = calculateCareerRoleRelevance({ title });
+      assert.strictEqual(res.category, ROLE_CATEGORIES.EXCLUDED);
+      assert.ok(res.score <= 40, `Non-tech role score too high: ${res.score} for ${title}`);
+    });
+  });
+
+  // 13. 90% SWE can outrank 75% ML
+  test('13. 90% SWE can outrank 75% ML', () => {
+    const swe90 = {
+      title: 'Software Engineer Intern',
+      company: 'TechCorp',
+      url: 'https://example.com/swe',
+      description: 'Build robust backend microservices in Python and SQL.',
+      matchScore: 90,
+      eligibility_status: 'ELIGIBLE',
+      type: 'internship',
+    };
+    const mlTrainer75 = {
+      title: 'ML Trainer Intern',
+      company: 'EduCorp',
+      url: 'https://example.com/ml-trainer',
+      description: 'Train students and teach machine learning courses.',
+      matchScore: 75,
+      eligibility_status: 'ELIGIBLE',
+      type: 'internship',
+    };
+
+    const sweScore = calculateApplicationPriorityScore(swe90);
+    const mlScore = calculateApplicationPriorityScore(mlTrainer75);
+    assert.ok(sweScore > mlScore, `90% SWE priority (${sweScore}) must outrank 75% ML Trainer (${mlScore})`);
+
+    const queue = buildTop20Queue([mlTrainer75, swe90]);
+    assert.strictEqual(queue[0].title, 'Software Engineer Intern');
+  });
+
+  // 14. 84% technical Data Analyst can outrank weaker ML opportunity
+  test('14. 84% technical Data Analyst can outrank weaker ML opportunity', () => {
+    const da84 = {
+      title: 'Data Analyst Intern',
+      company: 'AnalyticsCo',
+      url: 'https://example.com/da',
+      description: 'Perform exploratory data analysis using Python, SQL, and Pandas.',
+      matchScore: 84,
+      eligibility_status: 'ELIGIBLE',
+      type: 'internship',
+    };
+    const genericAi78 = {
+      title: 'AI Intern',
+      company: 'BasicAI',
+      url: 'https://example.com/ai',
+      description: 'Generic AI assistant tasks.',
+      matchScore: 78,
+      eligibility_status: 'ELIGIBLE',
+      type: 'internship',
+    };
+
+    const daScore = calculateApplicationPriorityScore(da84);
+    const aiScore = calculateApplicationPriorityScore(genericAi78);
+    assert.ok(daScore > aiScore, `84% technical Data Analyst (${daScore}) must outrank 78% generic AI (${aiScore})`);
+
+    const queue = buildTop20Queue([genericAi78, da84]);
+    assert.strictEqual(queue[0].title, 'Data Analyst Intern');
+  });
+
+  // 15. Multiple distinct roles from same company can coexist
+  test('15. Multiple distinct roles from same company can coexist', () => {
+    const jobs = [
+      { title: 'ML Engineer Intern', company: 'Google', url: 'https://careers.google.com/1', matchScore: 92, eligibility_status: 'ELIGIBLE' },
+      { title: 'Software Engineer Intern', company: 'Google', url: 'https://careers.google.com/2', matchScore: 89, eligibility_status: 'ELIGIBLE' },
+    ];
+    const queue = buildTop20Queue(jobs);
+    assert.strictEqual(queue.length, 2, 'Distinct roles from same company should both enter queue');
+    assert.strictEqual(queue[0].title, 'ML Engineer Intern');
+    assert.strictEqual(queue[1].title, 'Software Engineer Intern');
+  });
+
+  // 16. Maximum 3 roles per company
+  test('16. Maximum 3 roles per company', () => {
+    const jobs = [
+      { title: 'AI Engineer Intern', company: 'MegaCorp', url: 'https://mega.com/1', matchScore: 95, eligibility_status: 'ELIGIBLE' },
+      { title: 'ML Researcher Intern', company: 'MegaCorp', url: 'https://mega.com/2', matchScore: 92, eligibility_status: 'ELIGIBLE' },
+      { title: 'Software Developer Intern', company: 'MegaCorp', url: 'https://mega.com/3', matchScore: 89, eligibility_status: 'ELIGIBLE' },
+      { title: 'Data Scientist Intern', company: 'MegaCorp', url: 'https://mega.com/4', matchScore: 86, eligibility_status: 'ELIGIBLE' },
+      { title: 'Backend Developer Intern', company: 'MegaCorp', url: 'https://mega.com/5', matchScore: 83, eligibility_status: 'ELIGIBLE' },
+      { title: 'Cloud Engineer Intern', company: 'OtherCo', url: 'https://other.com/1', matchScore: 80, eligibility_status: 'ELIGIBLE' },
+    ];
+    const queue = buildTop20Queue(jobs);
+    assert.strictEqual(queue.length, 4);
+    const megaCount = queue.filter(j => j.company === 'MegaCorp').length;
+    assert.strictEqual(megaCount, MAX_ROLES_PER_COMPANY, 'Should cap at exactly 3 roles for MegaCorp');
+    assert.strictEqual(queue[3].company, 'OtherCo');
+  });
+
+  // 17. Duplicate canonical URLs remain deduplicated
+  test('17. Duplicate canonical URLs remain deduplicated', () => {
+    const jobs = [
+      { title: 'ML Intern', company: 'Flipkart', url: 'https://careers.flipkart.com/job1?ref=feed', matchScore: 90, eligibility_status: 'ELIGIBLE' },
+      { title: 'ML Intern', company: 'Flipkart', url: 'https://careers.flipkart.com/job1?utm_source=linkedin', matchScore: 90, eligibility_status: 'ELIGIBLE' },
+    ];
+    const queue = buildTop20Queue(jobs);
+    assert.strictEqual(queue.length, 1, 'Duplicate canonical URLs must be deduplicated');
+  });
+
+  // 18. <70 match remains excluded
+  test('18. <70 match remains excluded from queue', () => {
+    const lowMatch = { title: 'AI Intern', company: 'Co', url: 'https://example.com/1', matchScore: 69, eligibility_status: 'ELIGIBLE' };
+    assert.strictEqual(isQueueEligible(lowMatch), false);
+    const queue = buildTop20Queue([lowMatch]);
+    assert.strictEqual(queue.length, 0);
+  });
+
+  // 19. UNCLEAR remains excluded
+  test('19. UNCLEAR remains excluded from queue', () => {
+    const unclear = { title: 'AI Intern', company: 'Co', url: 'https://example.com/1', matchScore: 95, eligibility_status: 'UNCLEAR' };
+    assert.strictEqual(isQueueEligible(unclear), false);
+    const queue = buildTop20Queue([unclear]);
+    assert.strictEqual(queue.length, 0);
+  });
+
+  // 20. LIKELY_INELIGIBLE remains excluded
+  test('20. LIKELY_INELIGIBLE remains excluded from queue', () => {
+    const likelyInelig = { title: 'AI Intern', company: 'Co', url: 'https://example.com/1', matchScore: 95, eligibility_status: 'LIKELY_INELIGIBLE' };
+    assert.strictEqual(isQueueEligible(likelyInelig), false);
+    const queue = buildTop20Queue([likelyInelig]);
+    assert.strictEqual(queue.length, 0);
+  });
+
+  // 21. INELIGIBLE remains excluded
+  test('21. INELIGIBLE remains excluded from queue', () => {
+    const inelig = { title: 'AI Intern', company: 'Co', url: 'https://example.com/1', matchScore: 100, eligibility_status: 'INELIGIBLE' };
+    assert.strictEqual(isQueueEligible(inelig), false);
+    const queue = buildTop20Queue([inelig]);
+    assert.strictEqual(queue.length, 0);
+  });
+
+  // 22. APPLIED remains excluded
+  test('22. APPLIED remains excluded from queue', () => {
+    const apps = [{ company: 'Google', role: 'SWE Intern', url: 'https://careers.google.com/swe', status: 'Applied' }];
+    const job = { title: 'SWE Intern', company: 'Google', url: 'https://careers.google.com/swe', matchScore: 90, eligibility_status: 'ELIGIBLE' };
+    const queue = buildTop20Queue([job], { applications: apps });
+    assert.strictEqual(queue.length, 0);
+  });
+
+  // 23. REJECTED remains excluded
+  test('23. REJECTED remains excluded from queue', () => {
+    const apps = [{ company: 'Meta', role: 'AI Intern', url: 'https://metacareers.com/ai', status: 'Rejected' }];
+    const job = { title: 'AI Intern', company: 'Meta', url: 'https://metacareers.com/ai', matchScore: 90, eligibility_status: 'ELIGIBLE' };
+    const queue = buildTop20Queue([job], { applications: apps });
+    assert.strictEqual(queue.length, 0);
+  });
+
+  // 24. WITHDRAWN remains excluded
+  test('24. WITHDRAWN remains excluded from queue', () => {
+    const apps = [{ company: 'Amazon', role: 'SDE Intern', url: 'https://amazon.jobs/sde', status: 'Withdrawn' }];
+    const job = { title: 'SDE Intern', company: 'Amazon', url: 'https://amazon.jobs/sde', matchScore: 90, eligibility_status: 'ELIGIBLE' };
+    const queue = buildTop20Queue([job], { applications: apps });
+    assert.strictEqual(queue.length, 0);
+  });
+
+  // 25. Rolling queue promotion works
+  test('25. Rolling queue promotion works', () => {
+    const pool = [
+      { title: 'AI Intern 1', company: 'CompA', url: 'https://example.com/1', matchScore: 92, eligibility_status: 'ELIGIBLE', type: 'internship' },
+      { title: 'AI Intern 2', company: 'CompB', url: 'https://example.com/2', matchScore: 88, eligibility_status: 'ELIGIBLE', type: 'internship' },
+      { title: 'AI Intern 3', company: 'CompC', url: 'https://example.com/3', matchScore: 85, eligibility_status: 'ELIGIBLE', type: 'internship' },
+    ];
+    const initialQueue = buildTop20Queue(pool);
+    assert.strictEqual(initialQueue[0].company, 'CompA');
+    assert.strictEqual(initialQueue[0].queueRank, 1);
+
+    // Apply to CompA
+    const apps = [{ company: 'CompA', role: 'AI Intern 1', url: 'https://example.com/1', status: 'Applied' }];
+    const nextQueue = buildTop20Queue(pool, { applications: apps });
+    assert.strictEqual(nextQueue.length, 2);
+    assert.strictEqual(nextQueue[0].company, 'CompB', 'CompB should be promoted to #1');
+    assert.strictEqual(nextQueue[0].queueRank, 1);
+    assert.strictEqual(nextQueue[1].company, 'CompC', 'CompC should be promoted to #2');
+    assert.strictEqual(nextQueue[1].queueRank, 2);
+  });
+
+  // 26. Freshness affects ranking
+  test('26. Freshness affects ranking', () => {
+    const freshJob = {
+      title: 'AI/ML Intern',
+      company: 'FreshStartup',
+      url: 'https://example.com/fresh',
+      category: 'AI / ML & Data Science',
+      type: 'internship',
+      postedAt: 'today',
+      matchScore: 78,
+      eligibility_status: 'ELIGIBLE',
+    };
+    const staleJob = {
+      title: 'AI/ML Intern',
+      company: 'StaleStartup',
+      url: 'https://example.com/stale',
+      category: 'AI / ML & Data Science',
+      type: 'internship',
+      postedAt: '30+ days ago',
+      matchScore: 78,
+      eligibility_status: 'ELIGIBLE',
+    };
+    const freshScore = calculateApplicationPriorityScore(freshJob);
+    const staleScore = calculateApplicationPriorityScore(staleJob);
+    assert.ok(freshScore > staleScore, `Fresh job priority (${freshScore}) must exceed stale job (${staleScore})`);
+  });
+
+  // 27. Missing postedAt is safe
+  test('27. Missing postedAt is safe', () => {
+    const job = {
+      title: 'Data Science Intern',
+      company: 'NoDateCo',
+      url: 'https://example.com/nodate',
+      matchScore: 80,
+      eligibility_status: 'ELIGIBLE',
+      postedAt: null,
+    };
+    const score = calculateApplicationPriorityScore(job);
+    assert.ok(typeof score === 'number' && score >= 0 && score <= 100);
+  });
+
+  // 28. Missing optional fields are safe
+  test('28. Missing optional fields are safe', () => {
+    const minimal = {
+      title: 'Software Developer Intern',
+      company: 'MinCo',
+      url: 'https://example.com/min',
+      matchScore: 75,
+      eligibility_status: 'ELIGIBLE',
+      description: null,
+      salary: null,
+      skills: null,
+    };
+    assert.strictEqual(isQueueEligible(minimal), true);
+    const score = calculateApplicationPriorityScore(minimal);
+    assert.ok(score > 0);
+  });
+
+  // 29. Top 5 / Next 10 / Backup 5 tiering works
+  test('29. Top 5 / Next 10 / Backup 5 tiering works', () => {
+    const jobs20 = Array.from({ length: 20 }, (_, i) => ({
+      title: `Developer Intern ${i + 1}`,
+      company: `Company${i + 1}`,
+      url: `https://example.com/job-${i + 1}`,
+      matchScore: 85,
+      eligibility_status: 'ELIGIBLE',
+    }));
+    const queue = buildTop20Queue(jobs20);
+    const { priority, next, backup } = tierQueue(queue);
+    assert.strictEqual(priority.length, 5);
+    assert.strictEqual(next.length, 10);
+    assert.strictEqual(backup.length, 5);
+
+    const jobs8 = Array.from({ length: 8 }, (_, i) => ({
+      title: `Developer Intern ${i + 1}`,
+      company: `Company${i + 1}`,
+      url: `https://example.com/job-${i + 1}`,
+      matchScore: 85,
+      eligibility_status: 'ELIGIBLE',
+    }));
+    const queue8 = buildTop20Queue(jobs8);
+    const tiers8 = tierQueue(queue8);
+    assert.strictEqual(tiers8.priority.length, 5);
+    assert.strictEqual(tiers8.next.length, 3);
+    assert.strictEqual(tiers8.backup.length, 0);
+  });
+
+  // 30. Queue never pads with invalid jobs
+  test('30. Queue never pads with invalid jobs', () => {
+    const mixed = [
+      { title: 'ML Intern', company: 'C1', url: 'https://ex.com/1', matchScore: 85, eligibility_status: 'ELIGIBLE' },
+      { title: 'SWE Intern', company: 'C2', url: 'https://ex.com/2', matchScore: 80, eligibility_status: 'ELIGIBLE' },
+      { title: 'Bad Job 1', company: 'C3', url: 'https://ex.com/3', matchScore: 60, eligibility_status: 'ELIGIBLE' },
+      { title: 'Bad Job 2', company: 'C4', url: 'https://ex.com/4', matchScore: 90, eligibility_status: 'UNCLEAR' },
+      { title: 'Bad Job 3', company: 'C5', url: 'https://ex.com/5', matchScore: 90, eligibility_status: 'INELIGIBLE' },
+    ];
+    const queue = buildTop20Queue(mixed);
+    assert.strictEqual(queue.length, 2, 'Must never pad queue with bad/ineligible/low-score jobs');
+  });
+
+  test('renderQueueMarkdown: Formats 3 tiers with action recommendations, distribution summary, and cards', () => {
+    const queue = [
+      { title: 'AI Intern', company: 'Tier1Co', url: 'https://example.com/1', roleCategory: 'AI/ML', matchScore: 90, applicationPriorityScore: 92, eligibility_status: 'ELIGIBLE', queueRank: 1, queueTier: 'PRIORITY' },
+      { title: 'SWE Intern', company: 'NextCo', url: 'https://example.com/6', roleCategory: 'Software/Backend', matchScore: 78, applicationPriorityScore: 75, eligibility_status: 'ELIGIBLE', queueRank: 6, queueTier: 'NEXT' },
+      { title: 'Data Intern', company: 'BackupCo', url: 'https://example.com/16', roleCategory: 'Data/Data Analytics', matchScore: 72, applicationPriorityScore: 68, eligibility_status: 'ELIGIBLE', queueRank: 16, queueTier: 'BACKUP' },
+    ];
+    const md = renderQueueMarkdown(queue);
+    assert.ok(md.includes('PRIORITY — APPLY FIRST'));
+    assert.ok(md.includes('NEXT — APPLY AFTER PRIORITY'));
+    assert.ok(md.includes('BACKUP — OPPORTUNITIES TO CONSIDER'));
+    assert.ok(md.includes("Today's recommended minimum"));
+    assert.ok(md.includes('Role Category Distribution'));
+    assert.ok(md.includes('Why this is recommended:'));
+    assert.ok(md.includes('Apply:'));
+  });
+
+  test('formatQueueSummaryTelegram & formatQueueSummaryDiscord produce compact Top-5 highlights with counts', () => {
+    const queue = [
+      { title: 'AI Intern', company: 'AlphaAI', url: 'https://alpha.ai/job', roleCategory: 'AI/ML', matchScore: 92, applicationPriorityScore: 95, eligibility_status: 'ELIGIBLE', queueRank: 1, queueTier: 'PRIORITY' },
+      { title: 'ML Intern', company: 'BetaML', url: 'https://beta.ml/job', roleCategory: 'AI/ML', matchScore: 88, applicationPriorityScore: 89, eligibility_status: 'ELIGIBLE', queueRank: 2, queueTier: 'PRIORITY' },
+    ];
+
+    const tg = formatQueueSummaryTelegram(queue);
+    assert.ok(tg.includes("TODAY'S TOP 5 TO APPLY FIRST"));
+    assert.ok(tg.includes('AlphaAI'));
+    assert.ok(tg.includes('NEXT 10'));
+
+    const dc = formatQueueSummaryDiscord(queue);
+    assert.ok(dc.title.includes("Today's Top 20 Application Queue"));
+    assert.ok(dc.fields.some(f => f.name.includes('TOP 5 TO APPLY TODAY')));
+
+    const tgHeader = formatTelegramHeader(10, 'Morning Run', queue);
+    assert.ok(tgHeader.includes("TODAY'S DAILY TARGET: TOP 5 TO APPLY FIRST"));
+    assert.ok(tgHeader.includes('AlphaAI'));
+
+    const dcHeader = formatDiscordHeader(10, 'Morning Run', queue);
+    assert.ok(dcHeader.fields.some(f => f.name.includes('TOP 5 TO APPLY TODAY')));
+  });
+
+  test('Digest Generator: generateTop20Queue generates valid TOP20.md artifact', () => {
+    const jobs = [
+      { title: 'Machine Learning Intern', company: 'DeepLab', url: 'https://deeplab.ai/careers', matchScore: 88, eligibility_status: 'ELIGIBLE', type: 'internship' },
+    ];
+    const queue = generateTop20Queue(jobs, []);
+    assert.strictEqual(queue.length, 1);
+    const top20Path = path.join(__dirname, '..', 'TOP20.md');
+    assert.ok(fs.existsSync(top20Path));
+    const content = fs.readFileSync(top20Path, 'utf8');
+    assert.ok(content.includes('DeepLab'));
+    assert.ok(content.includes('PRIORITY — APPLY FIRST'));
+  });
+
+  // ── 13. Category-Aware Evaluation Pool Tests ──────────────────────────────
+  console.log('\n🔹 13. Category-Aware Candidate Evaluation Pool Tests:');
+
+  // Test 1: AI/ML does not consume all 50 slots when qualified SWE/Data candidates exist
+  test('1. AI/ML does not consume all 50 slots when qualified SWE/Data candidates exist', () => {
+    const candidates = [];
+    // 60 AI/ML jobs
+    for (let i = 1; i <= 60; i++) {
+      candidates.push({
+        title: `Machine Learning Intern ${i}`,
+        company: `AI Co ${i}`,
+        url: `https://example.com/aiml-${i}`,
+        location: 'Bangalore, India',
+        eligibility_status: 'ELIGIBLE',
+        type: 'internship',
+      });
+    }
+    // 15 SWE jobs
+    for (let i = 1; i <= 15; i++) {
+      candidates.push({
+        title: `Software Engineer Intern ${i}`,
+        company: `SWE Co ${i}`,
+        url: `https://example.com/swe-${i}`,
+        location: 'Bangalore, India',
+        eligibility_status: 'ELIGIBLE',
+        type: 'internship',
+      });
+    }
+    // 10 Data jobs
+    for (let i = 1; i <= 10; i++) {
+      candidates.push({
+        title: `Data Analyst Intern ${i}`,
+        company: `Data Co ${i}`,
+        url: `https://example.com/data-${i}`,
+        location: 'Bangalore, India',
+        eligibility_status: 'ELIGIBLE',
+        type: 'internship',
+      });
+    }
+
+    const pool = selectEvaluationPool(candidates, { maxTotal: 50, log: false });
+    assert.strictEqual(pool.length, 50, 'Pool size must be 50');
+
+    const dist = getQueueCategoryDistribution(pool);
+    assert.ok(dist['AI/ML'] <= 35, `AI/ML should not consume all slots (got ${dist['AI/ML']})`);
+    assert.ok(dist['Software/Backend'] >= 10, `Software/Backend must be represented (got ${dist['Software/Backend']})`);
+    assert.ok(dist['Data/Data Analytics'] >= 10, `Data/Data Analytics must be represented (got ${dist['Data/Data Analytics']})`);
+  });
+
+  // Test 2: Category-aware pool includes candidates from AI/ML, SWE/Backend, Data, and Cloud
+  test('2. Category-aware pool includes representation from all 4 primary target categories', () => {
+    const candidates = [
+      { title: 'Machine Learning Intern', company: 'C1', url: 'https://ex.com/1', location: 'India', eligibility_status: 'ELIGIBLE' },
+      { title: 'Software Engineer Intern', company: 'C2', url: 'https://ex.com/2', location: 'India', eligibility_status: 'ELIGIBLE' },
+      { title: 'Data Analyst Intern', company: 'C3', url: 'https://ex.com/3', location: 'India', eligibility_status: 'ELIGIBLE' },
+      { title: 'Cloud DevOps Intern', company: 'C4', url: 'https://ex.com/4', location: 'India', eligibility_status: 'ELIGIBLE' },
+    ];
+    const pool = selectEvaluationPool(candidates, { maxTotal: 50, log: false });
+    assert.strictEqual(pool.length, 4);
+    const dist = getQueueCategoryDistribution(pool);
+    assert.strictEqual(dist['AI/ML'], 1);
+    assert.strictEqual(dist['Software/Backend'], 1);
+    assert.strictEqual(dist['Data/Data Analytics'], 1);
+    assert.strictEqual(dist['Cloud/DevOps/Automation'], 1);
+  });
+
+  // Test 3: Unused slots redistribution when a category is under-filled
+  test('3. Unused slots redistribution when a category has fewer candidates', () => {
+    const candidates = [];
+    // 35 AI/ML jobs
+    for (let i = 1; i <= 35; i++) {
+      candidates.push({
+        title: `AI Engineer Intern ${i}`,
+        company: `AICo ${i}`,
+        url: `https://ex.com/ai-${i}`,
+        location: 'India',
+        eligibility_status: 'ELIGIBLE',
+      });
+    }
+    // 15 SWE jobs
+    for (let i = 1; i <= 15; i++) {
+      candidates.push({
+        title: `Backend Developer Intern ${i}`,
+        company: `SWECo ${i}`,
+        url: `https://ex.com/swe-${i}`,
+        location: 'India',
+        eligibility_status: 'ELIGIBLE',
+      });
+    }
+    // 2 Data jobs (under-filled vs limit of 10)
+    for (let i = 1; i <= 2; i++) {
+      candidates.push({
+        title: `Data Engineering Intern ${i}`,
+        company: `DataCo ${i}`,
+        url: `https://ex.com/data-${i}`,
+        location: 'India',
+        eligibility_status: 'ELIGIBLE',
+      });
+    }
+    // 0 Cloud jobs (under-filled vs limit of 5)
+
+    const pool = selectEvaluationPool(candidates, { maxTotal: 50, log: false });
+    // Total available = 35 + 15 + 2 = 52. Pool should select 50.
+    assert.strictEqual(pool.length, 50, 'Unused slots should be redistributed to fill 50 total');
+
+    const dist = getQueueCategoryDistribution(pool);
+    assert.strictEqual(dist['Data/Data Analytics'], 2, 'All 2 Data jobs should be selected');
+    assert.strictEqual(dist['Cloud/DevOps/Automation'], 0);
+    // Unused slots (8 from Data + 5 from Cloud = 13 unused) should be redistributed to AI/ML and SWE
+    assert.ok(dist['AI/ML'] > 25, `AI/ML should receive redistributed slots (got ${dist['AI/ML']})`);
+    assert.ok(dist['Software/Backend'] > 10, `Software should receive redistributed slots (got ${dist['Software/Backend']})`);
+    assert.strictEqual(dist['AI/ML'] + dist['Software/Backend'] + dist['Data/Data Analytics'], 50);
+  });
+
+  // Test 4: Poor quality / ineligible candidates are NEVER added just to satisfy category allocation
+  test('4. Poor quality / ineligible candidates are never added to satisfy category allocation', () => {
+    const candidates = [
+      { title: 'Machine Learning Intern', company: 'C1', url: 'https://ex.com/1', location: 'India', eligibility_status: 'ELIGIBLE' },
+      { title: 'Software Engineer Intern', company: 'C2', url: 'https://ex.com/2', location: 'India', eligibility_status: 'ELIGIBLE' },
+      // Ineligible jobs that should be blocked
+      { title: 'Cloud Engineer Intern', company: 'C3', url: 'https://ex.com/3', location: 'US', eligibility_status: 'INELIGIBLE' },
+      { title: 'Data Analyst Intern', company: 'C4', url: 'https://ex.com/4', location: 'UK', eligibility_status: 'UNCLEAR' },
+      { title: 'DevOps Intern', company: 'C5', url: 'https://ex.com/5', location: 'Germany', eligibility_status: 'LIKELY_INELIGIBLE' },
+      { title: 'Sales Executive Intern', company: 'C6', url: 'https://ex.com/6', location: 'India', eligibility_status: 'ELIGIBLE' }, // Non-technical
+      { title: 'SWE Intern Bad URL', company: 'C7', url: 'invalid-url', location: 'India', eligibility_status: 'ELIGIBLE' },
+    ];
+    const pool = selectEvaluationPool(candidates, { maxTotal: 50, log: false });
+    // Only C1 and C2 are valid eligible technical positions!
+    assert.strictEqual(pool.length, 2, 'Pool must strictly contain only the 2 eligible technical candidates');
+    assert.ok(pool.every(j => j.eligibility_status === 'ELIGIBLE' || j.eligibility_status === 'LIKELY_ELIGIBLE'));
+    assert.ok(!pool.some(j => j.company === 'C3' || j.company === 'C4' || j.company === 'C5' || j.company === 'C6' || j.company === 'C7'));
+  });
+
+  // Test 5: Candidate pool size never exceeds maxTotal
+  test('5. Candidate pool size strictly capped at maxTotal', () => {
+    const candidates = [];
+    for (let i = 1; i <= 80; i++) {
+      candidates.push({
+        title: `Software Engineer Intern ${i}`,
+        company: `TechCo ${i}`,
+        url: `https://ex.com/tech-${i}`,
+        location: 'Bangalore, India',
+        eligibility_status: 'ELIGIBLE',
+      });
+    }
+    const pool50 = selectEvaluationPool(candidates, { maxTotal: 50, log: false });
+    assert.strictEqual(pool50.length, 50);
+
+    const pool20 = selectEvaluationPool(candidates, { maxTotal: 20, log: false });
+    assert.strictEqual(pool20.length, 20);
+  });
+
+  // Test 6: Intra-category ranking prioritizes rolePriority, geo, internship, freshness, tier-1
+  test('6. Intra-category ranking prioritizes high-quality signals (tier-1, India, internship, freshness)', () => {
+    const sweJobs = [
+      {
+        title: 'Junior Software Engineer',
+        company: 'GenericStartup',
+        url: 'https://ex.com/swe-old',
+        location: 'Remote',
+        type: 'fulltime',
+        postedAt: '1 month ago',
+        eligibility_status: 'LIKELY_ELIGIBLE',
+      },
+      {
+        title: 'Software Engineer Intern',
+        company: 'Google',
+        url: 'https://ex.com/swe-top',
+        location: 'Bangalore, India',
+        type: 'internship',
+        postedAt: 'today',
+        eligibility_status: 'ELIGIBLE',
+      },
+      {
+        title: 'Software Developer Intern',
+        company: 'MidStartup',
+        url: 'https://ex.com/swe-mid',
+        location: 'Bangalore, India',
+        type: 'internship',
+        postedAt: '3 days ago',
+        eligibility_status: 'ELIGIBLE',
+      },
+    ];
+
+    const pool = selectEvaluationPool(sweJobs, { maxTotal: 2, limits: { 'Software/Backend': 2 }, log: false });
+    assert.strictEqual(pool.length, 2);
+    // Google (Tier 1, India, Intern, Today) must be #1
+    assert.strictEqual(pool[0].company, 'Google');
+    // MidStartup must be #2
+    assert.strictEqual(pool[1].company, 'MidStartup');
+    // GenericStartup (old fulltime) should have been dropped due to limit of 2
+    assert.ok(!pool.some(j => j.company === 'GenericStartup'));
+  });
+
+  // Test 7: Duplicate canonical URLs are deduplicated before evaluation
+  test('7. Duplicate canonical URLs are deduplicated before evaluation', () => {
+    const duplicates = [
+      { title: 'AI Intern', company: 'Alpha', url: 'https://ex.com/job?utm_source=linkedin', location: 'India', eligibility_status: 'ELIGIBLE' },
+      { title: 'AI Intern', company: 'Alpha', url: 'https://ex.com/job?utm_source=twitter', location: 'India', eligibility_status: 'ELIGIBLE' },
+      { title: 'AI Intern', company: 'Alpha', url: 'https://ex.com/job#apply', location: 'India', eligibility_status: 'ELIGIBLE' },
+    ];
+    const pool = selectEvaluationPool(duplicates, { maxTotal: 50, log: false });
+    assert.strictEqual(pool.length, 1, 'Duplicate canonical URLs must result in a single evaluation entry');
+  });
+
+  // Test 8: Final Top 20 is not subject to artificial category quotas (purely merit-based)
+  test('8. Final Top 20 queue is not subject to artificial category quotas (pure merit-based)', () => {
+    const evaluated = [
+      { title: 'SWE Intern', company: 'Uber', url: 'https://ex.com/1', roleCategory: 'Software/Backend', matchScore: 95, eligibility_status: 'ELIGIBLE' },
+      { title: 'Backend Intern', company: 'Stripe', url: 'https://ex.com/2', roleCategory: 'Software/Backend', matchScore: 92, eligibility_status: 'ELIGIBLE' },
+      { title: 'Data Intern', company: 'Databricks', url: 'https://ex.com/3', roleCategory: 'Data/Data Analytics', matchScore: 90, eligibility_status: 'ELIGIBLE' },
+      { title: 'ML Intern', company: 'SmallCo', url: 'https://ex.com/4', roleCategory: 'AI/ML', matchScore: 72, eligibility_status: 'ELIGIBLE' },
+    ];
+    const queue = buildTop20Queue(evaluated);
+    assert.strictEqual(queue[0].title, 'SWE Intern', 'Highest priority SWE intern should be #1 in queue');
+    assert.strictEqual(queue[1].title, 'Backend Intern', 'High priority Backend intern should be #2 in queue');
+    assert.strictEqual(queue[2].title, 'Data Intern', 'High priority Data intern should be #3 in queue');
+    assert.strictEqual(queue[3].title, 'ML Intern', 'Lower scoring ML intern should be #4');
+  });
+
+  // Test 9: End-to-end integration: Category-aware pool allows SWE/Data to reach Gemini and enter Top 20
+  test('9. Category-aware evaluation pool enables qualified SWE & Data roles to reach Gemini evaluation and enter Top 20', () => {
+    // Simulate candidate pool where AI/ML has 40 listings, SWE has 10 listings, Data has 5 listings
+    const candidatePool = [];
+    for (let i = 1; i <= 40; i++) {
+      candidatePool.push({
+        title: `AI/ML Research Intern ${i}`,
+        company: `Startup AI ${i}`,
+        url: `https://ex.com/ai-${i}`,
+        location: 'Bangalore, India',
+        eligibility_status: 'ELIGIBLE',
+        type: 'internship',
+      });
+    }
+    // High quality SWE roles
+    candidatePool.push({
+      title: 'Software Engineer Intern',
+      company: 'Amazon',
+      url: 'https://amazon.jobs/swe-intern',
+      location: 'Hyderabad, India',
+      eligibility_status: 'ELIGIBLE',
+      type: 'internship',
+      postedAt: 'today',
+    });
+    // High quality Data role
+    candidatePool.push({
+      title: 'Data Analyst Intern',
+      company: 'Swiggy',
+      url: 'https://swiggy.com/careers/data-analyst',
+      location: 'Bangalore, India',
+      eligibility_status: 'ELIGIBLE',
+      type: 'internship',
+      postedAt: 'today',
+    });
+
+    // Run selectEvaluationPool
+    const toEvaluate = selectEvaluationPool(candidatePool, { maxTotal: 50, log: false });
+    assert.ok(toEvaluate.some(j => j.title === 'Software Engineer Intern' && j.company === 'Amazon'), 'Amazon SWE must be selected for evaluation');
+    assert.ok(toEvaluate.some(j => j.title === 'Data Analyst Intern' && j.company === 'Swiggy'), 'Swiggy Data Analyst must be selected for evaluation');
+
+    // Simulate LLM evaluation where Amazon SWE scores 88%, Swiggy Data scores 82%, and Startup AI jobs score 75%
+    const evaluated = toEvaluate.map(j => {
+      let score = 75;
+      if (j.company === 'Amazon') score = 90;
+      if (j.company === 'Swiggy') score = 84;
+      return { ...j, matchScore: score };
+    });
+
+    // Build Top 20 Queue
+    const queue = buildTop20Queue(evaluated);
+    assert.ok(queue.length > 0);
+    // Amazon SWE and Swiggy Data should be in Top 5 Priority tier!
+    const queueTitles = queue.slice(0, 5).map(j => `${j.title} @ ${j.company}`);
+    assert.ok(queueTitles.includes('Software Engineer Intern @ Amazon'), `Amazon SWE must enter Top 5 queue (got: ${queueTitles.join(', ')})`);
+    assert.ok(queueTitles.includes('Data Analyst Intern @ Swiggy'), `Swiggy Data Analyst must enter Top 5 queue (got: ${queueTitles.join(', ')})`);
+  });
+
   console.log('\n' + '═'.repeat(60));
   console.log(`  📊 TEST RESULTS: ${passedTests} PASSED, ${failedTests} FAILED`);
   console.log('═'.repeat(60) + '\n');
