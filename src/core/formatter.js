@@ -86,7 +86,7 @@ function formatTelegram(job) {
     if (job.matchScore >= 80) {
       matchLine = `\n🔥 *PRIORITY MATCH: ${escapeMdV2(String(job.matchScore))}%*`;
     } else if (job.matchScore >= 70) {
-      matchLine = `\n⚡ *GOOD MATCH: ${escapeMdV2(String(job.matchScore))}%* _(Apply \\+ Learn)_`;
+      matchLine = `\n⚡ *GOOD MATCH: ${escapeMdV2(String(job.matchScore))}%* _\\(Apply \\+ Learn\\)_`;
     } else {
       matchLine = `\n📊 *Match: ${escapeMdV2(String(job.matchScore))}%*`;
     }

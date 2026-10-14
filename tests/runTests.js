@@ -521,21 +521,298 @@ async function runAll() {
     assert.ok(scoreField.value.includes('PRIORITY MATCH'), '80 score should display PRIORITY MATCH in Discord');
   });
 
-  test('Score 75 -> alert (Good Match / Apply + Learn)', () => {
+  test('Score 75 -> alert (Good Match / Apply + Learn) with valid MarkdownV2 escaping', () => {
     const job = { title: 'Backend Intern', company: 'Razorpay', eligibility_status: 'ELIGIBLE', matchScore: 75 };
     assert.strictEqual(shouldAlert(job, 70), true, 'Score 75 should be approved for alert');
     const tg = formatTelegram(job);
     assert.ok(tg.includes('GOOD MATCH'), '75 score should display GOOD MATCH in Telegram');
+    assert.ok(tg.includes('_\\(Apply \\+ Learn\\)_'), 'Parentheses in GOOD MATCH line must be escaped for MarkdownV2');
+    assert.ok(!tg.includes('_(Apply'), 'Unescaped opening parenthesis must not exist in Telegram output');
     const discord = formatDiscordEmbed(job);
     const scoreField = discord.fields.find(f => f.name.includes('Match Score'));
     assert.ok(scoreField.value.includes('GOOD MATCH (Apply + Learn)'), '75 score should display Good Match in Discord');
   });
 
-  test('Score 70 -> alert (Minimum notification boundary)', () => {
+  test('Score 70 -> alert (Minimum notification boundary) with valid MarkdownV2 escaping', () => {
     const job = { title: 'SWE Intern', company: 'Swiggy', eligibility_status: 'ELIGIBLE', matchScore: 70 };
     assert.strictEqual(shouldAlert(job, 70), true, 'Score 70 should be approved for alert');
     const tg = formatTelegram(job);
     assert.ok(tg.includes('GOOD MATCH'), '70 score should display GOOD MATCH in Telegram');
+    assert.ok(tg.includes('_\\(Apply \\+ Learn\\)_'), 'Score 70 must escape parentheses as _\\(Apply \\+ Learn\\)_');
+  });
+
+  test('Score 79 -> alert (Upper boundary of Good Match) with valid MarkdownV2 escaping', () => {
+    const job = { title: 'AI Intern', company: 'Zomato', eligibility_status: 'ELIGIBLE', matchScore: 79 };
+    assert.strictEqual(shouldAlert(job, 70), true, 'Score 79 should be approved for alert');
+    const tg = formatTelegram(job);
+    assert.ok(tg.includes('GOOD MATCH'), '79 score should display GOOD MATCH in Telegram');
+    assert.ok(tg.includes('_\\(Apply \\+ Learn\\)_'), 'Score 79 must escape parentheses as _\\(Apply \\+ Learn\\)_');
+  });
+
+  test('TelegramNotifier: Simulated 400 entity-parsing error triggers plain-text fallback successfully', async () => {
+    const TelegramNotifier = require('../src/notifiers/telegram');
+    const notifier = new TelegramNotifier('mock_token', '12345');
+
+    let sendCallCount = 0;
+    const calls = [];
+    notifier.bot = {
+      sendMessage: async (chatId, text, options) => {
+        sendCallCount++;
+        calls.push({ chatId, text, options });
+        if (sendCallCount === 1) {
+          const err = new Error("ETELEGRAM: 400 Bad Request: can't parse entities: Character '(' is reserved and must be escaped with the preceding '\\'");
+          err.response = {
+            statusCode: 400,
+            body: {
+              error_code: 400,
+              description: "Bad Request: can't parse entities: Character '(' is reserved and must be escaped with the preceding '\\'",
+            },
+          };
+          throw err;
+        }
+        return { message_id: 101 };
+      },
+    };
+
+    const mdMessage = '🧪 *AI Intern* \n⚡ *GOOD MATCH: 75%* _(Apply + Learn)_';
+    await assert.doesNotReject(async () => {
+      await notifier.sendMessage(mdMessage);
+    }, 'sendMessage should resolve successfully via plain-text fallback');
+
+    assert.strictEqual(sendCallCount, 2, 'Should attempt MarkdownV2 first, then plain-text fallback');
+    assert.strictEqual(calls[0].options.parse_mode, 'MarkdownV2', 'First attempt should be MarkdownV2');
+    assert.strictEqual(calls[1].options.parse_mode, undefined, 'Fallback attempt should NOT have MarkdownV2 parse_mode');
+    assert.ok(!calls[1].text.includes('\\_'), 'Fallback text should have markdown escape backslashes stripped');
+  });
+
+  test('TelegramNotifier: HTTP 429 rate-limit error is retried once with backoff and succeeds', async () => {
+    const TelegramNotifier = require('../src/notifiers/telegram');
+    const notifier = new TelegramNotifier('mock_token', '12345');
+
+    let sendCallCount = 0;
+    notifier.bot = {
+      sendMessage: async (chatId, text, options) => {
+        sendCallCount++;
+        if (sendCallCount === 1) {
+          const err = new Error('ETELEGRAM: 429 Too Many Requests: retry after 1');
+          err.response = {
+            statusCode: 429,
+            body: {
+              error_code: 429,
+              parameters: { retry_after: 0.001 },
+            },
+          };
+          throw err;
+        }
+        return { message_id: 102 };
+      },
+    };
+
+    await assert.doesNotReject(async () => {
+      await notifier.sendMessage('Test message');
+    }, 'sendMessage should resolve after 429 retry');
+    assert.strictEqual(sendCallCount, 2, 'Should retry after 429');
+  });
+
+  test('TelegramNotifier: Non-retryable HTTP error (401 Unauthorized) is not mislabeled as rate-limiting and rejects immediately', async () => {
+    const TelegramNotifier = require('../src/notifiers/telegram');
+    const notifier = new TelegramNotifier('mock_token', '12345');
+
+    let sendCallCount = 0;
+    notifier.bot = {
+      sendMessage: async () => {
+        sendCallCount++;
+        const err = new Error('ETELEGRAM: 401 Unauthorized');
+        err.response = {
+          statusCode: 401,
+          body: {
+            error_code: 401,
+            description: 'Unauthorized',
+          },
+        };
+        throw err;
+      },
+    };
+
+    await assert.rejects(
+      async () => {
+        await notifier.sendMessage('Test message');
+      },
+      /401 Unauthorized/,
+      'Should reject immediately on 401'
+    );
+    assert.strictEqual(sendCallCount, 1, 'Non-retryable 401 error should not be retried');
+  });
+
+  test('TelegramNotifier: Non-retryable HTTP error (403 Forbidden) rejects immediately without rate-limit retry', async () => {
+    const TelegramNotifier = require('../src/notifiers/telegram');
+    const notifier = new TelegramNotifier('mock_token', '12345');
+
+    let sendCallCount = 0;
+    notifier.bot = {
+      sendMessage: async () => {
+        sendCallCount++;
+        const err = new Error('ETELEGRAM: 403 Forbidden: bot was blocked by the user');
+        err.response = {
+          statusCode: 403,
+          body: {
+            error_code: 403,
+            description: 'Forbidden: bot was blocked by the user',
+          },
+        };
+        throw err;
+      },
+    };
+
+    await assert.rejects(
+      async () => {
+        await notifier.sendMessage('Test message');
+      },
+      /403 Forbidden/,
+      'Should reject immediately on 403'
+    );
+    assert.strictEqual(sendCallCount, 1, 'Non-retryable 403 error should not be retried');
+  });
+
+  test('TelegramNotifier: HTTP 429 retries no more than once and throws if second attempt fails', async () => {
+    const TelegramNotifier = require('../src/notifiers/telegram');
+    const notifier = new TelegramNotifier('mock_token', '12345');
+
+    let sendCallCount = 0;
+    notifier.bot = {
+      sendMessage: async () => {
+        sendCallCount++;
+        const err = new Error('ETELEGRAM: 429 Too Many Requests: retry after 1');
+        err.response = {
+          statusCode: 429,
+          body: {
+            error_code: 429,
+            parameters: { retry_after: 0.001 },
+          },
+        };
+        throw err;
+      },
+    };
+
+    await assert.rejects(
+      async () => {
+        await notifier.sendMessage('Test message');
+      },
+      /429 Too Many Requests/,
+      'Should throw if second attempt fails'
+    );
+    assert.strictEqual(sendCallCount, 2, 'Should retry exactly once and stop');
+  });
+
+  test('TelegramNotifier: HTTP 400 entity-parsing error does not trigger fallback if parse_mode is not MarkdownV2', async () => {
+    const TelegramNotifier = require('../src/notifiers/telegram');
+    const notifier = new TelegramNotifier('mock_token', '12345');
+
+    let sendCallCount = 0;
+    notifier.bot = {
+      sendMessage: async () => {
+        sendCallCount++;
+        const err = new Error("ETELEGRAM: 400 Bad Request: can't parse entities");
+        err.response = {
+          statusCode: 400,
+          body: {
+            error_code: 400,
+            description: "Bad Request: can't parse entities",
+          },
+        };
+        throw err;
+      },
+    };
+
+    await assert.rejects(
+      async () => {
+        await notifier.sendMessage('Plain message', { parse_mode: undefined });
+      },
+      /400 Bad Request/,
+      'Should reject without fallback when parse_mode is undefined'
+    );
+    assert.strictEqual(sendCallCount, 1, 'Should not attempt fallback when parse_mode is not MarkdownV2');
+  });
+
+  test('TelegramNotifier: Plain-text fallback regex unescapes formatting escapes without corrupting ordinary text, URLs, or literal backslashes', async () => {
+    const TelegramNotifier = require('../src/notifiers/telegram');
+    const notifier = new TelegramNotifier('mock_token', '12345');
+
+    let capturedPayload = null;
+    notifier.bot = {
+      sendMessage: async (chatId, text, options) => {
+        if (options.parse_mode === 'MarkdownV2') {
+          const err = new Error("ETELEGRAM: 400 Bad Request: can't parse entities");
+          err.response = {
+            statusCode: 400,
+            body: {
+              error_code: 400,
+              description: "Bad Request: can't parse entities",
+            },
+          };
+          throw err;
+        }
+        capturedPayload = { chatId, text, options };
+        return { message_id: 103 };
+      },
+    };
+
+    const complexJob = {
+      title: 'Senior Software Engineer (AI/ML & Back_End) [Intern] - C++ / Python \\ Version 3.10',
+      company: 'Acme Corp. / R&D (India) [Tech-Hub] _Pvt._ Ltd.',
+      location: 'Bengaluru (Remote - Work.From.Home) [Karnataka]',
+      url: 'https://jobs.acme.com/view?id=123&role=ai_ml(intern)#apply',
+      salary: '₹25,000 - ₹35,000 / month (stipend)',
+      postedAt: '2 hours ago (approx.)',
+      aiReason: 'Strong match: Python, C++ & ML (95% overlap). Great candidate!',
+      eligibility_status: 'ELIGIBLE',
+      eligibility_reasons: ['Indian citizen', '2028 batch'],
+      type: 'internship',
+      source: 'Google Jobs',
+      category: 'AI / ML & Data Science',
+      matchScore: 75,
+    };
+
+    const formattedMd = formatTelegram(complexJob);
+    await notifier.sendMessage(formattedMd);
+
+    assert.ok(capturedPayload, 'Plain-text fallback should have executed');
+    assert.strictEqual(capturedPayload.options.parse_mode, undefined, 'Fallback must have parse_mode undefined');
+
+    const text = capturedPayload.text;
+    assert.ok(text.includes('(AI/ML & Back_End) [Intern] - C++ / Python \\ Version 3.10'), 'Special characters and literal backslash preserved');
+    assert.ok(text.includes('Acme Corp. / R&D (India) [Tech-Hub] _Pvt._ Ltd.'), 'Company punctuation preserved');
+    assert.ok(text.includes('GOOD MATCH: 75%* _(Apply + Learn)_'), 'Parentheses in match line unescaped');
+    assert.ok(text.includes('https://jobs.acme.com/view?id=123&role=ai_ml%28intern%29#apply'), 'URL is intact and not corrupted');
+    assert.ok(!text.includes('\\_'), 'No escaped underscores remain');
+    assert.ok(!text.includes('\\('), 'No escaped opening parentheses remain');
+    assert.ok(!text.includes('\\[ '), 'No escaped brackets remain');
+  });
+
+  test('Formatter: MarkdownV2 escaping handles complex job with special characters across scores 70, 75, 79', () => {
+    const complexJob = {
+      title: 'Senior Software Engineer (AI/ML & Back_End) [Intern] - C++ / Python \\ Version 3.10',
+      company: 'Acme Corp. / R&D (India) [Tech-Hub] _Pvt._ Ltd.',
+      location: 'Bengaluru (Remote - Work.From.Home) [Karnataka]',
+      url: 'https://jobs.acme.com/view?id=123&role=ai_ml(intern)#apply',
+      salary: '₹25,000 - ₹35,000 / month (stipend)',
+      postedAt: '2 hours ago (approx.)',
+      aiReason: 'Strong match: Python, C++ & ML (95% overlap). Great candidate!',
+      eligibility_status: 'ELIGIBLE',
+      eligibility_reasons: ['Indian citizen', '2028 batch'],
+      type: 'internship',
+      source: 'Google Jobs',
+      category: 'AI / ML & Data Science',
+    };
+
+    [70, 75, 79].forEach(score => {
+      const job = { ...complexJob, matchScore: score };
+      const tg = formatTelegram(job);
+      assert.ok(tg.includes(`⚡ *GOOD MATCH: ${score}%* _\\(Apply \\+ Learn\\)_`), `Score ${score} line correctly escaped`);
+      assert.ok(tg.includes('\\(AI/ML & Back\\_End\\) \\[Intern\\] \\- C\\+\\+ / Python \\\\ Version 3\\.10'), 'Title special characters escaped');
+      assert.ok(tg.includes('Acme Corp\\. / R&D \\(India\\) \\[Tech\\-Hub\\] \\_Pvt\\.\\_ Ltd\\.'), 'Company special characters escaped');
+      assert.ok(tg.includes('[Apply Now →](https://jobs.acme.com/view?id=123&role=ai_ml%28intern%29#apply)'), 'URL safely encoded without raw parentheses');
+    });
   });
 
   test('Score 69 -> no alert (Below MIN_MATCH_SCORE)', () => {
