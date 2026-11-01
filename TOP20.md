@@ -1,174 +1,34 @@
-# 🎯 Today's Top 20 Application Queue (2026-11-01)
+# 🏆 Today's Top 20 Internship Recommendations (2026-11-01)
 
-> **Candidate:** NMAMIT B.Tech CSE (Batch of 2028) | **Target:** AI/ML, Software, Data & Cloud Internships
-> **Today's recommended minimum:** Apply to the **5 Priority jobs** (Ranks 1–5) below. The remaining 15 are optional next/backup opportunities.
-> *Screening Disclaimer: International work authorization and visa eligibility classifications are automated heuristic indicators for discovery and triage purposes only, not legal or immigration advice.*
+Curated for **B.Tech CSE 2028 (NMAMIT)** targeting **AI/ML & SWE Internships**.
+Ranked by **AI/ML role alignment + tier-1 employer signal + international eligibility + geographic fit**.
+
+> ⚠️ **Screening Disclaimer:** International work authorization and visa eligibility classifications are automated heuristic indicators for discovery and triage purposes only, not legal or immigration advice.
 
 [← Back to README](README.md) | [Application Tracker](APPLICATIONS.md)
 
-## 📊 Queue Summary
-
-| Priority Tier | Rank Range | Count | Action Recommendation |
-|---|---|---|---|
-| 🔥 **PRIORITY** | #1 – #5 | 5 / 5 | **Apply First (Today's Minimum Target)** |
-| 🟢 **NEXT** | #6 – #15 | 4 / 10 | Apply After Priority |
-| 🟡 **BACKUP** | #16 – #20 | 0 / 5 | Additional Opportunities |
-| **Total Queued** | #1 – #9 | **9** | |
-
-### 📈 Role Category Distribution
-- **AI/ML:** 4
-- **Software/Backend:** 3
-- **Data/Data Analytics:** 0
-- **Cloud/DevOps/Automation:** 1
-- **Other technical:** 1
-
----
-
-## 🔥 PRIORITY — APPLY FIRST
-*Today's recommended minimum target (Ranks 1–5)*
-
-| # | Company | Role | Category | Match | Priority | Eligibility | Location | Source | Apply |
-|---|---|---|---|---|---|---|---|---|---|
-| **#1** | **ThinkNovaa** | Machine Learning Intern | AI/ML | 95% | **96** | 🟢 Eligible | India | [LINKEDIN] | [Apply Now →](https://in.linkedin.com/jobs/view/machine-learning-intern-at-thinknovaa-4485184895) |
-| **#2** | **ThinkNovaa** | Artificial Intelligence Intern | Other technical | 95% | **90** | 🟢 Eligible | India | [LINKEDIN] | [Apply Now →](https://in.linkedin.com/jobs/view/artificial-intelligence-intern-at-thinknovaa-4485186959) |
-| **#3** | **Vantor** | AI Engineer Intern | AI/ML | 85% | **90** | 🟢 Likely | Remote, United States | GitHub Repos | [Apply Now →](https://go.vansh.nyc/13t) |
-| **#4** | **Evolvra** | Machine Learning | AI/ML | 85% | **88** | 🟢 Eligible | Work from home | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-machine-learning-internship-at-evolvra1793505627) |
-| **#5** | **ParkTek Innovation** | Software Engineer Intern | Software/Backend | 75% | **86** | 🟢 Eligible | Noida, Uttar Pradesh, India | [LINKEDIN] | [Apply Now →](https://in.linkedin.com/jobs/view/software-engineer-intern-at-parktek-innovation-4483984268) |
-
-### #1 Machine Learning Intern @ ThinkNovaa
-- **Company:** ThinkNovaa
-- **Role Category:** AI/ML
-- **Match Score:** 95%
-- **Application Priority:** 96
-- **Eligibility:** 🟢 Eligible
-- **Location:** India
-- **Source:** [LINKEDIN]
-- **Posted:** 2 hours ago
-- **Why this is recommended:** Primary AI/ML Engineering Target
-- **Apply:** [https://in.linkedin.com/jobs/view/machine-learning-intern-at-thinknovaa-4485184895](https://in.linkedin.com/jobs/view/machine-learning-intern-at-thinknovaa-4485184895)
-- **Log Command:** `npm run track -- add "ThinkNovaa" "Machine Learning Intern" "2026-11-01" "Applied" "Top-20 Queue #1" "https://in.linkedin.com/jobs/view/machine-learning-intern-at-thinknovaa-4485184895"`
-
-### #2 Artificial Intelligence Intern @ ThinkNovaa
-- **Company:** ThinkNovaa
-- **Role Category:** Other technical
-- **Match Score:** 95%
-- **Application Priority:** 90
-- **Eligibility:** 🟢 Eligible
-- **Location:** India
-- **Source:** [LINKEDIN]
-- **Posted:** 2 hours ago
-- **Why this is recommended:** General Technical / CS Opportunity
-- **Apply:** [https://in.linkedin.com/jobs/view/artificial-intelligence-intern-at-thinknovaa-4485186959](https://in.linkedin.com/jobs/view/artificial-intelligence-intern-at-thinknovaa-4485186959)
-- **Log Command:** `npm run track -- add "ThinkNovaa" "Artificial Intelligence Intern" "2026-11-01" "Applied" "Top-20 Queue #2" "https://in.linkedin.com/jobs/view/artificial-intelligence-intern-at-thinknovaa-4485186959"`
-
-### #3 AI Engineer Intern @ Vantor
-- **Company:** Vantor
-- **Role Category:** AI/ML
-- **Match Score:** 85%
-- **Application Priority:** 90
-- **Eligibility:** 🟢 Likely Eligible
-- **Location:** Remote, United States
-- **Source:** GitHub Repos
-- **Posted:** 2026-10-31
-- **Why this is recommended:** Primary AI/ML Engineering Target
-- **Apply:** [https://go.vansh.nyc/13t](https://go.vansh.nyc/13t)
-- **Log Command:** `npm run track -- add "Vantor" "AI Engineer Intern" "2026-11-01" "Applied" "Top-20 Queue #3" "https://go.vansh.nyc/13t"`
-
-### #4 Machine Learning @ Evolvra
-- **Company:** Evolvra
-- **Role Category:** AI/ML
-- **Match Score:** 85%
-- **Application Priority:** 88
-- **Eligibility:** 🟢 Eligible
-- **Location:** Work from home
-- **Source:** Internshala
-- **Posted:** Recently posted / Active
-- **Why this is recommended:** Primary AI/ML Engineering Target
-- **Apply:** [https://internshala.com/internship/detail/work-from-home-machine-learning-internship-at-evolvra1793505627](https://internshala.com/internship/detail/work-from-home-machine-learning-internship-at-evolvra1793505627)
-- **Log Command:** `npm run track -- add "Evolvra" "Machine Learning" "2026-11-01" "Applied" "Top-20 Queue #4" "https://internshala.com/internship/detail/work-from-home-machine-learning-internship-at-evolvra1793505627"`
-
-### #5 Software Engineer Intern @ ParkTek Innovation
-- **Company:** ParkTek Innovation
-- **Role Category:** Software/Backend
-- **Match Score:** 75%
-- **Application Priority:** 86
-- **Eligibility:** 🟢 Eligible
-- **Location:** Noida, Uttar Pradesh, India
-- **Source:** [LINKEDIN]
-- **Posted:** 39 minutes ago
-- **Why this is recommended:** Software Engineering Core Target
-- **Apply:** [https://in.linkedin.com/jobs/view/software-engineer-intern-at-parktek-innovation-4483984268](https://in.linkedin.com/jobs/view/software-engineer-intern-at-parktek-innovation-4483984268)
-- **Log Command:** `npm run track -- add "ParkTek Innovation" "Software Engineer Intern" "2026-11-01" "Applied" "Top-20 Queue #5" "https://in.linkedin.com/jobs/view/software-engineer-intern-at-parktek-innovation-4483984268"`
-
-## 🟢 NEXT — APPLY AFTER PRIORITY
-*High-quality opportunities to apply to after priority roles (Ranks 6–15)*
-
-| # | Company | Role | Category | Match | Priority | Eligibility | Location | Source | Apply |
-|---|---|---|---|---|---|---|---|---|---|
-| **#6** | **Datacor** | AI Engineer Intern | AI/ML | 75% | **86** | 🟢 Likely | Remote, United States | GitHub Repos | [Apply Now →](https://go.vansh.nyc/12N) |
-| **#7** | **Solink** | Software Engineer Co-op, Agents | Software/Backend | 75% | **84** | 🟢 Likely | Remote, Canada | GitHub Repos | [Apply Now →](https://go.vansh.nyc/13K) |
-| **#8** | **FlatUIUX** | Cloud Engineer Internship | Cloud/DevOps/Automation | 85% | **77** | 🟢 Eligible | Remote / Work From Home (India) | [UNSTOP] | [Apply Now →](https://unstop.com/internships/cloud-engineer-internship-flatuiux-1788178) |
-| **#9** | **BTOW Pvt. Ltd.** | Full Stack Developer Internship | Software/Backend | 75% | **73** | 🟢 Eligible | Remote / Work From Home (India) | [UNSTOP] | [Apply Now →](https://unstop.com/internships/full-stack-developer-internship-btow-pvt-ltd-1789292) |
-
-### #6 AI Engineer Intern @ Datacor
-- **Company:** Datacor
-- **Role Category:** AI/ML
-- **Match Score:** 75%
-- **Application Priority:** 86
-- **Eligibility:** 🟢 Likely Eligible
-- **Location:** Remote, United States
-- **Source:** GitHub Repos
-- **Posted:** 2026-10-31
-- **Why this is recommended:** Primary AI/ML Engineering Target
-- **Apply:** [https://go.vansh.nyc/12N](https://go.vansh.nyc/12N)
-- **Log Command:** `npm run track -- add "Datacor" "AI Engineer Intern" "2026-11-01" "Applied" "Top-20 Queue #6" "https://go.vansh.nyc/12N"`
-
-### #7 Software Engineer Co-op, Agents @ Solink
-- **Company:** Solink
-- **Role Category:** Software/Backend
-- **Match Score:** 75%
-- **Application Priority:** 84
-- **Eligibility:** 🟢 Likely Eligible
-- **Location:** Remote, Canada
-- **Source:** GitHub Repos
-- **Posted:** 2026-10-31
-- **Why this is recommended:** Software Engineering Core Target
-- **Apply:** [https://go.vansh.nyc/13K](https://go.vansh.nyc/13K)
-- **Log Command:** `npm run track -- add "Solink" "Software Engineer Co-op, Agents" "2026-11-01" "Applied" "Top-20 Queue #7" "https://go.vansh.nyc/13K"`
-
-### #8 Cloud Engineer Internship @ FlatUIUX
-- **Company:** FlatUIUX
-- **Role Category:** Cloud/DevOps/Automation
-- **Match Score:** 85%
-- **Application Priority:** 77
-- **Eligibility:** 🟢 Eligible
-- **Location:** Remote / Work From Home (India)
-- **Source:** [UNSTOP]
-- **Posted:** 1/11/2026
-- **Why this is recommended:** Cloud, DevOps & Automation Target
-- **Apply:** [https://unstop.com/internships/cloud-engineer-internship-flatuiux-1788178](https://unstop.com/internships/cloud-engineer-internship-flatuiux-1788178)
-- **Log Command:** `npm run track -- add "FlatUIUX" "Cloud Engineer Internship" "2026-11-01" "Applied" "Top-20 Queue #8" "https://unstop.com/internships/cloud-engineer-internship-flatuiux-1788178"`
-
-### #9 Full Stack Developer Internship @ BTOW Pvt. Ltd.
-- **Company:** BTOW Pvt. Ltd.
-- **Role Category:** Software/Backend
-- **Match Score:** 75%
-- **Application Priority:** 73
-- **Eligibility:** 🟢 Eligible
-- **Location:** Remote / Work From Home (India)
-- **Source:** [UNSTOP]
-- **Posted:** 1/11/2026
-- **Why this is recommended:** Full-Stack & Web Engineering Target
-- **Apply:** [https://unstop.com/internships/full-stack-developer-internship-btow-pvt-ltd-1789292](https://unstop.com/internships/full-stack-developer-internship-btow-pvt-ltd-1789292)
-- **Log Command:** `npm run track -- add "BTOW Pvt. Ltd." "Full Stack Developer Internship" "2026-11-01" "Applied" "Top-20 Queue #9" "https://unstop.com/internships/full-stack-developer-internship-btow-pvt-ltd-1789292"`
-
-## 🟡 BACKUP — OPPORTUNITIES TO CONSIDER
-*Worthwhile opportunities for pipeline depth (Ranks 16–20)*
-
-*No opportunities currently queued in this tier.*
+| # | Company | Role | Location | Focus | Eligibility | Apply | Log Application |
+|---|---|---|---|---|---|---|---|
+| 1 | **Jane Street** | Machine Learning Researcher Intern | New York, NY 🌍 Global | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://go.vansh.nyc/40) | `npm run track -- add "Jane Street" "Machine Learning Researcher Intern"` |
+| 2 | **Microsoft** | Software Engineer Intern, AI/ML & LLM | Redmond, WA 🌍 Global | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://go.vansh.nyc/5K) | `npm run track -- add "Microsoft" "Software Engineer Intern, AI/ML & LLM"` |
+| 3 | **LEEO TECK INDIA SOLUTIONS** | Trainee / Intern – Multi-Disciplinary Engineering (Electrical, IIoT & Automation) | Chennai, Delhi, Gurgaon, Pune, Hyderabad, Mumbai, Bangalore 🇮🇳 India | 💻 SWE | 🟢 Eligible | [Apply →](https://internshala.com/internship/detail/trainee-intern--multi-disciplinary-engineering-electrical-iiot-automation-internship-in-multiple-locations-at-leeo-teck-india-solutions1793421018) | `npm run track -- add "LEEO TECK INDIA SOLUTIONS" "Trainee / Intern – Multi-Disciplinary Engineering (Electrical, IIoT & Automation)"` |
+| 4 | **Assetcues Solutions Private Limited** | Artificial Intelligence (AI) | Pune 🇮🇳 India | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-pune-at-assetcues-solutions-private-limited1793244005) | `npm run track -- add "Assetcues Solutions Private Limited" "Artificial Intelligence (AI)"` |
+| 5 | **Simpli Intern** | Artificial Intelligence (AI) | Tamil Nadu Hybrid 🇮🇳 India | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://internshala.com/internship/detail/work-from-home-part-time-artificial-intelligence-ai-internship-at-simpli-intern1791881325) | `npm run track -- add "Simpli Intern" "Artificial Intelligence (AI)"` |
+| 6 | **Foresight Systems Ltd.** | Computer Vision | Delhi 🇮🇳 India | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://internshala.com/internship/detail/computer-vision-internship-in-delhi-at-foresight-systems-ltd1793353353) | `npm run track -- add "Foresight Systems Ltd." "Computer Vision"` |
+| 7 | **People Matter** | Artificial Intelligence (AI) | Mumbai 🇮🇳 India | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://internshala.com/internship/detail/part-time-artificial-intelligence-ai-internship-in-mumbai-at-people-matter1793242204) | `npm run track -- add "People Matter" "Artificial Intelligence (AI)"` |
+| 8 | **SmartBridge Educational Services Private Limited** | Generative AI | Hyderabad 🇮🇳 India | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://internshala.com/internship/detail/generative-ai-internship-in-hyderabad-at-smartbridge-educational-services-private-limited1793077879) | `npm run track -- add "SmartBridge Educational Services Private Limited" "Generative AI"` |
+| 9 | **Raletta Technology Private Limited** | Prompt Engineering | Indore 🇮🇳 India | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://internshala.com/internship/detail/prompt-engineering-internship-in-indore-at-raletta-technology-private-limited1793437195) | `npm run track -- add "Raletta Technology Private Limited" "Prompt Engineering"` |
+| 10 | **Crazy For Success Foundation** | AI Prompt Engineer | Pune 🇮🇳 India | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://internshala.com/internship/detail/ai-prompt-engineer-internship-in-pune-at-crazy-for-success-foundation1791952065) | `npm run track -- add "Crazy For Success Foundation" "AI Prompt Engineer"` |
+| 11 | **Fortune Analytics** | Machine Learning Engineer Internship | Remote / Work From Home (India) 🌐 Remote | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://unstop.com/internships/machine-learning-engineer-internship-fortune-analytics-1790094) | `npm run track -- add "Fortune Analytics" "Machine Learning Engineer Internship"` |
+| 12 | **Suvidha Foundation (Suvidha Mahila Mandal)** | Fundraising Coordinator Internship | Remote / Work From Home (India) 🌐 Remote | 💻 SWE | 🟢 Eligible | [Apply →](https://unstop.com/internships/fundraising-coordinator-internship-suvidha-foundation-suvidha-mahila-mandal-1789552) | `npm run track -- add "Suvidha Foundation (Suvidha Mahila Mandal)" "Fundraising Coordinator Internship"` |
+| 13 | **TalentCV** | Data Analyst Internship | Remote / Work From Home (India) 🌐 Remote | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://unstop.com/internships/data-analyst-internship-talentcv-1790039) | `npm run track -- add "TalentCV" "Data Analyst Internship"` |
+| 14 | **Xtragrad Technologie Private Limited** | Artificial Intelligence Internship | Hyderabad (Work from home) 🌐 Remote | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://unstop.com/internships/artificial-intelligence-internship-xtragrad-technologie-private-limited-1789546) | `npm run track -- add "Xtragrad Technologie Private Limited" "Artificial Intelligence Internship"` |
+| 15 | **Nexvia Technologies** | AI & Machine Learning Internship | Hyderabad (Work from home) 🌐 Remote | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://unstop.com/internships/ai-machine-learning-internship-nexvia-technologies-1774793) | `npm run track -- add "Nexvia Technologies" "AI & Machine Learning Internship"` |
+| 16 | **Zenotalent** | Machine Learning Internship | Remote / Work From Home (India) 🌐 Remote | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://unstop.com/internships/machine-learning-internship-zenotalent-1770195) | `npm run track -- add "Zenotalent" "Machine Learning Internship"` |
+| 17 | **Kukbit SL** | Machine Learning Internship | Remote / Work From Home (India) 🌐 Remote | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://unstop.com/internships/machine-learning-internship-kukbit-sl-1751307) | `npm run track -- add "Kukbit SL" "Machine Learning Internship"` |
+| 18 | **Harvinn Technologies** | Bioinformatics with AI & Machine Learning Internship | Remote / Work From Home (India) 🌐 Remote | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://unstop.com/internships/bioinformatics-with-ai-machine-learning-internship-harvinn-technologies-1768836) | `npm run track -- add "Harvinn Technologies" "Bioinformatics with AI & Machine Learning Internship"` |
+| 19 | **Vortizo AI** | Machine Learning Internship | Remote / Work From Home (India) 🌐 Remote | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://unstop.com/internships/machine-learning-internship-vortizo-ai-1744336) | `npm run track -- add "Vortizo AI" "Machine Learning Internship"` |
+| 20 | **Bharat Academix** | Data Science & Machine Learning Internship | Remote / Work From Home (India) 🌐 Remote | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://unstop.com/internships/data-science-machine-learning-internship-bharat-academix-1761800) | `npm run track -- add "Bharat Academix" "Data Science & Machine Learning Internship"` |
 
 ---
-### 💡 How to Track These Applications:
-```bash
-npm run track -- add "ThinkNovaa" "Machine Learning Intern" "2026-11-01" "Applied" "Top-20 Queue #1" "https://in.linkedin.com/jobs/view/machine-learning-intern-at-thinknovaa-4485184895"
-```
+*Rankings auto-update twice daily with every scheduled pipeline run.*
