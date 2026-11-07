@@ -1,34 +1,216 @@
-# 🏆 Today's Top 20 Internship Recommendations (2026-11-06)
+# 🎯 Today's Top 20 Application Queue (2026-11-07)
 
-Curated for **B.Tech CSE 2028 (NMAMIT)** targeting **AI/ML & SWE Internships**.
-Ranked by **AI/ML role alignment + tier-1 employer signal + international eligibility + geographic fit**.
-
-> ⚠️ **Screening Disclaimer:** International work authorization and visa eligibility classifications are automated heuristic indicators for discovery and triage purposes only, not legal or immigration advice.
+> **Candidate:** NMAMIT B.Tech CSE (Batch of 2028) | **Target:** AI/ML, Software, Data & Cloud Internships
+> **Today's recommended minimum:** Apply to the **5 Priority jobs** (Ranks 1–5) below. The remaining 15 are optional next/backup opportunities.
+> *Screening Disclaimer: International work authorization and visa eligibility classifications are automated heuristic indicators for discovery and triage purposes only, not legal or immigration advice.*
 
 [← Back to README](README.md) | [Application Tracker](APPLICATIONS.md)
 
-| # | Company | Role | Location | Focus | Eligibility | Apply | Log Application |
-|---|---|---|---|---|---|---|---|
-| 1 | **Jane Street** | Machine Learning Researcher Intern | New York, NY 🌍 Global | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://go.vansh.nyc/40) | `npm run track -- add "Jane Street" "Machine Learning Researcher Intern"` |
-| 2 | **Microsoft** | Software Engineer Intern, AI/ML & LLM | Redmond, WA 🌍 Global | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://go.vansh.nyc/5K) | `npm run track -- add "Microsoft" "Software Engineer Intern, AI/ML & LLM"` |
-| 3 | **Attributics** | Data Science | Pune 🇮🇳 India | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://internshala.com/internship/detail/data-science-internship-in-pune-at-attributics1793944192) | `npm run track -- add "Attributics" "Data Science"` |
-| 4 | **Tamaara Digital** | Data & AI Engineer | Thiruvananthapuram Hybrid 🇮🇳 India | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://internshala.com/internship/detail/data-ai-engineer-internship-in-thiruvananthapuram-at-tamaara-digital1793595408) | `npm run track -- add "Tamaara Digital" "Data & AI Engineer"` |
-| 5 | **Generation Virtual** | Artificial Intelligence (AI) | Mumbai 🇮🇳 India | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-mumbai-at-generation-virtual1793851808) | `npm run track -- add "Generation Virtual" "Artificial Intelligence (AI)"` |
-| 6 | **Tax-O-Smart LLP** | Artificial Intelligence (AI) | Mumbai 🇮🇳 India | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-mumbai-at-tax-o-smart-llp1793787141) | `npm run track -- add "Tax-O-Smart LLP" "Artificial Intelligence (AI)"` |
-| 7 | **Career Solutions** | Artificial Intelligence (AI) | Chennai 🇮🇳 India | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-chennai-at-career-solutions1793776629) | `npm run track -- add "Career Solutions" "Artificial Intelligence (AI)"` |
-| 8 | **Newton School** | Data Science | Bangalore 🇮🇳 India | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://internshala.com/internship/detail/data-science-internship-in-bangalore-at-newton-school1793884727) | `npm run track -- add "Newton School" "Data Science"` |
-| 9 | **Crazy For Success Foundation** | AI Prompt Engineer | Pune 🇮🇳 India | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://internshala.com/internship/detail/ai-prompt-engineer-internship-in-pune-at-crazy-for-success-foundation1791952065) | `npm run track -- add "Crazy For Success Foundation" "AI Prompt Engineer"` |
-| 10 | **Ashna AI** | Campus Executive Officer Internship | Remote / Work From Home (India) 🌐 Remote | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://unstop.com/internships/campus-executive-officer-internship-ashna-ai-1798816) | `npm run track -- add "Ashna AI" "Campus Executive Officer Internship"` |
-| 11 | **FlatUIUX** | Data Science Internship | Remote / Work From Home (India) 🌐 Remote | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://unstop.com/internships/data-science-internship-flatuiux-1799142) | `npm run track -- add "FlatUIUX" "Data Science Internship"` |
-| 12 | **Masters' Union School of Business** | AI Campus Ambassador Internship | Remote / Work From Home (India) 🌐 Remote | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://unstop.com/internships/ai-campus-ambassador-internship-campus-ambassador-carnival-masters-union-school-of-business-1798032) | `npm run track -- add "Masters' Union School of Business" "AI Campus Ambassador Internship"` |
-| 13 | **Smartshopz LLP** | Marketing & Growth Internship - AI (Remote) | Bangalore (Work from home) 🌐 Remote | 💻 SWE | 🟢 Eligible | [Apply →](https://unstop.com/internships/marketing-growth-internship-ai-remote-smartshopz-llp-1797681) | `npm run track -- add "Smartshopz LLP" "Marketing & Growth Internship - AI (Remote)"` |
-| 14 | **Accesco Living** | AI/ML Internship | Remote / Work From Home (India) 🌐 Remote | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://unstop.com/internships/aiml-internship-accesco-living-1797752) | `npm run track -- add "Accesco Living" "AI/ML Internship"` |
-| 15 | **Bleep Education LLP** | Generative AI Internship | Remote / Work From Home (India) 🌐 Remote | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://unstop.com/internships/generative-ai-internship-bleep-education-llp-1798604) | `npm run track -- add "Bleep Education LLP" "Generative AI Internship"` |
-| 16 | **WoRisGo** | AI and Machine Learning Internship | Remote / Work From Home (India) 🌐 Remote | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://unstop.com/internships/ai-and-machine-learning-intern-worisgo-1794927) | `npm run track -- add "WoRisGo" "AI and Machine Learning Internship"` |
-| 17 | **Vortizo AI** | Machine Learning Engineer Internship | Remote / Work From Home (India) 🌐 Remote | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://unstop.com/internships/machine-learning-engineer-vortizo-ai-1791403) | `npm run track -- add "Vortizo AI" "Machine Learning Engineer Internship"` |
-| 18 | **Fortune Analytics** | Machine Learning Engineer Internship | Remote / Work From Home (India) 🌐 Remote | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://unstop.com/internships/machine-learning-engineer-internship-fortune-analytics-1790094) | `npm run track -- add "Fortune Analytics" "Machine Learning Engineer Internship"` |
-| 19 | **Nexvia Technologies** | AI & Machine Learning Internship | Hyderabad (Work from home) 🌐 Remote | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://unstop.com/internships/ai-machine-learning-internship-nexvia-technologies-1774793) | `npm run track -- add "Nexvia Technologies" "AI & Machine Learning Internship"` |
-| 20 | **Zenotalent** | Machine Learning Internship | Remote / Work From Home (India) 🌐 Remote | 🧠 AI/ML | 🟢 Eligible | [Apply →](https://unstop.com/internships/machine-learning-internship-zenotalent-1770195) | `npm run track -- add "Zenotalent" "Machine Learning Internship"` |
+## 📊 Queue Summary
+
+| Priority Tier | Rank Range | Count | Action Recommendation |
+|---|---|---|---|
+| 🔥 **PRIORITY** | #1 – #5 | 5 / 5 | **Apply First (Today's Minimum Target)** |
+| 🟢 **NEXT** | #6 – #15 | 7 / 10 | Apply After Priority |
+| 🟡 **BACKUP** | #16 – #20 | 0 / 5 | Additional Opportunities |
+| **Total Queued** | #1 – #12 | **12** | |
+
+### 📈 Role Category Distribution
+- **AI/ML:** 10
+- **Software/Backend:** 1
+- **Data/Data Analytics:** 0
+- **Cloud/DevOps/Automation:** 0
+- **Other technical:** 1
 
 ---
-*Rankings auto-update twice daily with every scheduled pipeline run.*
+
+## 🔥 PRIORITY — APPLY FIRST
+*Today's recommended minimum target (Ranks 1–5)*
+
+| # | Company | Role | Category | Match | Priority | Eligibility | Location | Source | Apply |
+|---|---|---|---|---|---|---|---|---|---|
+| **#1** | **Bluebex** | AI/ML Intern | AI/ML | 95% | **96** | 🟢 Eligible | Bengaluru, Karnataka, India | [LINKEDIN] | [Apply Now →](https://in.linkedin.com/jobs/view/ai-ml-intern-at-bluebex-4487386644) |
+| **#2** | **Dexter's Tech** | Machine Learning Intern | AI/ML | 95% | **96** | 🟢 Eligible | India | [LINKEDIN] | [Apply Now →](https://in.linkedin.com/jobs/view/machine-learning-intern-at-dexter-s-tech-4488482922) |
+| **#3** | **ThinkNovaa** | Machine Learning Intern | AI/ML | 95% | **96** | 🟢 Eligible | India | [LINKEDIN] | [Apply Now →](https://in.linkedin.com/jobs/view/machine-learning-intern-at-thinknovaa-4487393207) |
+| **#4** | **Devryxa** | Data Science Intern | AI/ML | 95% | **95** | 🟢 Eligible | India | [LINKEDIN] | [Apply Now →](https://in.linkedin.com/jobs/view/data-science-intern-at-devryxa-4487387512) |
+| **#5** | **Dexter's Tech** | Data Science Intern | AI/ML | 95% | **95** | 🟢 Eligible | India | [LINKEDIN] | [Apply Now →](https://in.linkedin.com/jobs/view/data-science-intern-at-dexter-s-tech-4488707059) |
+
+### #1 AI/ML Intern @ Bluebex
+- **Company:** Bluebex
+- **Role Category:** AI/ML
+- **Match Score:** 95%
+- **Application Priority:** 96
+- **Eligibility:** 🟢 Eligible
+- **Location:** Bengaluru, Karnataka, India
+- **Source:** [LINKEDIN]
+- **Posted:** 4 hours ago
+- **Why this is recommended:** Primary AI/ML Engineering Target
+- **Apply:** [https://in.linkedin.com/jobs/view/ai-ml-intern-at-bluebex-4487386644](https://in.linkedin.com/jobs/view/ai-ml-intern-at-bluebex-4487386644)
+- **Log Command:** `npm run track -- add "Bluebex" "AI/ML Intern" "2026-11-07" "Applied" "Top-20 Queue #1" "https://in.linkedin.com/jobs/view/ai-ml-intern-at-bluebex-4487386644"`
+
+### #2 Machine Learning Intern @ Dexter's Tech
+- **Company:** Dexter's Tech
+- **Role Category:** AI/ML
+- **Match Score:** 95%
+- **Application Priority:** 96
+- **Eligibility:** 🟢 Eligible
+- **Location:** India
+- **Source:** [LINKEDIN]
+- **Posted:** 4 hours ago
+- **Why this is recommended:** Primary AI/ML Engineering Target
+- **Apply:** [https://in.linkedin.com/jobs/view/machine-learning-intern-at-dexter-s-tech-4488482922](https://in.linkedin.com/jobs/view/machine-learning-intern-at-dexter-s-tech-4488482922)
+- **Log Command:** `npm run track -- add "Dexter's Tech" "Machine Learning Intern" "2026-11-07" "Applied" "Top-20 Queue #2" "https://in.linkedin.com/jobs/view/machine-learning-intern-at-dexter-s-tech-4488482922"`
+
+### #3 Machine Learning Intern @ ThinkNovaa
+- **Company:** ThinkNovaa
+- **Role Category:** AI/ML
+- **Match Score:** 95%
+- **Application Priority:** 96
+- **Eligibility:** 🟢 Eligible
+- **Location:** India
+- **Source:** [LINKEDIN]
+- **Posted:** 6 hours ago
+- **Why this is recommended:** Primary AI/ML Engineering Target
+- **Apply:** [https://in.linkedin.com/jobs/view/machine-learning-intern-at-thinknovaa-4487393207](https://in.linkedin.com/jobs/view/machine-learning-intern-at-thinknovaa-4487393207)
+- **Log Command:** `npm run track -- add "ThinkNovaa" "Machine Learning Intern" "2026-11-07" "Applied" "Top-20 Queue #3" "https://in.linkedin.com/jobs/view/machine-learning-intern-at-thinknovaa-4487393207"`
+
+### #4 Data Science Intern @ Devryxa
+- **Company:** Devryxa
+- **Role Category:** AI/ML
+- **Match Score:** 95%
+- **Application Priority:** 95
+- **Eligibility:** 🟢 Eligible
+- **Location:** India
+- **Source:** [LINKEDIN]
+- **Posted:** 5 hours ago
+- **Why this is recommended:** Data Science & Applied ML Target
+- **Apply:** [https://in.linkedin.com/jobs/view/data-science-intern-at-devryxa-4487387512](https://in.linkedin.com/jobs/view/data-science-intern-at-devryxa-4487387512)
+- **Log Command:** `npm run track -- add "Devryxa" "Data Science Intern" "2026-11-07" "Applied" "Top-20 Queue #4" "https://in.linkedin.com/jobs/view/data-science-intern-at-devryxa-4487387512"`
+
+### #5 Data Science Intern @ Dexter's Tech
+- **Company:** Dexter's Tech
+- **Role Category:** AI/ML
+- **Match Score:** 95%
+- **Application Priority:** 95
+- **Eligibility:** 🟢 Eligible
+- **Location:** India
+- **Source:** [LINKEDIN]
+- **Posted:** 4 hours ago
+- **Why this is recommended:** Data Science & Applied ML Target
+- **Apply:** [https://in.linkedin.com/jobs/view/data-science-intern-at-dexter-s-tech-4488707059](https://in.linkedin.com/jobs/view/data-science-intern-at-dexter-s-tech-4488707059)
+- **Log Command:** `npm run track -- add "Dexter's Tech" "Data Science Intern" "2026-11-07" "Applied" "Top-20 Queue #5" "https://in.linkedin.com/jobs/view/data-science-intern-at-dexter-s-tech-4488707059"`
+
+## 🟢 NEXT — APPLY AFTER PRIORITY
+*High-quality opportunities to apply to after priority roles (Ranks 6–15)*
+
+| # | Company | Role | Category | Match | Priority | Eligibility | Location | Source | Apply |
+|---|---|---|---|---|---|---|---|---|---|
+| **#6** | **Vortenza Systems** | Data Science Intern | AI/ML | 95% | **95** | 🟢 Eligible | India | [LINKEDIN] | [Apply Now →](https://in.linkedin.com/jobs/view/data-science-intern-at-vortenza-systems-4488490687) |
+| **#7** | **ThinkNovaa** | Data Science Intern | AI/ML | 95% | **95** | 🟢 Eligible | India | [LINKEDIN] | [Apply Now →](https://in.linkedin.com/jobs/view/data-science-intern-at-thinknovaa-4487375931) |
+| **#8** | **Jobs4PanIndia** | Data Science Intern | AI/ML | 95% | **95** | 🟢 Eligible | India | [LINKEDIN] | [Apply Now →](https://in.linkedin.com/jobs/view/data-science-intern-at-jobs4panindia-4487392872) |
+| **#9** | **MediNex Workforce** | DATA SCIENCE INTERN (PYTHON, PANDAS, STATISTICS) | AI/ML | 95% | **95** | 🟢 Eligible | India | [LINKEDIN] | [Apply Now →](https://in.linkedin.com/jobs/view/data-science-intern-python-pandas-statistics-at-medinex-workforce-4487600626) |
+| **#10** | **Qubixo** | Machine Learning | AI/ML | 90% | **90** | 🟢 Eligible | Work from home | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-machine-learning-internship-at-qubixo1794028835) |
+| **#11** | **Bookmywarehouse** | Full Stack Development | Software/Backend | 72% | **78** | 🟢 Eligible | Work from home | Internshala | [Apply Now →](https://internshala.com/internship/detail/work-from-home-full-stack-development-internship-at-bookmywarehouse1794039009) |
+| **#12** | **SkillMe** | Software Development Internship | Other technical | 75% | **71** | 🟢 Eligible | Remote / Work From Home (India) | [UNSTOP] | [Apply Now →](https://unstop.com/internships/software-development-internship-skillme-1799439) |
+
+### #6 Data Science Intern @ Vortenza Systems
+- **Company:** Vortenza Systems
+- **Role Category:** AI/ML
+- **Match Score:** 95%
+- **Application Priority:** 95
+- **Eligibility:** 🟢 Eligible
+- **Location:** India
+- **Source:** [LINKEDIN]
+- **Posted:** 4 hours ago
+- **Why this is recommended:** Data Science & Applied ML Target
+- **Apply:** [https://in.linkedin.com/jobs/view/data-science-intern-at-vortenza-systems-4488490687](https://in.linkedin.com/jobs/view/data-science-intern-at-vortenza-systems-4488490687)
+- **Log Command:** `npm run track -- add "Vortenza Systems" "Data Science Intern" "2026-11-07" "Applied" "Top-20 Queue #6" "https://in.linkedin.com/jobs/view/data-science-intern-at-vortenza-systems-4488490687"`
+
+### #7 Data Science Intern @ ThinkNovaa
+- **Company:** ThinkNovaa
+- **Role Category:** AI/ML
+- **Match Score:** 95%
+- **Application Priority:** 95
+- **Eligibility:** 🟢 Eligible
+- **Location:** India
+- **Source:** [LINKEDIN]
+- **Posted:** 6 hours ago
+- **Why this is recommended:** Data Science & Applied ML Target
+- **Apply:** [https://in.linkedin.com/jobs/view/data-science-intern-at-thinknovaa-4487375931](https://in.linkedin.com/jobs/view/data-science-intern-at-thinknovaa-4487375931)
+- **Log Command:** `npm run track -- add "ThinkNovaa" "Data Science Intern" "2026-11-07" "Applied" "Top-20 Queue #7" "https://in.linkedin.com/jobs/view/data-science-intern-at-thinknovaa-4487375931"`
+
+### #8 Data Science Intern @ Jobs4PanIndia
+- **Company:** Jobs4PanIndia
+- **Role Category:** AI/ML
+- **Match Score:** 95%
+- **Application Priority:** 95
+- **Eligibility:** 🟢 Eligible
+- **Location:** India
+- **Source:** [LINKEDIN]
+- **Posted:** 2 hours ago
+- **Why this is recommended:** Data Science & Applied ML Target
+- **Apply:** [https://in.linkedin.com/jobs/view/data-science-intern-at-jobs4panindia-4487392872](https://in.linkedin.com/jobs/view/data-science-intern-at-jobs4panindia-4487392872)
+- **Log Command:** `npm run track -- add "Jobs4PanIndia" "Data Science Intern" "2026-11-07" "Applied" "Top-20 Queue #8" "https://in.linkedin.com/jobs/view/data-science-intern-at-jobs4panindia-4487392872"`
+
+### #9 DATA SCIENCE INTERN (PYTHON, PANDAS, STATISTICS) @ MediNex Workforce
+- **Company:** MediNex Workforce
+- **Role Category:** AI/ML
+- **Match Score:** 95%
+- **Application Priority:** 95
+- **Eligibility:** 🟢 Eligible
+- **Location:** India
+- **Source:** [LINKEDIN]
+- **Posted:** 1 hour ago
+- **Why this is recommended:** Data Science & Applied ML Target
+- **Apply:** [https://in.linkedin.com/jobs/view/data-science-intern-python-pandas-statistics-at-medinex-workforce-4487600626](https://in.linkedin.com/jobs/view/data-science-intern-python-pandas-statistics-at-medinex-workforce-4487600626)
+- **Log Command:** `npm run track -- add "MediNex Workforce" "DATA SCIENCE INTERN (PYTHON, PANDAS, STATISTICS)" "2026-11-07" "Applied" "Top-20 Queue #9" "https://in.linkedin.com/jobs/view/data-science-intern-python-pandas-statistics-at-medinex-workforce-4487600626"`
+
+### #10 Machine Learning @ Qubixo
+- **Company:** Qubixo
+- **Role Category:** AI/ML
+- **Match Score:** 90%
+- **Application Priority:** 90
+- **Eligibility:** 🟢 Eligible
+- **Location:** Work from home
+- **Source:** Internshala
+- **Posted:** Recently posted / Active
+- **Why this is recommended:** Primary AI/ML Engineering Target
+- **Apply:** [https://internshala.com/internship/detail/work-from-home-machine-learning-internship-at-qubixo1794028835](https://internshala.com/internship/detail/work-from-home-machine-learning-internship-at-qubixo1794028835)
+- **Log Command:** `npm run track -- add "Qubixo" "Machine Learning" "2026-11-07" "Applied" "Top-20 Queue #10" "https://internshala.com/internship/detail/work-from-home-machine-learning-internship-at-qubixo1794028835"`
+
+### #11 Full Stack Development @ Bookmywarehouse
+- **Company:** Bookmywarehouse
+- **Role Category:** Software/Backend
+- **Match Score:** 72%
+- **Application Priority:** 78
+- **Eligibility:** 🟢 Eligible
+- **Location:** Work from home
+- **Source:** Internshala
+- **Posted:** Recently posted / Active
+- **Why this is recommended:** Full-Stack & Web Engineering Target
+- **Apply:** [https://internshala.com/internship/detail/work-from-home-full-stack-development-internship-at-bookmywarehouse1794039009](https://internshala.com/internship/detail/work-from-home-full-stack-development-internship-at-bookmywarehouse1794039009)
+- **Log Command:** `npm run track -- add "Bookmywarehouse" "Full Stack Development" "2026-11-07" "Applied" "Top-20 Queue #11" "https://internshala.com/internship/detail/work-from-home-full-stack-development-internship-at-bookmywarehouse1794039009"`
+
+### #12 Software Development Internship @ SkillMe
+- **Company:** SkillMe
+- **Role Category:** Other technical
+- **Match Score:** 75%
+- **Application Priority:** 71
+- **Eligibility:** 🟢 Eligible
+- **Location:** Remote / Work From Home (India)
+- **Source:** [UNSTOP]
+- **Posted:** 7/11/2026
+- **Why this is recommended:** General Technical / CS Opportunity
+- **Apply:** [https://unstop.com/internships/software-development-internship-skillme-1799439](https://unstop.com/internships/software-development-internship-skillme-1799439)
+- **Log Command:** `npm run track -- add "SkillMe" "Software Development Internship" "2026-11-07" "Applied" "Top-20 Queue #12" "https://unstop.com/internships/software-development-internship-skillme-1799439"`
+
+## 🟡 BACKUP — OPPORTUNITIES TO CONSIDER
+*Worthwhile opportunities for pipeline depth (Ranks 16–20)*
+
+*No opportunities currently queued in this tier.*
+
+---
+### 💡 How to Track These Applications:
+```bash
+npm run track -- add "Bluebex" "AI/ML Intern" "2026-11-07" "Applied" "Top-20 Queue #1" "https://in.linkedin.com/jobs/view/ai-ml-intern-at-bluebex-4487386644"
+```
